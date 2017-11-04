@@ -18,7 +18,7 @@ class OfficeEntity extends Model
 
     public function lead()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'lead_id');
     }
 
     public function branch()
