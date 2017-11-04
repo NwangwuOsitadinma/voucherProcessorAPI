@@ -14,3 +14,19 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->group(['prefix' => 'api'], function () use($router){
+    $router->get('/office_entity_types', function (){
+       $ent = \App\Models\OfficeEntityType::all();
+       return $ent;
+    });
+    $router->post('/office_entity_type/create', function (\Illuminate\Http\Request $request){
+        if($c = \App\Models\OfficeEntityType::create([
+            'name' => $request->name
+        ])){
+            return response()->json(['message' => 'you just created an entity type', $c]);
+        }
+    });
+});
+
+
