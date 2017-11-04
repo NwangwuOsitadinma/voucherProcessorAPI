@@ -6,12 +6,12 @@
  * Time: 8:17 PM
  */
 
-namespace App\Repository;
+namespace App\Repositories;
 
 
 use App\Models\OfficeEntityType;
 
-class OfficeEntityTypeRepository
+class OfficeEntityTypeRepository extends BaseRepository
 {
     protected $model;
 
@@ -19,4 +19,5 @@ class OfficeEntityTypeRepository
     {
         $this->model = $entityType;
     }
+
 }
