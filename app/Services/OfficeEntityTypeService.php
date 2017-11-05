@@ -27,5 +27,8 @@ class OfficeEntityTypeService
         }
         return $this->repository->getById($id);
     }
+    public  function create($data){
+        return $this->repository->create($data);
+    }
 
 }

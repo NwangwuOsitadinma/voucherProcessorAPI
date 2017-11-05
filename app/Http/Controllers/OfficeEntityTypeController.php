@@ -32,7 +32,11 @@ class OfficeEntityTypeController extends Controller
     public function create(Request $request){
         $data = ['name' => 'required'];
         $this->validate($request, $data);
-        return response()->json(['message' => 'The Office Entity Type was created successfully', 'data' => $data ],200);
+        $c = ['name' =>$request->name];
+        if(!$this->service->create($c)){
+            return response()->json([],503);
+        }
+        return response()->json(['message' => 'The Office Entity Type was created successfully', 'data' => c ],200);
     }
 
 
