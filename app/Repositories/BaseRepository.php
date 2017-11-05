@@ -28,7 +28,7 @@ abstract class BaseRepository
         return $this->model->find($id);
     }
 
-    public function update($id, Request $fields){
+    public function update($id, array $fields){
         return $this->model->where('id',$id)->update($fields);
     }
 

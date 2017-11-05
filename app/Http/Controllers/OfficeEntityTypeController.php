@@ -22,6 +22,12 @@ class OfficeEntityTypeController extends Controller
     public function index(){
         return $this->service->getOfficeEntities();
     }
+    public function show($id){
+        if($this->service->getEntity($id) == null){
+            return response()->json(['status' => 400, 'message' => 'The resource you requested does not exist']);
+        }
+        return response()->json($this->service->getEntity($id));
+    }
 
 
 }

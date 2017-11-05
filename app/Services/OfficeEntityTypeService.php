@@ -21,5 +21,11 @@ class OfficeEntityTypeService
     public function getOfficeEntities(){
         return $this->repository->getAll();
     }
+    public function getEntity($id){
+        if(!$this->repository->getById($id)){
+            return null;
+        }
+        return $this->repository->getById($id);
+    }
 
 }
