@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 
 use App\Services\OfficeEntityTypeService;
+use Illuminate\Http\Request;
 
 class OfficeEntityTypeController extends Controller
 {
@@ -24,9 +25,14 @@ class OfficeEntityTypeController extends Controller
     }
     public function show($id){
         if($this->service->getEntity($id) == null){
-            return response()->json(['status' => 400, 'message' => 'The resource you requested does not exist']);
+            return response()->json(['message' => 'The resource you requested does not exist'],404);
         }
-        return response()->json($this->service->getEntity($id));
+        return response()->json($this->service->getEntity($id),200);
+    }
+    public function create(Request $request){
+        $data = ['name' => 'required'];
+        $this->validate($request, $data);
+        return response()->json(['message' => 'The Office Entity Type was created successfully', 'data' => $data ],200);
     }
 
 
