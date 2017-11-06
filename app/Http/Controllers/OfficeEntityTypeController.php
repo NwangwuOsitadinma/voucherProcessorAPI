@@ -30,6 +30,8 @@ class OfficeEntityTypeController extends Controller
         return response()->json($this->service->getEntity($id),200);
     }
     public function create(Request $request){
+        $data = ['name' => 'required'];
+        $this->validate($request, $data);
         return $this->service->create($request);
     }
 

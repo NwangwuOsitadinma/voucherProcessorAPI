@@ -10,6 +10,7 @@ namespace App\Services;
 
 
 use App\Repositories\OfficeEntityTypeRepository;
+use Illuminate\Http\Request;
 
 class OfficeEntityTypeService
 {
@@ -27,11 +28,9 @@ class OfficeEntityTypeService
         }
         return $this->repository->getById($id);
     }
-    public  function create($request){
-        $data = ['name' => 'required'];
-        $this->validate($request, $data);
+    public  function create(Request $request){
         $c = ['name' =>$request->name];
-        if(!$this->service->create($c)){
+        if(!$this->repository->create($c)){
             return response()->json(['message' => 'something went wrong and the entity type could not be create'],503);
         }
         return response()->json(['message' => 'The Office Entity Type was created successfully', 'data' => $c ],200);
