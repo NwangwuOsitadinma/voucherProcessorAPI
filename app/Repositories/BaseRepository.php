@@ -16,12 +16,12 @@ abstract class BaseRepository
 {
     protected $model;
 
-    public function getAll(array $fields = null)
+    public function getAll(int $n, array $fields = null)
     {
         if ($fields != null){
-           return $this->model->all($fields);
+           return $this->model->all($fields)->paginate($n);
         }
-        return $this->model->all();
+        return $this->model->paginate($n);
     }
 
     public function getById( $id){
