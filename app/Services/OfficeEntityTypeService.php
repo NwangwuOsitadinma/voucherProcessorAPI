@@ -20,7 +20,7 @@ class OfficeEntityTypeService
     }
 
     public function getOfficeEntities($n){
-        if ($this->repository->getAll()){
+        if (!$this->repository->getAll($n)){
             return response()->json(['message' => 'The resource you requested was not found']);
         }
         return $this->repository->getAll($n);
