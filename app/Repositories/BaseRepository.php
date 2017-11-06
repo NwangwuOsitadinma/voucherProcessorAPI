@@ -33,7 +33,7 @@ abstract class BaseRepository
     }
 
     public function delete($id){
-        return $this->model->delete($id);
+        return $this->model->find($id)->delete();
     }
 
     public function create(array $object){

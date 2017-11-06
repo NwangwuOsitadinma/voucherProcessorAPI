@@ -24,7 +24,7 @@ class OfficeEntityTypeService
     }
     public function getEntity($id){
         if(!$this->repository->getById($id)){
-            return null;
+            return response()->json(['message' => 'The resource you requested could not be found'],404);
         }
         return $this->repository->getById($id);
     }
@@ -37,6 +37,12 @@ class OfficeEntityTypeService
     }
     public function update($id, array $data){
         return $this->update($id, $data);
+    }
+    public function delete($id){
+        if(!$this->repository->delete($id)){
+            return response()->json(['message' => 'the request could not be completed.','data', $id], 404);
+        }
+        return response()->json(['message' => 'the Office Entity Type was successfully deleted'],200);
     }
 
 
