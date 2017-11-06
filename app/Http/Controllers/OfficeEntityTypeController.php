@@ -21,18 +21,23 @@ class OfficeEntityTypeController extends Controller
         $this->service = $service;
     }
     public function index(){
-        return $this->service->getOfficeEntities(5);
+        return $this->service->getEntityTypes(5);
     }
     public function show($id){
-        return $this->service->getEntity($id);
+        return $this->service->getEntityType($id);
     }
     public function create(Request $request){
         $data = ['name' => 'required'];
         $this->validate($request, $data);
-        return $this->service->create($request);
+        return $this->service->createEntityType($request);
+    }
+    public function update($id, Request $request){
+        $data = ['name' => 'required'];
+        $this->validate($request,$data);
+        return $this->service->updateEntityType($id, $request);
     }
     public function delete($id){
-        return $this->service->delete($id);
+        return $this->service->deleteEntityType($id);
     }
 
 

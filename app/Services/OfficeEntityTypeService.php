@@ -38,8 +38,13 @@ class OfficeEntityTypeService
         }
         return response()->json(['message' => 'The Office Entity Type was created successfully', 'data' => $c ],200);
     }
-    public function updateEntityType($id, array $data){
-        return $this->update($id, $data);
+    public function updateEntityType($id, Request $request){
+        $data = ['name' => $request->name];
+        if(!$this->repository->getById($id)){
+            return response()->json(['message' => 'The resource you requested was not found']);
+        }
+        $this->repository->update($id, $data);
+        return response()->json(['message' => 'The update was successful', $data]);
     }
     public function deleteEntityType($id){
         if(!$this->repository->delete($id)){
