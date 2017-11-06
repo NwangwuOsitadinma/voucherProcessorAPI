@@ -19,29 +19,29 @@ class OfficeEntityTypeService
         $this->repository = $repo;
     }
 
-    public function getOfficeEntities($n){
+    public function getEntityTypes($n){
         if (!$this->repository->getAll($n)){
             return response()->json(['message' => 'The resource you requested was not found']);
         }
         return $this->repository->getAll($n);
     }
-    public function getEntity($id){
+    public function getEntityType($id){
         if(!$this->repository->getById($id)){
             return response()->json(['message' => 'The resource you requested was not'],404);
         }
         return $this->repository->getById($id);
     }
-    public  function create(Request $request){
+    public  function createEntityType(Request $request){
         $c = ['name' =>$request->name];
         if(!$this->repository->create($c)){
             return response()->json(['message' => 'something went wrong and the entity type could not be create'],503);
         }
         return response()->json(['message' => 'The Office Entity Type was created successfully', 'data' => $c ],200);
     }
-    public function update($id, array $data){
+    public function updateEntityType($id, array $data){
         return $this->update($id, $data);
     }
-    public function delete($id){
+    public function deleteEntityType($id){
         if(!$this->repository->delete($id)){
             return response()->json(['message' => 'the request could not be completed.','data', $id], 404);
         }
