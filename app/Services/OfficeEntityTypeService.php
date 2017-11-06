@@ -20,11 +20,14 @@ class OfficeEntityTypeService
     }
 
     public function getOfficeEntities($n){
+        if ($this->repository->getAll()){
+            return response()->json(['message' => 'The resource you requested was not found']);
+        }
         return $this->repository->getAll($n);
     }
     public function getEntity($id){
         if(!$this->repository->getById($id)){
-            return response()->json(['message' => 'The resource you requested could not be found'],404);
+            return response()->json(['message' => 'The resource you requested was not'],404);
         }
         return $this->repository->getById($id);
     }
