@@ -19,6 +19,9 @@ $router->group(['prefix' => 'api'], function () use($router){
     $router->get('/office_entity_types', 'OfficeEntityTypeController@index');
     $router->get('/office_entity_type/{id}','OfficeEntityTypeController@show');
     $router->post('/office_entity_type/create', 'OfficeEntityTypeController@create');
+    $router->put('/office_entity_type/update/{id}', 'OfficeEntityTypeController@update');
+    $router->delete('/office_entity_type/delete/{id}', 'OfficeEntityTypeController@delete');
+
 });
 
 
