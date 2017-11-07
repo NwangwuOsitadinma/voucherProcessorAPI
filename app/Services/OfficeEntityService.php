@@ -10,6 +10,7 @@ namespace App\Services;
 
 
 use App\Repositories\OfficeEntityRepository;
+use Illuminate\Http\Request;
 use function MongoDB\BSON\toJSON;
 
 class OfficeEntityService
@@ -27,4 +28,25 @@ class OfficeEntityService
         }
         return $this->repository->getAll($n);
     }
+
+    public function getEntity($id){
+        if(!$this->repository->getById($id)){
+            return response()->json(['message' => 'the resource you requested was not found']);
+        }
+        return $this->repository->getById($id);
+    }
+
+    public function createEntity(Request $request){
+        $c = ['name' => $request->name,
+                'lead_id' => $request->lead,
+                'branch_id' => $request->branch,
+                'office_entity_type_id' => $request->office_entity_type,
+        ];
+        if(!$this->repository->create($c)){
+            return response()->json(['message' => 'the resource was not created', 'data' => $c], 500);
+        }
+        return response()->json(['message' => 'the resource was successfully created', 'data' => $c], 200);
+    }
+
+
 }
