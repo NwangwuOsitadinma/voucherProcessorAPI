@@ -47,6 +47,18 @@ class OfficeEntityService
         }
         return response()->json(['message' => 'the resource was successfully created', 'data' => $c], 200);
     }
+    public  function updateEntity($id, Request $request){
+        $data = ['name' => $request->name,
+            'lead_id' => $request->lead,
+            'branch_id' => $request->branch,
+            'office_entity_type_id' => $request->office_entity_type,
+        ];
+        if(!$this->repository->getById($id)){
+            return response()->json(['message' => 'The resource you requested was not found']);
+        }
+        $this->repository->update($id, $data);
+        return response()->json(['message' => 'The update was successful', $data]);
+    }
 
 
 }
