@@ -10,6 +10,7 @@ namespace App\Services;
 
 
 use App\Repositories\OfficeEntityRepository;
+use function MongoDB\BSON\toJSON;
 
 class OfficeEntityService
 {
@@ -20,7 +21,10 @@ class OfficeEntityService
         $this->repository = $repository;
     }
 
-    public function getAll(){
-
+    public function getEntities($n){
+        if(!$this->repository->getAll($n)){
+            return response()->json(['message' => 'the resource you requested was not found']);
+        }
+        return $this->repository->getAll($n);
     }
 }
