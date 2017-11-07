@@ -9,10 +9,16 @@
 namespace App\Http\Controllers;
 
 
+use App\Services\OfficeEntityService;
+
 class OfficeEntityController extends Controller
 {
     protected $service;
-    public function __construct($entityService){
+    public function __construct(OfficeEntityService $entityService){
         $this->service = $entityService;
+    }
+
+    public function index(){
+        return $this->service->getEntities(5);
     }
 }
