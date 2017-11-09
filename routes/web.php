@@ -28,6 +28,25 @@ $router->group(['prefix' => 'api'], function () use($router){
     $router->put('/office_entity/update/{id}', 'OfficeEntityController@update');
     $router->delete('/office_entity/delete/{id}', 'OfficeEntityController@delete');
 
+    $router->get('/items', 'ItemController@getAllItems');
+    $router->get('/item/{id}', 'ItemController@getById');
+    $router->post('/item/create', 'ItemController@create');
+    $router->put('/item/update/{id}', 'ItemController@update');
+    $router->delete('/item/delete/{id}', 'ItemController@delete');
+
+    $router->get('/branches', 'BranchController@getAllBranches');
+    $router->get('/branch/{id}', 'BranchController@getById');
+    $router->post('/branch/create', 'BranchController@create');
+    $router->put('/branch/update/{id}', 'BranchController@update');
+    $router->delete('/branch/delete/{id}', 'BranchController@delete');
+
+    $router->get('/vouchers', 'VoucherController@getAllVouchers');
+    $router->get('/voucher/{id}', 'VoucherController@getById');
+    $router->post('/voucher/create', 'VoucherController@create');
+    $router->put('/voucher/update/{id}', 'VoucherController@update');
+    $router->delete('/voucher/delete/{id}', 'VoucherController@delete');
+
+
 
 });
 
