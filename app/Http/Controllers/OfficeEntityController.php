@@ -38,4 +38,19 @@ class OfficeEntityController extends Controller
         return $this->service->createEntity($request);
     }
 
+    public function update($id, Request $request){
+        $required = [
+            'name' => 'required',
+            'lead' => 'required',
+            'branch' => 'required',
+            'office_entity_type' => 'required'
+        ];
+        $this->validate( $request, $required);
+        return $this->service->update($id, $request);
+    }
+
+    public function delete($id){
+        return $this->service->delete($id);
+    }
+
 }
