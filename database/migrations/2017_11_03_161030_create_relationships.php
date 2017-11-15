@@ -14,6 +14,11 @@ class CreateRelationships extends Migration
     public function up()
     {
         Schema::table('vouchers', function (Blueprint $table){
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->foreign('office_entity_type_id')
                 ->references('id')
                 ->on('office_entity_types')

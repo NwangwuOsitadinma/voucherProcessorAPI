@@ -36,4 +36,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->belongsTo(OfficeEntity::class);
     }
 
+    public function voucher()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

@@ -17,6 +17,7 @@ class CreateVouchersTable extends Migration
             $table->increments('id');
             $table->string('voucher_number');
             $table->string('description')->nullable(true);
+            $table->integer('user_id')->unsigned();
             $table->integer('office_entity_type_id')->unsigned();
             $table->integer('office_entity_id')->unsigned();
             $table->timestamps();
