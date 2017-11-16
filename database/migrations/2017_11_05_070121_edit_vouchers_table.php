@@ -14,7 +14,7 @@ class EditVouchersTable extends Migration
     public function up()
     {
         Schema::table('vouchers', function(Blueprint $table){
-            $table->string('status');
+            $table->integer('status')->default(0);
             $table->string('reason');
         });
     }
