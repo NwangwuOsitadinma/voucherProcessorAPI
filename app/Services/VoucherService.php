@@ -14,7 +14,7 @@ use App\Repositories\VoucherRepository;
 use Illuminate\Http\Request;
 
 class VoucherService {
-    private $repository;
+    protected $repository;
 
     public function __construct(VoucherRepository $voucherRepository){
         $this->repository = $voucherRepository;

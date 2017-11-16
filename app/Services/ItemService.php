@@ -11,7 +11,7 @@ use App\Repositories\ItemRepository;
 use Illuminate\Http\Request;
 
 class ItemService {
-    private $repository;
+    protected $repository;
 
     public function __construct (ItemRepository $itemRepository){
         $this->repository = $itemRepository;

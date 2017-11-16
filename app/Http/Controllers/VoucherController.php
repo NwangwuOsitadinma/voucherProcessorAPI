@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 class VoucherController extends Controller{
 
-    private $service;
+    protected $service;
 
     public function __construct(VoucherService $voucherService){
         $this->service = $voucherService;

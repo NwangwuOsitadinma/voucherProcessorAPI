@@ -16,7 +16,7 @@ use Illuminate\Http\Request;
 
 class BranchController extends Controller{
 
-    private $service;
+    protected $service;
 
     public function __construct(BranchService $branchService){
         $this->service = $branchService;

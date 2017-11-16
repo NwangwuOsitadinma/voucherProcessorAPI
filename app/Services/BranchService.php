@@ -13,7 +13,7 @@ use App\Repositories\BranchRepository;
 use Illuminate\Http\Request;
 
 class BranchService {
-    private $repository;
+    protected $repository;
 
     public function __construct (BranchRepository $branchRepository){
         $this->repository = $branchRepository;
