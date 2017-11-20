@@ -9,14 +9,14 @@
 namespace App\Repositories;
 
 
-
-
 use App\Models\OfficeEntity;
 
 class OfficeEntityRepository extends BaseRepository
 {
     protected $model;
-    public function __construct(OfficeEntity $model){
+
+    public function __construct(OfficeEntity $model)
+    {
         $this->model = $model;
     }
 

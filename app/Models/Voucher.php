@@ -37,5 +37,4 @@ class Voucher extends Model
     }
 
 
-
 }

@@ -15,19 +15,24 @@ use Illuminate\Http\Request;
 class OfficeEntityController extends Controller
 {
     protected $service;
-    public function __construct(OfficeEntityService $entityService){
+
+    public function __construct(OfficeEntityService $entityService)
+    {
         $this->service = $entityService;
     }
 
-    public function index(){
+    public function index()
+    {
         return $this->service->getEntities(5);
     }
 
-    public function show($id){
+    public function show($id)
+    {
         return $this->service->getEntity($id);
     }
 
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $r = [
             'name' => 'required',
             'lead' => 'required',
@@ -38,18 +43,20 @@ class OfficeEntityController extends Controller
         return $this->service->createEntity($request);
     }
 
-    public function update($id, Request $request){
+    public function update($id, Request $request)
+    {
         $required = [
             'name' => 'required',
             'lead' => 'required',
             'branch' => 'required',
             'office_entity_type' => 'required'
         ];
-        $this->validate( $request, $required);
+        $this->validate($request, $required);
         return $this->service->update($id, $request);
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         return $this->service->delete($id);
     }
 

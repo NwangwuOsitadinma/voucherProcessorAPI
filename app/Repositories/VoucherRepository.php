@@ -11,12 +11,19 @@ namespace App\Repositories;
 
 use App\Models\Voucher;
 
-class VoucherRepository extends BaseRepository{
+class VoucherRepository extends BaseRepository
+{
 
     protected $model;
 
-    public function __construct(Voucher $voucher){
+    public function __construct(Voucher $voucher)
+    {
         $this->model = $voucher;
+    }
+
+    public function getOfficeEntityVouchers($officeEntityId)
+    {
+        return $this->model->where('office_entity_id', $officeEntityId)->get()/*->with('office_entity')->get()*/;
     }
 
 }

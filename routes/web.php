@@ -45,7 +45,16 @@ $router->group(['prefix' => 'api'], function () use($router){
     $router->post('/voucher/create', 'VoucherController@create');
     $router->put('/voucher/update/{id}', 'VoucherController@update');
     $router->delete('/voucher/delete/{id}', 'VoucherController@delete');
+    $router->get('/vouchers/user', 'VoucherController@getUserVouchers');
+    $router->get('/vouchers/officeEntity', 'VoucherController@getOfficeEntityVouchers');
+    $router->get('/vouchers/payable', 'VoucherController@getPayableVouchers');
+    $router->put('/voucher/approve/{voucherId}', 'VoucherController@approveVoucher');
+    $router->put('/voucher/paid/{voucherId}', 'VoucherController@hasPaidVoucher');
 
+    $router->get('/users', 'UserController@getAllUsers');
+    $router->get('/user/{id}', 'UserController@getById');
+    $router->put('/user/update/{id}', 'UserController@update');
+    $router->delete('/user/delete/{id}', 'UserController@delete');
 
 
 });

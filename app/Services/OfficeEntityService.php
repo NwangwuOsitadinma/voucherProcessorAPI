@@ -22,46 +22,51 @@ class OfficeEntityService
         $this->repository = $repository;
     }
 
-    public function getEntities($n){
-        if(!$this->repository->getAll($n)){
+    public function getEntities($n)
+    {
+        if (!$this->repository->getAll($n)) {
             return response()->json(['message' => 'the resource you requested was not found']);
         }
         return $this->repository->getAll($n);
     }
 
-    public function getEntity($id){
-        if(!$this->repository->getById($id)){
+    public function getEntity($id)
+    {
+        if (!$this->repository->getById($id)) {
             return response()->json(['message' => 'the resource you requested was not found']);
         }
         return $this->repository->getById($id);
     }
 
-    public function createEntity(Request $request){
+    public function createEntity(Request $request)
+    {
         $c = ['name' => $request->name,
-                'lead_id' => $request->lead,
-                'branch_id' => $request->branch,
-                'office_entity_type_id' => $request->office_entity_type,
+            'lead_id' => $request->lead,
+            'branch_id' => $request->branch,
+            'office_entity_type_id' => $request->office_entity_type,
         ];
-        if(!$this->repository->create($c)){
+        if (!$this->repository->create($c)) {
             return response()->json(['message' => 'the resource was not created', 'data' => $c], 500);
         }
         return response()->json(['message' => 'the resource was successfully created', 'data' => $c], 200);
     }
 
-    public function update($id, Request $request){
+    public function update($id, Request $request)
+    {
         $officeEntityType = ['name' => $request->name,
             'lead_id' => $request->lead,
             'branch_id' => $request->branch,
             'office_entity_type' => $request->office_entity_type
         ];
-        if(!$this->repository->update($id, $officeEntityType)){
+        if (!$this->repository->update($id, $officeEntityType)) {
             return response()->json(['message' => 'the resource was not updated', 'data' => $officeEntityType], 500);
         }
         return response()->json(['message' => 'the resource was successfully updated', 'data' => $officeEntityType], 200);
     }
 
-    public function delete($id){
-        if(!$this->repository->delete($id)) {
+    public function delete($id)
+    {
+        if (!$this->repository->delete($id)) {
             return response()->json(['message' => 'the resource was not deleted'], 404);
         }
         return response()->json(['message' => 'the resource was successfully deleted'], 200);

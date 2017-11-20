@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateRelationships extends Migration
 {
@@ -13,25 +13,30 @@ class CreateRelationships extends Migration
      */
     public function up()
     {
-        Schema::table('vouchers', function (Blueprint $table){
+        Schema::table('vouchers', function (Blueprint $table) {
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->foreign('office_entity_type_id')
+            /*$table->foreign('office_entity_type_id')
                 ->references('id')
                 ->on('office_entity_types')
                 ->onDelete('cascade')
-                ->onUpdate('cascade');
+                ->onUpdate('cascade');*/
             $table->foreign('office_entity_id')
                 ->references('id')
                 ->on('office_entities')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+            /*$table->foreign('department_id')
+                ->references('id')
+                ->on('departments')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');*/
         });
 
-        Schema::table('items', function (Blueprint $table){
+        Schema::table('items', function (Blueprint $table) {
             $table->foreign('voucher_id')
                 ->references('id')
                 ->on('vouchers')
@@ -39,7 +44,7 @@ class CreateRelationships extends Migration
                 ->onDelete('cascade');
         });
 
-        Schema::table('office_entities', function (Blueprint $table){
+        Schema::table('office_entities', function (Blueprint $table) {
             $table->foreign('lead_id')
                 ->references('id')
                 ->on('users')
@@ -57,18 +62,26 @@ class CreateRelationships extends Migration
                 ->onDelete('cascade');
         });
 
-        Schema::table('users', function (Blueprint $table){
-            $table->foreign('department_id')
+        Schema::table('users', function (Blueprint $table) {
+            /*$table->foreign('department_id')
                 ->references('id')
                 ->on('departments')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->onDelete('cascade');*/
             $table->foreign('office_entity_id')
                 ->references('id')
                 ->on('office_entities')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
+
+        /*Schema::table('departments', function (Blueprint $table) {
+            $table->foreign('office_entity_type_id')
+                ->references('id')
+                ->on('office_entity_types')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+        });*/
     }
 
     /**
