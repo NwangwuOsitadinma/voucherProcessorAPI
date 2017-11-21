@@ -40,30 +40,6 @@ class VoucherService
             : response()->json(['message' => 'the resource you requested was not found']);
     }
 
-    public function getUserVouchers($userId)
-    {
-        $usersVouchers = $this->repository->getByParam('user_id', $userId);
-        return $usersVouchers
-            ? $usersVouchers
-            : response()->json(['message' => 'the resource you requested was not found']);
-    }
-
-    public function getOfficeEntityVouchers($officeEntityId)
-    {
-//        $officeEntityVouchers = $this->repository->getByParam('department_id', $departmentId);
-        $officeEntityVouchers = $this->repository->getOfficeEntityVouchers($officeEntityId);
-        return $officeEntityVouchers
-            ? $officeEntityVouchers
-            : response()->json(['message' => 'the resource you requested was not found']);
-    }
-
-    public function getPayableVouchers()
-    {
-        $vouchers = $this->repository->getByParam('status', 'Accepted');
-        return $vouchers
-            ? $vouchers
-            : response()->json(['message' => 'there are currently no payable vouchers']);
-    }
 
     public function create(Request $request)
     {
@@ -99,6 +75,7 @@ class VoucherService
         return response()->json(['message' => 'the resource was successfully deleted']);
     }
 
+
     public function approveVoucher($voucherId)
     {
         $voucher = [
@@ -120,5 +97,32 @@ class VoucherService
         }
         return response()->json(['message' => 'the resource was successfully updated', 'data' => $voucher], 200);
     }
+
+    public function getPayableVouchers()
+    {
+        $vouchers = $this->repository->getByParam('status', 'Accepted');
+        return $vouchers
+            ? $vouchers
+            : response()->json(['message' => 'there are currently no payable vouchers']);
+    }
+
+    public function getUserVouchers($userId)
+    {
+        $usersVouchers = $this->repository->getByParam('user_id', $userId);
+        return $usersVouchers
+            ? $usersVouchers
+            : response()->json(['message' => 'the resource you requested was not found']);
+    }
+
+    public function getOfficeEntityVouchers($officeEntityId)
+    {
+        $officeEntityVouchers = $this->repository->getByParam('office_entity_id',$officeEntityId);
+        return $officeEntityVouchers
+            ? $officeEntityVouchers
+            : response()->json(['message' => 'the resource you requested was not found']);
+    }
+
+
+
 
 }

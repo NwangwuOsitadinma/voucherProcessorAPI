@@ -21,9 +21,5 @@ class VoucherRepository extends BaseRepository
         $this->model = $voucher;
     }
 
-    public function getOfficeEntityVouchers($officeEntityId)
-    {
-        return $this->model->where('office_entity_id', $officeEntityId)->get()/*->with('office_entity')->get()*/;
-    }
 
 }
