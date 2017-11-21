@@ -15,7 +15,7 @@ class VoucherRepository extends BaseRepository
 {
 
     protected $model;
-    
+
     public function __construct(Voucher $voucher)
     {
         $this->model = $voucher;
