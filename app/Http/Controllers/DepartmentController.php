@@ -1,29 +1,28 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Harris
- * Date: 05/11/2017
- * Time: 05:11 AM
+ * User: Harrison Favour
+ * Date: 16/11/2017
+ * Time: 11:49 AM
  */
-
 
 namespace App\Http\Controllers;
 
 
-use App\Services\BranchService;
-use Illuminate\Http\Request;
+use App\Services\DepartmentService;
+use Symfony\Component\HttpFoundation\Request;
 
-class BranchController extends Controller
+class DepartmentController extends Controller
 {
 
-    protected $service;
+    private $service;
 
-    public function __construct(BranchService $branchService)
+    public function __construct(DepartmentService $departmentService)
     {
-        $this->service = $branchService;
+        $this->service = $departmentService;
     }
 
-    public function getAllBranches()
+    public function getAll()
     {
         return $this->service->getAll(5);
     }
@@ -37,8 +36,7 @@ class BranchController extends Controller
     {
         $required = [
             'name' => 'required',
-            'finance_head' => 'required',
-            'payer' => 'required'
+            'office_entity_type' => 'required'
         ];
         $this->validate($request, $required);
         return $this->service->create($request);
@@ -48,8 +46,7 @@ class BranchController extends Controller
     {
         $required = [
             'name' => 'required',
-            'finance_head' => 'required',
-            'payer' => 'required'
+            'office_entity_type' => 'required'
         ];
         $this->validate($request, $required);
         return $this->service->update($id, $request);

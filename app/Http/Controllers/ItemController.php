@@ -9,23 +9,26 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\Item;
 use App\Services\ItemService;
 use Illuminate\Http\Request;
 
-class ItemController extends Controller{
+class ItemController extends Controller
+{
 
     protected $service;
 
-    public function __construct(ItemService $itemService){
+    public function __construct(ItemService $itemService)
+    {
         $this->service = $itemService;
     }
 
-    public function getAllItems(){
+    public function getAllItems()
+    {
         return $this->service->getAll(5);
     }
 
-    public function getById($id){
+    public function getById($id)
+    {
         return $this->service->getById($id);
     }
 
@@ -33,7 +36,8 @@ class ItemController extends Controller{
      * @param Request $request
      * @return mixed
      */
-    public function create(Request $request){
+    public function create(Request $request)
+    {
         $required = [
             'name' => 'required',
             'price' => 'required',
@@ -48,7 +52,8 @@ class ItemController extends Controller{
      * @param Request $request
      * @return mixed
      */
-    public function update($id, Request $request){
+    public function update($id, Request $request)
+    {
         $required = [
             'name' => 'required',
             'price' => 'required',
@@ -58,7 +63,8 @@ class ItemController extends Controller{
         return $this->service->update($id, $request);
     }
 
-    public function delete($id){
+    public function delete($id)
+    {
         return $this->service->delete($id);
     }
 

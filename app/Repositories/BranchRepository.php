@@ -11,11 +11,13 @@ namespace App\Repositories;
 
 use App\Models\Branch;
 
-class BranchRepository extends BaseRepository{
+class BranchRepository extends BaseRepository
+{
 
     protected $model;
 
-    public function __construct(Branch $branch){
+    public function __construct(Branch $branch)
+    {
         $this->model = $branch;
     }
 

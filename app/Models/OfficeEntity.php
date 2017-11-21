@@ -35,6 +35,7 @@ class OfficeEntity extends Model
     {
         return $this->hasMany(Voucher::class);
     }
+
     public function users()
     {
         return $this->hasMany(User::class);

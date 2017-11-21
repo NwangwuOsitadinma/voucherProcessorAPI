@@ -9,6 +9,7 @@
 namespace App\Models;
 
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Voucher extends Model
@@ -25,11 +26,15 @@ class Voucher extends Model
         return $this->belongsTo(OfficeEntity::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function items()
     {
         return $this->hasMany(Item::class);
     }
-
 
 
 }

@@ -11,12 +11,15 @@ namespace App\Repositories;
 
 use App\Models\Voucher;
 
-class VoucherRepository extends BaseRepository{
+class VoucherRepository extends BaseRepository
+{
 
     protected $model;
 
-    public function __construct(Voucher $voucher){
+    public function __construct(Voucher $voucher)
+    {
         $this->model = $voucher;
     }
+
 
 }

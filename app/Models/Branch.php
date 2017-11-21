@@ -18,8 +18,9 @@ class Branch extends Model
 
     public function finance_head()
     {
-        return $this->belongsTo(User::class,'finance_head_id');
+        return $this->belongsTo(User::class, 'finance_head_id');
     }
+
     public function payer()
     {
         return $this->belongsTo(User::class, 'payer_id');
