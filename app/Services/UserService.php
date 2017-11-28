@@ -16,10 +16,12 @@ class UserService
 {
 
     private $repository;
+    private $rolesAndClaimsService;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, RolesAndClaimsService $rolesAndClaimsService)
     {
         $this->repository = $userRepository;
+        $this->rolesAndClaimsService = $rolesAndClaimsService;
     }
 
     public function getAll($n)
@@ -37,17 +39,29 @@ class UserService
         return $this->repository->getByParam($param, $value);
     }
 
-    public function create(Request $request)
+    public function create(Request $request, $role)
     {
         $user = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password
+            'first_name' => $request->firstName,
+            'last_name' => $request->lastName,
+            'email_address' => $request->emailAddress,
+            'password' => $request->password,
+            'sex' => $request->sex,
+            'office_entity_id' => $request->officeEntity
         ];
         if (!$this->repository->create($user)) {
             return response()->json(['message' => 'the resource was not created', 'data' => $user], 500);
         }
-        return response()->json(['message' => 'the resource was successfully created', 'data' => $user], 200);
+        return $this->rolesAndClaimsService->assignRole($user, $role) != null
+            ? response()->json(['message' => 'the resource was successfully created', 'data' => $user], 200)
+            : response()->json(['message' => 'the user was created but the role was not set']);
+    }
+
+    public function updateUserRole($user, $newRole, $previousRole)
+    {
+        return $this->rolesAndClaimsService->retractUserRole($user, $previousRole)
+            && $this->rolesAndClaimsService->assignRole($user, $newRole)
+            != null;
     }
 
     public function update($id, Request $request)
@@ -58,7 +72,6 @@ class UserService
             'email_address' => $request->emailAddress,
             'password' => $request->password,
             'sex' => $request->sex,
-//            'department_id' => $request->department,
             'office_entity_id' => $request->officeEntity
         ];
         if (!$this->repository->update($id, $user)) {

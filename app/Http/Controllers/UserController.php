@@ -32,6 +32,20 @@ class UserController extends Controller
         return $this->service->getById($id);
     }
 
+    public function create(Request $request)
+    {
+        $required = [
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'emailAddress' => 'required',
+            'password' => 'required',
+            'sex' => 'required',
+            'officeEntity' => 'required'
+        ];
+        $this->validate($request, $required);
+        return $this->service->create($request, 'User');
+    }
+
     public function update($id, Request $request)
     {
         $required = [
