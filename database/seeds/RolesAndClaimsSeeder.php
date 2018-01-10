@@ -1,9 +1,18 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Silber\Bouncer\Bouncer;
+use App\Services\RolesAndClaimsService;
 
 class RolesAndClaimsSeeder extends Seeder
 {
+    private $rolesAndClaimsService;
+
+    public function __construct(RolesAndClaimsService $rolesAndClaimsService)
+    {
+        $this->rolesAndClaimsService = $rolesAndClaimsService;
+    }
+
     /**
      * Run the database seeds.
      *
@@ -11,18 +20,10 @@ class RolesAndClaimsSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('roles')->insert([[
-            'id' => 1,
-            'name' => 'Admin',
-            'level' => 'Highest'
-        ], [
-            'id' => 2,
-            'name' => 'Moderator',
-            'level' => 'Medium'
-        ], [
-            'id' => 3,
-            'name' => 'User',
-            'level' => 'Lowest'
-        ]]);
+        Bouncer::seeder(function() {
+            $this->rolesAndClaimsService->newRoleWithClaims('admin', ['']);
+            $this->rolesAndClaimsService->newRoleWithClaims('moderator', ['']);
+            $this->rolesAndClaimsService->newRoleWithClaims('user', ['']);
+        });
     }
 }

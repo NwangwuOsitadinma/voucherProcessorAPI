@@ -19,8 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('last_name');
             $table->string('email_address');
             $table->string('password');
+            $table->string('employee_id');
             $table->string('sex');
-            $table->integer('department_id')->unsigned();
+            // $table->integer('department_id')->unsigned();
             $table->integer('office_entity_id')->unsigned();
             $table->timestamps();
         });

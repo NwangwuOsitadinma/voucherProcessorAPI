@@ -30,5 +30,6 @@ class DatabaseSeeder extends Seeder
                 'department_id' => 1
 	        ]);
         }
+        $this->call(RolesAndClaimsSeeder::class);
     }
 }

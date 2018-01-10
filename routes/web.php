@@ -11,8 +11,8 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+$router->get('/', function () {
+    return view('index');
 });
 
 $router->group(['prefix' => 'api'], function () use($router){
@@ -22,7 +22,7 @@ $router->group(['prefix' => 'api'], function () use($router){
     $router->put('/office_entity_type/update/{id}', 'OfficeEntityTypeController@update');
     $router->delete('/office_entity_type/delete/{id}', 'OfficeEntityTypeController@delete');
 
-    $router->get('/office_entities/', 'OfficeEntityController@index');
+    $router->get('/office_entities', 'OfficeEntityController@index');
     $router->get('/office_entity/{id}', 'OfficeEntityController@show');
     $router->post('/office_entity/create', 'OfficeEntityController@create');
     $router->put('/office_entity/update/{id}', 'OfficeEntityController@update');

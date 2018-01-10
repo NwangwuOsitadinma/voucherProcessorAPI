@@ -1,0 +1,111 @@
+<!--Page Title-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<div id="page-title">
+    <h1 class="page-header text-overflow">New Office Entity</h1>
+
+    <!--Searchbox-->
+    <div class="searchbox">
+        <div class="input-group custom-search-form">
+            <input type="text" class="form-control" placeholder="Search..">
+            <span class="input-group-btn">
+                <button class="text-muted" type="button">
+                    <i class="demo-pli-magnifi-glass"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--End page title-->
+
+
+<!--Breadcrumb-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li>
+        <a href="#">Home</a>
+    </li>
+    <li>
+        <a href="#">Forms</a>
+    </li>
+    <li class="active">New Office Entity</li>
+</ol>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--End breadcrumb-->
+
+
+
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Register a new office entity</h3>
+                </div>
+
+                <!--Block Styled Form -->
+                <!--===================================================-->
+                <form>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Name</label>
+                                    <input type="text" data-ng-model="officeEntity.name" name="name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Office Entity Lead</label>
+                                    <select name="leadId" data-ng-model="officeEntity.leadId" id="demo-nav-offcanvas" class="form-control">
+                                        <option value="none" selected disabled="disabled">-- Select Mode --</option>
+                                        <option value="push">Push</option>
+                                        <option value="slide">Slide in on top</option>
+                                        <option value="reveal">Reveal</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Select Branch</label>
+                                    <select name="branchId" data-ng-model="officeEntity.branchId" id="demo-nav-offcanvas" class="form-control">
+                                        <option value="none" selected disabled="disabled">-- Select Mode --</option>
+                                        <option value="push">Push</option>
+                                        <option value="slide">Slide in on top</option>
+                                        <option value="reveal">Reveal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Select the type of office entity</label>
+                                    <select name="officeEntityTypeId" data-ng-model="officeEntity.officeEntityTypeId" id="demo-nav-offcanvas" class="form-control">
+                                        <option value="none" selected disabled="disabled">-- Select Mode --</option>
+                                        <option value="push">Push</option>
+                                        <option value="slide">Slide in on top</option>
+                                        <option value="reveal">Reveal</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer text-right">
+                        <button class="btn btn-success" type="submit">Submit</button>
+                    </div>
+                </form>
+                <!--===================================================-->
+                <!--End Block Styled Form -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--===================================================-->
+<!--End page content-->
