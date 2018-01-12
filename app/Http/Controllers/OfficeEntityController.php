@@ -21,9 +21,11 @@ class OfficeEntityController extends Controller
         $this->service = $entityService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->service->getEntities(5);
+        $n = $request->input('n') ?? null;
+        $fields = $request->input('fields') ? explode(',', $request->input('fields')) : null;
+        return $this->service->getEntities($n, $fields);
     }
 
     public function show($id)
@@ -51,18 +53,6 @@ class OfficeEntityController extends Controller
         ];
         $this->validate($request, $r);
         return $this->service->updateEntity($id, $request);
-    }
-
-    public function update($id, Request $request)
-    {
-        $required = [
-            'name' => 'required',
-            'lead' => 'required',
-            'branch' => 'required',
-            'office_entity_type' => 'required'
-        ];
-        $this->validate($request, $required);
-        return $this->service->update($id, $request);
     }
 
     public function delete($id)

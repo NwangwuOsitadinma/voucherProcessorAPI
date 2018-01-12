@@ -16,8 +16,10 @@ class CreateBranchesTable extends Migration
         Schema::create('branches', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('finance_head_id')->unsigned();
-            $table->integer('payer_id')->unsigned();
+            $table->string('location');
+            $table->string('description');
+            $table->integer('finance_head_id')->unsigned()->nullable();
+            $table->integer('payer_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

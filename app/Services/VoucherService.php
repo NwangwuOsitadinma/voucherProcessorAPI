@@ -24,9 +24,9 @@ class VoucherService
         $this->departmentService = $departmentService;
     }
 
-    public function getAll($n)
+    public function getAll(int $n = null, array $fields = null)
     {
-        $vouchers = $this->repository->getAll($n);
+        $vouchers = $this->repository->getAll($n, $fields);
         return $vouchers
             ? $vouchers
             : response()->json(['message' => 'the resource you requested was not found']);
@@ -43,10 +43,13 @@ class VoucherService
 
     public function create(Request $request)
     {
+        //TODO $user = $request->user()->id; replace this after testing
+        $user = 1;
         $voucher = ['voucher_number' => $request->voucher_number,
             'description' => $request->description,
-            'office_entity_type_id' => $request->office_entity_type,
-            'office_entity_id' => $request->office_entity
+            'reason' => $request->reason,
+            'office_entity_id' => $request->office_entity,
+            'user_id' => $user
         ];
         if (!$this->repository->create($voucher)) {
             return response()->json(['message' => 'the resource was not created', 'data' => $voucher], 500);

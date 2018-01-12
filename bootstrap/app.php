@@ -23,7 +23,7 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
-// $app->withFacades();
+$app->withFacades();
 
 $app->withEloquent();
 
@@ -78,10 +78,22 @@ $app->singleton(
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
+$app->register(Silber\Bouncer\BouncerServiceProvider::class);
+
+$app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
-$app->register(Silber\Bouncer\BouncerServiceProvider::class);
+
+/*
+| -------------------------------------------------------------------------
+| Register Facade here
+|
+| -------------------------------------------------------------------------
+*/
+
+if (!class_exists('Bouncer')) {
+    class_alias('Silber\Bouncer\BouncerFacade', 'Bouncer');
+}
 
 /*
 |--------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 <!--Page Title-->
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<div id="page-title">
+<div id="page-title" data-ng-init="getOfficeEntities()">
     <h1 class="page-header text-overflow">New Voucher</h1>
 
     <!--Searchbox-->
@@ -55,17 +55,15 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Voucher Number</label>
-                                    <input type="text" data-ng-model="voucher.voucherNumber" name="voucherNumber" class="form-control">
+                                    <input type="text" data-ng-model="voucher.voucher_number" name="voucher_number" class="form-control">
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Office Entity</label>
-                                    <select id="demo-nav-offcanvas" data-ng-model="voucher.officeEntity" name="officeEntity" class="form-control">
+                                    <select id="demo-nav-offcanvas" data-ng-model="voucher.office_entity" name="office_entity" class="form-control">
                                         <option value="none" selected disabled="disabled">-- Select Mode --</option>
-                                        <option value="push">Push</option>
-                                        <option value="slide">Slide in on top</option>
-                                        <option value="reveal">Reveal</option>
+                                        <option value="<% officeEntity.id %>" data-ng-repeat="officeEntity in officeEntities"><% officeEntity.name %></option>
                                     </select>
                                 </div>
                             </div>

@@ -23,9 +23,11 @@ class BranchController extends Controller
         $this->service = $branchService;
     }
 
-    public function getAllBranches()
+    public function getAllBranches(Request $request)
     {
-        return $this->service->getAll(5);
+        $n = $request->input('n') ?? null;
+        $fields = $request->input('fields') ? explode(',', $request->input('fields')) : null;
+        return $this->service->getAll($n, $fields);
     }
 
     public function getById($id)

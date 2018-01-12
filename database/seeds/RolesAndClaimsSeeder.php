@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Silber\Bouncer\Bouncer;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 use App\Services\RolesAndClaimsService;
 
 class RolesAndClaimsSeeder extends Seeder
@@ -21,9 +21,9 @@ class RolesAndClaimsSeeder extends Seeder
     public function run()
     {
         Bouncer::seeder(function() {
-            $this->rolesAndClaimsService->newRoleWithClaims('admin', ['']);
-            $this->rolesAndClaimsService->newRoleWithClaims('moderator', ['']);
-            $this->rolesAndClaimsService->newRoleWithClaims('user', ['']);
+            $this->rolesAndClaimsService->newRoleWithClaims('admin', ['create-branch']);
+            $this->rolesAndClaimsService->newRoleWithClaims('moderator', ['create-voucher']);
+            $this->rolesAndClaimsService->newRoleWithClaims('user', ['create-voucher']);
         });
     }
 }

@@ -36,6 +36,14 @@ app.controller('VoucherController', ['$scope', 'VoucherService', function ($scop
             console.log("error occurred while trying to update the voucher");
         });
     };
+
+    $scope.getOfficeEntities = function () {
+        VoucherService.getOfficeEntities(function (response) {
+            $scope.officeEntities = response.data;
+        }, function (response) {
+            console.log("error occurred while trying to get the list of office entities");
+        });
+    };
     
 }]);
 
@@ -59,5 +67,9 @@ app.service('VoucherService', ['APIService', function (APIService) {
 
     this.updateVoucher = function (voucherId, voucherDetails, successHandler, errorHandler) {
         APIService.put('/api/voucher/update/' + voucherId, voucherDetails, successHandler, errorHandler);
+    };
+
+    this.getOfficeEntities = function (successHandler, errorHandler) {
+        APIService.get('/api/office_entities',  successHandler, errorHandler);
     };
 }]);

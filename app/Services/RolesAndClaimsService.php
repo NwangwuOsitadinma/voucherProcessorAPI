@@ -8,7 +8,8 @@
 
 namespace App\Services;
 
-use Silber\Bouncer\Bouncer;
+use Silber\Bouncer\BouncerFacade as Bouncer;
+// use Bouncer;
 
 class RolesAndClaimsService {
 

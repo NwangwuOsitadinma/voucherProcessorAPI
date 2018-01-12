@@ -41,22 +41,22 @@ app.controller('OfficeEntityController', ['$scope', 'OfficeEntityService', funct
 app.service('OfficeEntityService', ['APIService', function(APIService) {
 
     this.createOfficeEntity = function (officeEntityDetails, successHandler, errorHandler) {
-        APIService.post('/api/office-entity/create', officeEntityDetails, successHandler, errorHandler);
+        APIService.post('/api/office_entity/create', officeEntityDetails, successHandler, errorHandler);
     };
 
     this.getOfficeEntities = function (successHandler, errorHandler) {
-        APIService.get('/api/office-entities', successHandler, errorHandler);
+        APIService.get('/api/office_entities', successHandler, errorHandler);
     };
 
     this.getOfficeEntityById = function (officeEntityId, successHandler, errorHandler) {
-        APIService.get('/api/office-entity/' + officeEntityId, successHandler, errorHandler);
+        APIService.get('/api/office_entity/' + officeEntityId, successHandler, errorHandler);
     };
 
     this.deleteOfficeEntity = function (officeEntityId, successHandler, errorHandler) {
-        APIService.delete('/api/office-entity/delete/' + officeEntityId, successHandler, errorHandler);
+        APIService.delete('/api/office_entity/delete/' + officeEntityId, successHandler, errorHandler);
     };
 
     this.updateOfficeEntity = function (officeEntityId, officeEntityDetails, successHandler, errorHandler) {
-        APIService.put('/api/office-entity/update/' + officeEntityId, officeEntityDetails, successHandler, errorHandler);
+        APIService.put('/api/office_entity/update/' + officeEntityId, officeEntityDetails, successHandler, errorHandler);
     };
 }]);

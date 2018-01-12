@@ -1,4 +1,4 @@
-app.controller('OfficeEntityTypeTypeController', ['$scope', 'OfficeEntityTypeService', function($scope, OfficeEntityTypeService) {
+app.controller('OfficeEntityTypeController', ['$scope', 'OfficeEntityTypeService', function($scope, OfficeEntityTypeService) {
 
     $scope.officeEntityType = {};
     $scope.officeEntityTypes = [];
@@ -41,22 +41,22 @@ app.controller('OfficeEntityTypeTypeController', ['$scope', 'OfficeEntityTypeSer
 app.service('OfficeEntityTypeService', ['APIService', function(APIService) {
 
     this.createOfficeEntityType = function (officeEntityTypeDetails, successHandler, errorHandler) {
-        APIService.post('/api/office-entity-type/create', officeEntityTypeDetails, successHandler, errorHandler);
+        APIService.post('/api/office_entity_type/create', officeEntityTypeDetails, successHandler, errorHandler);
     };
 
     this.getOfficeEntityTypes = function (successHandler, errorHandler) {
-        APIService.get('/api/office-entities', successHandler, errorHandler);
+        APIService.get('/api/office_entity_types', successHandler, errorHandler);
     };
 
     this.getOfficeEntityTypeById = function (officeEntityTypeId, successHandler, errorHandler) {
-        APIService.get('/api/office-entity-type/' + officeEntityTypeId, successHandler, errorHandler);
+        APIService.get('/api/office_entity_type/' + officeEntityTypeId, successHandler, errorHandler);
     };
 
     this.deleteOfficeEntityType = function (officeEntityTypeId, successHandler, errorHandler) {
-        APIService.delete('/api/office-entity-type/delete/' + officeEntityTypeId, successHandler, errorHandler);
+        APIService.delete('/api/office_entity_type/delete/' + officeEntityTypeId, successHandler, errorHandler);
     };
 
     this.updateOfficeEntityType = function (officeEntityTypeId, officeEntityTypeDetails, successHandler, errorHandler) {
-        APIService.put('/api/office-entity-type/update/' + officeEntityTypeId, officeEntityTypeDetails, successHandler, errorHandler);
+        APIService.put('/api/office_entity_type/update/' + officeEntityTypeId, officeEntityTypeDetails, successHandler, errorHandler);
     };
 }]);

@@ -22,9 +22,9 @@ class BranchService
         $this->repository = $branchRepository;
     }
 
-    public function getAll($n)
+    public function getAll(int $n = null, array $fields = null)
     {
-        $branches = $this->repository->getAll($n);
+        $branches = $this->repository->getAll($n, $fields);
         return $branches
             ? $branches
             : response()->json(['message' => 'the resource you requested was not found']);
@@ -37,6 +37,11 @@ class BranchService
             ? $branch
             : response()->json(['message' => 'the resource you requested was not found']);
     }
+
+    // public function getBranchWithAssociated($id)
+    // {
+    //     return $this->repository->getBranchWithAssociated();
+    // }
 
     public function create(Request $request)
     {

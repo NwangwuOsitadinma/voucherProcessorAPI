@@ -21,9 +21,9 @@ class OfficeEntityTypeService
         $this->repository = $repo;
     }
 
-    public function getEntityTypes($n)
+    public function getEntityTypes(int $n = null, array $fields = null)
     {
-        if (!$this->repository->getAll($n)) {
+        if (!$this->repository->getAll($n, $fields)) {
             return response()->json(['message' => 'The resource you requested was not found']);
         }
         return $this->repository->getAll($n);

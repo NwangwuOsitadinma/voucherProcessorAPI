@@ -24,9 +24,9 @@ class UserService
         $this->rolesAndClaimsService = $rolesAndClaimsService;
     }
 
-    public function getAll($n)
+    public function getAll(int $n = null, array $fields = null)
     {
-        return $this->repository->getAll($n);
+        return $this->repository->getAll($n, $fields);
     }
 
     public function getById($id)

@@ -21,9 +21,11 @@ class OfficeEntityTypeController extends Controller
         $this->service = $service;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->service->getEntityTypes(5);
+        $n = $request->input('n') ?? null;
+        $fields = $request->input('fields') ? explode(',', $request->input('fields')) : null;
+        return $this->service->getEntityTypes($n, $fields);
     }
 
     public function show($id)

@@ -22,10 +22,18 @@ class UserController extends Controller
         $this->service = $userService;
     }
 
-    public function getAllUsers()
+    public function getAllUsers(Request $request)
     {
-        return $this->service->getAll(5);
+        $n = $request->input('n') ?? null;
+        $fields = $request->input('fields') ? explode(',', $request->input('fields')) : null;
+        return $this->service->getAll($n, $fields);
     }
+
+    // public function getAllUsersNameAndId()
+    // {
+    //     $n = $request->n ?? null;
+    //     return $this->service->getAll($n, ['last_name', 'first_name', 'id']);
+    // }
 
     public function getById($id)
     {

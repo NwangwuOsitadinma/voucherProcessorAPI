@@ -63,19 +63,6 @@ class OfficeEntityService
         return response()->json(['message' => 'The update was successful', $data]);
     }
 
-    public function update($id, Request $request)
-    {
-        $officeEntityType = ['name' => $request->name,
-            'lead_id' => $request->lead,
-            'branch_id' => $request->branch,
-            'office_entity_type' => $request->office_entity_type
-        ];
-        if (!$this->repository->update($id, $officeEntityType)) {
-            return response()->json(['message' => 'the resource was not updated', 'data' => $officeEntityType], 500);
-        }
-        return response()->json(['message' => 'the resource was successfully updated', 'data' => $officeEntityType], 200);
-    }
-
     public function delete($id)
     {
         if (!$this->repository->delete($id)) {

@@ -43272,12 +43272,13 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
 
 app.service('MainService', ['APIService', function (APIService) {
 
-}]);;app.controller('BranchController', ['$scope', 'BranchService', function($scope, BranchService) {
+}]);;app.controller('BranchController', ['$scope', 'BranchService', function ($scope, BranchService) {
 
     $scope.branch = {};
     $scope.branches = [];
+    $scope.page = 'view-branches';
 
-    $scope.createBranch = function() {
+    $scope.createBranch = function () {
         BranchService.createBranch($scope.branch, function (response) {
             console.log("branch was successfully created");
         }, function (response) {
@@ -43285,34 +43286,54 @@ app.service('MainService', ['APIService', function (APIService) {
         });
     };
 
+    $scope.getBranchDetails = function (branchId) {
+        Pace.restart();
+        BranchService.getBranchById(branchId, function (response) {
+            $scope.branch = response.data;
+            $scope.page = 'branch-details';
+            // var html = '<span>' + response.data.finance_head.last_name + '</span> <span>' + response.data.finance_head.last_name + '</span>';
+            // $('#branchAppend' +index).append(html);
+        }, function (response) {
+            console.log("error occured while trying to get the branch");
+        });
+    };
+
     $scope.getBranches = function () {
-        BranchService.getBranches(function(response) {
+        BranchService.getBranches(function (response) {
             $scope.branches = response.data;
-        }, function(response) {
+        }, function (response) {
             console.log("error occured while fetching branches");
         });
     };
 
     $scope.deleteBranch = function (branchId) {
-        BranchService.deleteBranch(branchId, function(response) {
+        BranchService.deleteBranch(branchId, function (response) {
             console.log("branch has been deleted");
             $scope.getBranches();
         }, function (response) {
             console.log("an error occured while trying to delete the branch");
         });
     };
-    
+
     $scope.updateBranch = function () {
         BranchService.updateBranch($scope.branchUpdate.id, $scope.branchUpdate, function (response) {
             console.log("branch was successfully updated");
             $scope.getBranches();
-        }, function(response) {
+        }, function (response) {
             console.log("error occured while trying to update the branch");
         });
-    }
+    };
+
+    $scope.getAllUsers = function () {
+        BranchService.getAllUsers(['last_name', 'first_name', 'id'], function (response) {
+            $scope.users = response.data;
+        }, function (response) {
+            console.log("error occurred while trying to get the list of users");
+        });
+    };
 }]);
 
-app.service('BranchService', ['APIService', function(APIService) {
+app.service('BranchService', ['APIService', function (APIService) {
 
     this.createBranch = function (branchDetails, successHandler, errorHandler) {
         APIService.post('/api/branch/create', branchDetails, successHandler, errorHandler);
@@ -43332,6 +43353,10 @@ app.service('BranchService', ['APIService', function(APIService) {
 
     this.updateBranch = function (branchId, branchDetails, successHandler, errorHandler) {
         APIService.put('/api/branch/update/' + branchId, branchDetails, successHandler, errorHandler);
+    };
+
+    this.getAllUsers = function (fields, successHandler, errorHandler) {
+        APIService.get('/api/users?fields=' + fields.toString(), successHandler, errorHandler);
     };
 }]);;app.controller('ItemController', ['$scope', 'ItemService', function($scope, ItemService) {
 
@@ -43394,7 +43419,7 @@ app.service('ItemService', ['APIService', function(APIService) {
     this.updateItem = function (itemId, itemDetails, successHandler, errorHandler) {
         APIService.put('/api/item/update/' + itemId, itemDetails, successHandler, errorHandler);
     };
-}]);;app.controller('OfficeEntityTypeTypeController', ['$scope', 'OfficeEntityTypeService', function($scope, OfficeEntityTypeService) {
+}]);;app.controller('OfficeEntityTypeController', ['$scope', 'OfficeEntityTypeService', function($scope, OfficeEntityTypeService) {
 
     $scope.officeEntityType = {};
     $scope.officeEntityTypes = [];
@@ -43437,23 +43462,23 @@ app.service('ItemService', ['APIService', function(APIService) {
 app.service('OfficeEntityTypeService', ['APIService', function(APIService) {
 
     this.createOfficeEntityType = function (officeEntityTypeDetails, successHandler, errorHandler) {
-        APIService.post('/api/office-entity-type/create', officeEntityTypeDetails, successHandler, errorHandler);
+        APIService.post('/api/office_entity_type/create', officeEntityTypeDetails, successHandler, errorHandler);
     };
 
     this.getOfficeEntityTypes = function (successHandler, errorHandler) {
-        APIService.get('/api/office-entities', successHandler, errorHandler);
+        APIService.get('/api/office_entity_types', successHandler, errorHandler);
     };
 
     this.getOfficeEntityTypeById = function (officeEntityTypeId, successHandler, errorHandler) {
-        APIService.get('/api/office-entity-type/' + officeEntityTypeId, successHandler, errorHandler);
+        APIService.get('/api/office_entity_type/' + officeEntityTypeId, successHandler, errorHandler);
     };
 
     this.deleteOfficeEntityType = function (officeEntityTypeId, successHandler, errorHandler) {
-        APIService.delete('/api/office-entity-type/delete/' + officeEntityTypeId, successHandler, errorHandler);
+        APIService.delete('/api/office_entity_type/delete/' + officeEntityTypeId, successHandler, errorHandler);
     };
 
     this.updateOfficeEntityType = function (officeEntityTypeId, officeEntityTypeDetails, successHandler, errorHandler) {
-        APIService.put('/api/office-entity-type/update/' + officeEntityTypeId, officeEntityTypeDetails, successHandler, errorHandler);
+        APIService.put('/api/office_entity_type/update/' + officeEntityTypeId, officeEntityTypeDetails, successHandler, errorHandler);
     };
 }]);;app.controller('OfficeEntityController', ['$scope', 'OfficeEntityService', function($scope, OfficeEntityService) {
 
@@ -43498,23 +43523,23 @@ app.service('OfficeEntityTypeService', ['APIService', function(APIService) {
 app.service('OfficeEntityService', ['APIService', function(APIService) {
 
     this.createOfficeEntity = function (officeEntityDetails, successHandler, errorHandler) {
-        APIService.post('/api/office-entity/create', officeEntityDetails, successHandler, errorHandler);
+        APIService.post('/api/office_entity/create', officeEntityDetails, successHandler, errorHandler);
     };
 
     this.getOfficeEntities = function (successHandler, errorHandler) {
-        APIService.get('/api/office-entities', successHandler, errorHandler);
+        APIService.get('/api/office_entities', successHandler, errorHandler);
     };
 
     this.getOfficeEntityById = function (officeEntityId, successHandler, errorHandler) {
-        APIService.get('/api/office-entity/' + officeEntityId, successHandler, errorHandler);
+        APIService.get('/api/office_entity/' + officeEntityId, successHandler, errorHandler);
     };
 
     this.deleteOfficeEntity = function (officeEntityId, successHandler, errorHandler) {
-        APIService.delete('/api/office-entity/delete/' + officeEntityId, successHandler, errorHandler);
+        APIService.delete('/api/office_entity/delete/' + officeEntityId, successHandler, errorHandler);
     };
 
     this.updateOfficeEntity = function (officeEntityId, officeEntityDetails, successHandler, errorHandler) {
-        APIService.put('/api/office-entity/update/' + officeEntityId, officeEntityDetails, successHandler, errorHandler);
+        APIService.put('/api/office_entity/update/' + officeEntityId, officeEntityDetails, successHandler, errorHandler);
     };
 }]);;app.controller('VoucherController', ['$scope', 'VoucherService', function ($scope, VoucherService) {
 
@@ -43554,6 +43579,14 @@ app.service('OfficeEntityService', ['APIService', function(APIService) {
             console.log("error occurred while trying to update the voucher");
         });
     };
+
+    $scope.getOfficeEntities = function () {
+        VoucherService.getOfficeEntities(function (response) {
+            $scope.officeEntities = response.data;
+        }, function (response) {
+            console.log("error occurred while trying to get the list of office entities");
+        });
+    };
     
 }]);
 
@@ -43577,5 +43610,9 @@ app.service('VoucherService', ['APIService', function (APIService) {
 
     this.updateVoucher = function (voucherId, voucherDetails, successHandler, errorHandler) {
         APIService.put('/api/voucher/update/' + voucherId, voucherDetails, successHandler, errorHandler);
+    };
+
+    this.getOfficeEntities = function (successHandler, errorHandler) {
+        APIService.get('/api/office_entities',  successHandler, errorHandler);
     };
 }]);

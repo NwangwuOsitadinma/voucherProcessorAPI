@@ -1180,15 +1180,16 @@
     <!--===================================================-->
     <!-- END OF CONTAINER -->
 
+    <!-- tenece js -->
     <script src="app/compiled/js/tenece_vouchers.min.js"></script>
 
 
 
     <!--FooTable [ OPTIONAL ]-->
-    <link href="plugins/fooTable/css/footable.core.css" rel="stylesheet">
+    <!-- <link href="plugins/fooTable/css/footable.core.css" rel="stylesheet"> -->
     
     <!--FooTable [ OPTIONAL ]-->
-    <script src="plugins/fooTable/dist/footable.all.min.js"></script>
+    <!-- <script src="plugins/fooTable/dist/footable.all.min.js"></script> -->
 
     <!--FooTable Example [ SAMPLE ]-->
     <!-- <script src="js/demo/tables-footable.js"></script> -->

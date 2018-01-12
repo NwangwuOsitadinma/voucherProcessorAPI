@@ -19,9 +19,9 @@ class ItemService {
         $this->repository = $itemRepository;
     }
 
-    public function getAll($n)
+    public function getAll(int $n = null, array $fields = null)
     {
-        $branches = $this->repository->getAll($n);
+        $branches = $this->repository->getAll($n, $fields);
         return $branches
             ? $branches
             : response()->json(['message' => 'the resource you requested was not found']);

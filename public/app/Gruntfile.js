@@ -8,8 +8,9 @@ module.exports = function (grunt) {
                 separator: ';'
             },
             dist: {
-                src: ['angular.js',
-                    'angular-ui-router.js',
+                src: ['angular/angular.js',
+                    'angular/angular-ui-router.js',
+                    // 'angular/angular-sanitize.js',
                     'config/*.js',
                     'service/*.js',
                     'main.js',
