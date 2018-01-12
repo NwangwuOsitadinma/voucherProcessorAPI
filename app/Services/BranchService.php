@@ -38,16 +38,13 @@ class BranchService
             : response()->json(['message' => 'the resource you requested was not found']);
     }
 
-    // public function getBranchWithAssociated($id)
-    // {
-    //     return $this->repository->getBranchWithAssociated();
-    // }
-
     public function create(Request $request)
     {
         $branch = ['name' => $request->name,
             'finance_head_id' => $request->finance_head,
-            'payer_id' => $request->payer
+            'payer_id' => $request->payer,
+            'location' => $request->location,
+            'description' => $request->description
         ];
         if (!$this->repository->create($branch)) {
             return response()->json(['message' => 'the resource was not created', 'data' => $branch], 500);

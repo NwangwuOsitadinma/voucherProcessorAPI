@@ -39,6 +39,8 @@ class BranchController extends Controller
     {
         $required = [
             'name' => 'required',
+            'location' => 'required',
+            'description' => 'required',
             'finance_head' => 'required',
             'payer' => 'required'
         ];
