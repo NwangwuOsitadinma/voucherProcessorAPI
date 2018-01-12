@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\Services\VoucherService;
 use Illuminate\Http\Request;
+use App\Http\Requests\VoucherRequest;
 
 class VoucherController extends Controller
 {
@@ -34,27 +35,13 @@ class VoucherController extends Controller
         return $this->service->getById($id);
     }
 
-    public function create(Request $request)
+    public function create(VoucherRequest $request)
     {
-        $required = [
-            'voucher_number' => 'required',
-            'description' => 'required',
-            'reason' => 'required',
-            'office_entity' => 'required'
-        ];
-        $this->validate($request, $required);
         return $this->service->create($request);
     }
 
-    public function update($id, Request $request)
+    public function update($id, VoucherRequest $request)
     {
-        $required = [
-            'voucher_number' => 'required',
-            'description' => 'required',
-            'office_entity_type' => 'required',
-            'office_entity' => 'required'
-        ];
-        $this->validate($request, $required);
         return $this->service->update($id, $request);
     }
 

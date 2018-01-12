@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\Services\OfficeEntityService;
 use Illuminate\Http\Request;
+use App\Http\Requests\OfficeEntityRequest;
 
 class OfficeEntityController extends Controller
 {
@@ -33,25 +34,12 @@ class OfficeEntityController extends Controller
         return $this->service->getEntity($id);
     }
 
-    public function create(Request $request)
+    public function create(OfficeEntityRequest $request)
     {
-        $r = [
-            'name' => 'required',
-            'lead' => 'required',
-            'branch' => 'required',
-            'office_entity_type' => 'required'
-        ];
-        $this->validate($request, $r);
         return $this->service->createEntity($request);
     }
-    public function update($id, Request $request){
-        $r = [
-            'name' => 'required',
-            'lead' => 'required',
-            'branch' => 'required',
-            'office_entity_type' => 'required'
-        ];
-        $this->validate($request, $r);
+    public function update($id, OfficeEntityRequest $request)
+    {
         return $this->service->updateEntity($id, $request);
     }
 

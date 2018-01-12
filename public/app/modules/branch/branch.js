@@ -1,12 +1,14 @@
-app.controller('BranchController', ['$scope', 'BranchService', function ($scope, BranchService) {
+app.controller('BranchController', ['$scope', '$state', 'BranchService', function ($scope, $state, BranchService) {
 
     $scope.branch = {};
     $scope.branches = [];
     $scope.page = 'view-branches';
 
     $scope.createBranch = function () {
+        Pace.restart();
         BranchService.createBranch($scope.branch, function (response) {
             console.log("branch was successfully created");
+            $state.go('view-branches');
         }, function (response) {
             console.log("branch could not be created");
         });

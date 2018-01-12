@@ -1,4 +1,4 @@
-app.controller('ItemController', ['$scope', 'ItemService', function($scope, ItemService) {
+app.controller('ItemController', ['$scope', '$state', 'ItemService', function($scope, $state, ItemService) {
 
     $scope.item = {};
     $scope.items = [];
@@ -12,8 +12,10 @@ app.controller('ItemController', ['$scope', 'ItemService', function($scope, Item
     };
 
     $scope.createItem = function () {
+        Pace.restart();
         ItemService.createItem($scope.item, function(response) {
             console.log("item was successfully created");
+            $state.go('view-items');
         }, function (response) {
             console.log("item could not be created");
         });

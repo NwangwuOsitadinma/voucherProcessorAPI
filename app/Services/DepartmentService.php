@@ -10,7 +10,7 @@ namespace App\Services;
 
 
 use App\Repositories\DepartmentRepository;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class DepartmentService
 {

@@ -1,4 +1,4 @@
-app.controller('VoucherController', ['$scope', 'VoucherService', function ($scope, VoucherService) {
+app.controller('VoucherController', ['$scope',, '$state', 'VoucherService', function ($scope, $state, VoucherService) {
 
     $scope.voucher = {};
     $scope.vouchers = [];

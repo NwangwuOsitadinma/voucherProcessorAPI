@@ -43272,15 +43272,17 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
 
 app.service('MainService', ['APIService', function (APIService) {
 
-}]);;app.controller('BranchController', ['$scope', 'BranchService', function ($scope, BranchService) {
+}]);;app.controller('BranchController', ['$scope', '$state', 'BranchService', function ($scope, $state, BranchService) {
 
     $scope.branch = {};
     $scope.branches = [];
     $scope.page = 'view-branches';
 
     $scope.createBranch = function () {
+        Pace.restart();
         BranchService.createBranch($scope.branch, function (response) {
             console.log("branch was successfully created");
+            $state.go('view-branches');
         }, function (response) {
             console.log("branch could not be created");
         });
@@ -43358,7 +43360,7 @@ app.service('BranchService', ['APIService', function (APIService) {
     this.getAllUsers = function (fields, successHandler, errorHandler) {
         APIService.get('/api/users?fields=' + fields.toString(), successHandler, errorHandler);
     };
-}]);;app.controller('ItemController', ['$scope', 'ItemService', function($scope, ItemService) {
+}]);;app.controller('ItemController', ['$scope', '$state', 'ItemService', function($scope, $state, ItemService) {
 
     $scope.item = {};
     $scope.items = [];
@@ -43372,8 +43374,10 @@ app.service('BranchService', ['APIService', function (APIService) {
     };
 
     $scope.createItem = function () {
+        Pace.restart();
         ItemService.createItem($scope.item, function(response) {
             console.log("item was successfully created");
+            $state.go('view-items');
         }, function (response) {
             console.log("item could not be created");
         });
@@ -43419,14 +43423,17 @@ app.service('ItemService', ['APIService', function(APIService) {
     this.updateItem = function (itemId, itemDetails, successHandler, errorHandler) {
         APIService.put('/api/item/update/' + itemId, itemDetails, successHandler, errorHandler);
     };
-}]);;app.controller('OfficeEntityTypeController', ['$scope', 'OfficeEntityTypeService', function($scope, OfficeEntityTypeService) {
+}]);;app.controller('OfficeEntityTypeController', ['$scope', '$state', 'OfficeEntityTypeService', function($scope, $state, OfficeEntityTypeService) {
 
     $scope.officeEntityType = {};
     $scope.officeEntityTypes = [];
+    $scope.page = 'view-office-entity-types';
 
-    $scope.createOfficeEntity = function () {
-        OfficeEntityTypeService.createOfficeEntity($scope.officeEntityType, function (response) {
+    $scope.createOfficeEntityType = function () {
+        Pace.restart();
+        OfficeEntityTypeService.createOfficeEntityType($scope.officeEntityType, function (response) {
             console.log("office entity type was successfully created");
+            $state.go('view-office-entity-types');
         }, function (response) {
             console.log("an error occured while trying to create the office entity type");
         });
@@ -43437,6 +43444,16 @@ app.service('ItemService', ['APIService', function(APIService) {
             $scope.officeEntityTypes = response.data;
         }, function (response) {
             console.log("an error occured while fetching list of office entity types");
+        });
+    };
+
+    $scope.getOfficeEntityTypeDetails = function(officeEntityId) {
+        Pace.restart();
+        OfficeEntityTypeService.getOfficeEntityTypeById(officeEntityId, function (response) {
+            $scope.officeEntityType = response.data;
+            $scope.page = 'office-entity-type-details';
+        }, function(response) {
+            console.log("an error occurred while trying to fetch the office entity type details");
         });
     };
 
@@ -43480,14 +43497,16 @@ app.service('OfficeEntityTypeService', ['APIService', function(APIService) {
     this.updateOfficeEntityType = function (officeEntityTypeId, officeEntityTypeDetails, successHandler, errorHandler) {
         APIService.put('/api/office_entity_type/update/' + officeEntityTypeId, officeEntityTypeDetails, successHandler, errorHandler);
     };
-}]);;app.controller('OfficeEntityController', ['$scope', 'OfficeEntityService', function($scope, OfficeEntityService) {
+}]);;app.controller('OfficeEntityController', ['$scope', '$state', 'OfficeEntityService', function($scope, $state, OfficeEntityService) {
 
     $scope.officeEntity = {};
     $scope.officeEntities = [];
 
     $scope.createOfficeEntity = function () {
+        Pace.restart();
         OfficeEntityService.createOfficeEntity($scope.officeEntity, function (response) {
             console.log("office entity was successfully created");
+            $state.go('view-office-entities');
         }, function (response) {
             console.log("an error occured while trying to create the office entity");
         });
@@ -43541,7 +43560,7 @@ app.service('OfficeEntityService', ['APIService', function(APIService) {
     this.updateOfficeEntity = function (officeEntityId, officeEntityDetails, successHandler, errorHandler) {
         APIService.put('/api/office_entity/update/' + officeEntityId, officeEntityDetails, successHandler, errorHandler);
     };
-}]);;app.controller('VoucherController', ['$scope', 'VoucherService', function ($scope, VoucherService) {
+}]);;app.controller('VoucherController', ['$scope',, '$state', 'VoucherService', function ($scope, $state, VoucherService) {
 
     $scope.voucher = {};
     $scope.vouchers = [];

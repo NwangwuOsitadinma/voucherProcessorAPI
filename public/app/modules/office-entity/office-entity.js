@@ -1,11 +1,13 @@
-app.controller('OfficeEntityController', ['$scope', 'OfficeEntityService', function($scope, OfficeEntityService) {
+app.controller('OfficeEntityController', ['$scope', '$state', 'OfficeEntityService', function($scope, $state, OfficeEntityService) {
 
     $scope.officeEntity = {};
     $scope.officeEntities = [];
 
     $scope.createOfficeEntity = function () {
+        Pace.restart();
         OfficeEntityService.createOfficeEntity($scope.officeEntity, function (response) {
             console.log("office entity was successfully created");
+            $state.go('view-office-entities');
         }, function (response) {
             console.log("an error occured while trying to create the office entity");
         });

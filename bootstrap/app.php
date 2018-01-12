@@ -27,6 +27,8 @@ $app->withFacades();
 
 $app->withEloquent();
 
+$app->make('validator');
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -77,6 +79,8 @@ $app->singleton(
 | totally optional, so you are not required to uncomment this line.
 |
 */
+
+$app->register(App\Providers\FormRequestServiceProvider::class);
 
 $app->register(Silber\Bouncer\BouncerServiceProvider::class);
 
