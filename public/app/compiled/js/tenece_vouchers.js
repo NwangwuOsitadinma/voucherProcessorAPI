@@ -43317,12 +43317,20 @@ app.service('MainService', ['APIService', function (APIService) {
     };
 
     $scope.updateBranch = function () {
-        BranchService.updateBranch($scope.branchUpdate.id, $scope.branchUpdate, function (response) {
+        Pace.restart();
+        BranchService.updateBranch($scope.branch.id, $scope.branch, function (response) {
             console.log("branch was successfully updated");
             $scope.getBranches();
         }, function (response) {
             console.log("error occured while trying to update the branch");
         });
+    };
+
+    $scope.getUpdatePage = function () {
+        Pace.restart();
+        $scope.branch.finance_head = $scope.branch.finance_head_id;
+        $scope.branch.payer = $scope.branch.payer_id;
+        $scope.page = 'update-branch';
     };
 
     $scope.getAllUsers = function () {
@@ -43404,12 +43412,20 @@ app.service('BranchService', ['APIService', function (APIService) {
     };
 
     $scope.updateItem = function () {
-        ItemService.updateItem($scope.itemUpdate.id, $scope.itemUpdate, function(response) {
+        Pace.restart();
+        ItemService.updateItem($scope.item.id, $scope.item, function(response) {
             console.log("item was successfully updated");
             $scope.getItems();
+            $scope.page = 'view-items';
         }, function (response) {
             console.log("an error occured while trying to update the item");
         });
+    };
+
+    $scope.getUpdatePage = function () {
+        Pace.restart();
+        $scope.item.voucher = $scope.item.voucher_id;
+        $scope.page = 'update-item';
     };
 
     $scope.getVouchers = function () {
@@ -43485,18 +43501,25 @@ app.service('ItemService', ['APIService', function(APIService) {
         OfficeEntityTypeService.deleteOfficeEntityType(officeEntityId, function (response) {
             console.log("office entity type was succesfully deleted");
             $scope.getOfficeEntityTypes();
+            $scope.page = 'view-office-entity-types';
         }, function (response) {
             console.log("an error occurred while trying to delete office entity type");
         });
     };
 
     $scope.updateOfficeEntityType = function () {
-        OfficeEntityTypeService.updateOfficeEntityType($scope.officeEntityTypeUpdate.id, $scope.officeEntityTypeUpdate, function (response) {
+        Pace.restart();
+        OfficeEntityTypeService.updateOfficeEntityType($scope.officeEntityType.id, $scope.officeEntityType, function (response) {
             console.log("office entity type was successfully updated");
             $scope.getOfficeEntityTypes();
         }, function (response) {
             console.log("an error occured while trying to update office entity types");
         });
+    };
+
+    $scope.getUpdatePage = function () {
+        Pace.restart();
+        $scope.page = 'update-office-entity-type';
     };
 }]);
 
@@ -43571,12 +43594,22 @@ app.service('OfficeEntityTypeService', ['APIService', function(APIService) {
     };
 
     $scope.updateOfficeEntity = function () {
-        OfficeEntityService.updateOfficeEntity($scope.officeEntityUpdate.id, $scope.officeEntityUpdate, function (response) {
+        Pace.restart();
+        OfficeEntityService.updateOfficeEntity($scope.officeEntity.id, $scope.officeEntity, function (response) {
             console.log("office entity was successfully updated");
             $scope.getOfficeEntities();
+            $scope.page = 'view-office-entities';
         }, function (response) {
             console.log("an error occured while trying to update office entity");
         });
+    };
+
+    $scope.getUpdatePage = function () {
+        Pace.restart();
+        $scope.officeEntity.office_entity_type = $scope.officeEntity.office_entity_type_id;
+        $scope.officeEntity.lead = $scope.officeEntity.lead_id;
+        $scope.officeEntity.branch = $scope.officeEntity.branch_id;
+        $scope.page = 'update-office-entity';
     };
 
     $scope.getAllUsers = function () {
@@ -43682,12 +43715,18 @@ app.service('OfficeEntityService', ['APIService', function(APIService) {
     };
 
     $scope.updateVoucher = function () {
-        VoucherService.updateVoucher($scope.voucherUpdate.id, $scope.voucherUpdate, function (response) {
+        VoucherService.updateVoucher($scope.voucher.id, $scope.voucher, function (response) {
             console.log("voucher was successfully updated");
             $scope.getVouchers();
         }, function (response) {
             console.log("error occurred while trying to update the voucher");
         });
+    };
+
+    $scope.getUpdatePage = function () {
+        Pace.restart();
+        $scope.voucher.office_entity = $scope.voucher.office_entity_id;
+        $scope.page = 'update-voucher';
     };
 
     $scope.getOfficeEntities = function () {

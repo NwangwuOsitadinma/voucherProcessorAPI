@@ -43,12 +43,20 @@ app.controller('ItemController', ['$scope', '$state', 'ItemService', function($s
     };
 
     $scope.updateItem = function () {
-        ItemService.updateItem($scope.itemUpdate.id, $scope.itemUpdate, function(response) {
+        Pace.restart();
+        ItemService.updateItem($scope.item.id, $scope.item, function(response) {
             console.log("item was successfully updated");
             $scope.getItems();
+            $scope.page = 'view-items';
         }, function (response) {
             console.log("an error occured while trying to update the item");
         });
+    };
+
+    $scope.getUpdatePage = function () {
+        Pace.restart();
+        $scope.item.voucher = $scope.item.voucher_id;
+        $scope.page = 'update-item';
     };
 
     $scope.getVouchers = function () {

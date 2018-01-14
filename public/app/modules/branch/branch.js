@@ -43,12 +43,20 @@ app.controller('BranchController', ['$scope', '$state', 'BranchService', functio
     };
 
     $scope.updateBranch = function () {
-        BranchService.updateBranch($scope.branchUpdate.id, $scope.branchUpdate, function (response) {
+        Pace.restart();
+        BranchService.updateBranch($scope.branch.id, $scope.branch, function (response) {
             console.log("branch was successfully updated");
             $scope.getBranches();
         }, function (response) {
             console.log("error occured while trying to update the branch");
         });
+    };
+
+    $scope.getUpdatePage = function () {
+        Pace.restart();
+        $scope.branch.finance_head = $scope.branch.finance_head_id;
+        $scope.branch.payer = $scope.branch.payer_id;
+        $scope.page = 'update-branch';
     };
 
     $scope.getAllUsers = function () {

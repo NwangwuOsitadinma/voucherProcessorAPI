@@ -37,18 +37,25 @@ app.controller('OfficeEntityTypeController', ['$scope', '$state', 'OfficeEntityT
         OfficeEntityTypeService.deleteOfficeEntityType(officeEntityId, function (response) {
             console.log("office entity type was succesfully deleted");
             $scope.getOfficeEntityTypes();
+            $scope.page = 'view-office-entity-types';
         }, function (response) {
             console.log("an error occurred while trying to delete office entity type");
         });
     };
 
     $scope.updateOfficeEntityType = function () {
-        OfficeEntityTypeService.updateOfficeEntityType($scope.officeEntityTypeUpdate.id, $scope.officeEntityTypeUpdate, function (response) {
+        Pace.restart();
+        OfficeEntityTypeService.updateOfficeEntityType($scope.officeEntityType.id, $scope.officeEntityType, function (response) {
             console.log("office entity type was successfully updated");
             $scope.getOfficeEntityTypes();
         }, function (response) {
             console.log("an error occured while trying to update office entity types");
         });
+    };
+
+    $scope.getUpdatePage = function () {
+        Pace.restart();
+        $scope.page = 'update-office-entity-type';
     };
 }]);
 

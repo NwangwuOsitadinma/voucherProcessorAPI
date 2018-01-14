@@ -48,12 +48,22 @@ app.controller('OfficeEntityController', ['$scope', '$state', 'OfficeEntityServi
     };
 
     $scope.updateOfficeEntity = function () {
-        OfficeEntityService.updateOfficeEntity($scope.officeEntityUpdate.id, $scope.officeEntityUpdate, function (response) {
+        Pace.restart();
+        OfficeEntityService.updateOfficeEntity($scope.officeEntity.id, $scope.officeEntity, function (response) {
             console.log("office entity was successfully updated");
             $scope.getOfficeEntities();
+            $scope.page = 'view-office-entities';
         }, function (response) {
             console.log("an error occured while trying to update office entity");
         });
+    };
+
+    $scope.getUpdatePage = function () {
+        Pace.restart();
+        $scope.officeEntity.office_entity_type = $scope.officeEntity.office_entity_type_id;
+        $scope.officeEntity.lead = $scope.officeEntity.lead_id;
+        $scope.officeEntity.branch = $scope.officeEntity.branch_id;
+        $scope.page = 'update-office-entity';
     };
 
     $scope.getAllUsers = function () {

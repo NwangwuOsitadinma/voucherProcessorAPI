@@ -28,7 +28,7 @@
     <li>
         <a href="#">Forms</a>
     </li>
-    <li class="active" data-ng-show="page == 'office-entity-details'">
+    <li class="active" data-ng-show="page == 'office-entity-details' || page == 'update-office-entity'">
         <a href="javascript:void(0)" data-ng-click="page = 'view-office-entities'">View Office Entities</a>
     </li>
     <li class="active" data-ng-show="page == 'view-office-entities'">
@@ -122,8 +122,8 @@
                                 <p class="text-muted" data-ng-bind="officeEntity.lead.last_name"></p>
                                 <p class="text-sm" data-ng-bind="officeEntity.branch.name"> </p>
                                 <p class="text-sm" data-ng-bind="officeEntity.office_entity_type.name"> </p>
-                                <button class="btn btn-primary mar-ver">
-                                    <i class="demo-pli-male icon-fw"></i>Follow</button>
+                                <button class="btn btn-primary mar-ver" data-ng-click="getUpdatePage()">
+                                    <i class="demo-pli-male icon-fw"></i>Update</button>
                                 <ul class="list-unstyled text-center bord-top pad-top mar-no row">
                                     <li class="col-xs-4">
                                         <span class="text-lg text-semibold text-main">1,345</span>
@@ -152,3 +152,77 @@
         </div>
     </div>
 </div>
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content" data-ng-show="page == 'update-office-entity'" data-ng-init="initialize()">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Update new office entity</h3>
+                </div>
+
+                <!--Block Styled Form -->
+                <!--===================================================-->
+                <form>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Name</label>
+                                    <input type="text" data-ng-model="officeEntity.name" name="name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Office Entity Lead</label>
+                                    <select name="payer" data-ng-model="officeEntity.lead" id="demo-nav-offcanvas" class="form-control">
+                                        <option value="none" selected disabled="disabled">-- Select Mode --</option>
+                                        <option value="<% user.id %>" data-ng-repeat="user in users">
+                                            <% user.last_name + " " +user.first_name %>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Select Branch</label>
+                                    <select name="branch_id" data-ng-model="officeEntity.branch" id="demo-nav-offcanvas" class="form-control">
+                                        <option value="none" selected disabled="disabled">-- Select Mode --</option>
+                                        <option value="<% branch.id%>" data-ng-repeat="branch in branches">
+                                            <% branch.name %>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Select the type of office entity</label>
+                                    <select name="office_entity_type_id" data-ng-model="officeEntity.office_entity_type" id="demo-nav-offcanvas" class="form-control">
+                                        <option value="none" selected disabled="disabled">-- Select Mode --</option>
+                                        <option value="<% officeEntityType.id%>" data-ng-repeat="officeEntityType in officeEntityTypes">
+                                            <% officeEntityType.name %>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer text-right">
+                        <button class="btn btn-success" data-ng-click="updateOfficeEntity()" type="submit">Submit</button>
+                    </div>
+                </form>
+                <!--===================================================-->
+                <!--End Block Styled Form -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--===================================================-->
+<!--End page content-->

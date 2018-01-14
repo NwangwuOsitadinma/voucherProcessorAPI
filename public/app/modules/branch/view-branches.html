@@ -28,7 +28,7 @@
     <li>
         <a href="#">Forms</a>
     </li>
-    <li class="active" data-ng-show="page == 'branch-details'">
+    <li class="active" data-ng-show="page == 'branch-details' || page == 'update-branch'">
         <a href="javascript:void(0)" data-ng-click="page = 'view-branches'">View Branches</a>
     </li>
     <li class="active" data-ng-show="page == 'view-branches'">
@@ -61,8 +61,6 @@
                                 <th data-toggle="true">Name</th>
                                 <th>Location</th>
                                 <th>Description</th>
-                                <!-- <th data-hide="all">Branch Finance head</th>
-                                <th data-hide="all">Branch Payer</th> -->
                                 <th data-hide="all">Actions</th>
                             </tr>
                         </thead>
@@ -113,7 +111,7 @@
 <!--===================================================-->
 <!--End page content-->
 
-<div id="page-content" data-ng-show="page == 'branch-details'">
+<div id="page-content" data-ng-show="page == 'branch-details'" data-ng-init="getAllUsers()">
 
     <div class="row">
         <div class="col-sm-12">
@@ -135,8 +133,8 @@
                                 <p class="text-lg text-semibold mar-no text-main" data-ng-bind="branch.name"></p>
                                 <p class="text-muted" data-ng-bind="branch.location"></p>
                                 <p class="text-sm" data-ng-bind="branch.description"> </p>
-                                <button class="btn btn-primary mar-ver">
-                                    <i class="demo-pli-male icon-fw"></i>Follow</button>
+                                <button class="btn btn-primary mar-ver" data-ng-click="getUpdatePage()">
+                                    <i class="demo-pli-male icon-fw"></i>Update</button>
                                 <ul class="list-unstyled text-center bord-top pad-top mar-no row">
                                     <li class="col-xs-4">
                                         <span class="text-lg text-semibold text-main">1,345</span>
@@ -165,3 +163,80 @@
         </div>
     </div>
 </div>
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content" data-ng-show="page == 'update-branch'">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Update Tenece branch</h3>
+                    </div>
+    
+                    <!--Block Styled Form -->
+                    <!--===================================================-->
+                    <form>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Name</label>
+                                        <input type="text" data-ng-model="branch.name" name="name" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Branch Finance Head</label>
+                                        <select name="finance_head" data-ng-model="branch.finance_head" id="demo-nav-offcanvas" class="form-control">
+                                            <option value="none" selected disabled="disabled">-- Select Mode --</option>
+                                            <option value="<% user.id %>" data-ng-repeat="user in users">
+                                                <% user.last_name + " " +user.first_name %>
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Who pays for vouchers in this branch</label>
+                                        <select name="payer" data-ng-model="branch.payer" id="demo-nav-offcanvas" class="form-control">
+                                            <option value="none" selected disabled="disabled">-- Select Mode --</option>
+                                            <option value="<% user.id %>" data-ng-repeat="user in users">
+                                                <% user.last_name + " " +user.first_name %>
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Location</label>
+                                        <input type="text" data-ng-model="branch.location" name="name" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Description of this branch</label>
+                                        <textarea name="description" data-ng-model="branch.description" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="panel-footer text-right">
+                            <button class="btn btn-success" data-ng-click="updateBranch()" type="submit">Submit</button>
+                        </div>
+                    </form>
+                    <!--===================================================-->
+                    <!--End Block Styled Form -->
+    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--===================================================-->
+    <!--End page content-->
