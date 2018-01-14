@@ -43293,8 +43293,6 @@ app.service('MainService', ['APIService', function (APIService) {
         BranchService.getBranchById(branchId, function (response) {
             $scope.branch = response.data;
             $scope.page = 'branch-details';
-            // var html = '<span>' + response.data.finance_head.last_name + '</span> <span>' + response.data.finance_head.last_name + '</span>';
-            // $('#branchAppend' +index).append(html);
         }, function (response) {
             console.log("error occured while trying to get the branch");
         });
@@ -43364,6 +43362,7 @@ app.service('BranchService', ['APIService', function (APIService) {
 
     $scope.item = {};
     $scope.items = [];
+    $scope.page = 'view-items';
 
     $scope.getItems = function () {
         ItemService.getItems(function (response) {
@@ -43383,6 +43382,16 @@ app.service('BranchService', ['APIService', function (APIService) {
         });
     };
 
+    $scope.getItemDetails = function (itemId) {
+        Pace.restart();
+        ItemService.getItemById(itemId, function (response) {
+            $scope.item = response.data;
+            $scope.page = 'item-details';
+        }, function (response) {
+            console.log("an error occurred while trying to fetch item details");
+        });
+    };
+
     $scope.deleteItem = function (itemId) {
         ItemService.deleteItem(itemId, function (response) {
             console.log("item was successfully deleted");
@@ -43398,6 +43407,14 @@ app.service('BranchService', ['APIService', function (APIService) {
             $scope.getItems();
         }, function (response) {
             console.log("an error occured while trying to update the item");
+        });
+    };
+
+    $scope.getVouchers = function () {
+        ItemService.getVouchers(function (response) {
+            $scope.vouchers = response.data;
+        }, function (response) {
+            console.log("an error occurred while trying to fetch vouchers");
         });
     };
 }]);
@@ -43422,6 +43439,10 @@ app.service('ItemService', ['APIService', function(APIService) {
 
     this.updateItem = function (itemId, itemDetails, successHandler, errorHandler) {
         APIService.put('/api/item/update/' + itemId, itemDetails, successHandler, errorHandler);
+    };
+
+    this.getVouchers = function (successHandler, errorHandler) {
+        APIService.get('/api/vouchers', successHandler, errorHandler);
     };
 }]);;app.controller('OfficeEntityTypeController', ['$scope', '$state', 'OfficeEntityTypeService', function($scope, $state, OfficeEntityTypeService) {
 
@@ -43644,7 +43665,7 @@ app.service('OfficeEntityService', ['APIService', function(APIService) {
         }, function (response) {
             console.log("error occured while getting voucher details");
         });
-    }
+    };
 
     $scope.deleteVoucher = function (voucherId) {
         VoucherService.deleteVoucher(voucherId, function (response) {

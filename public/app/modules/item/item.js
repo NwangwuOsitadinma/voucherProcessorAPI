@@ -2,6 +2,7 @@ app.controller('ItemController', ['$scope', '$state', 'ItemService', function($s
 
     $scope.item = {};
     $scope.items = [];
+    $scope.page = 'view-items';
 
     $scope.getItems = function () {
         ItemService.getItems(function (response) {
@@ -21,6 +22,16 @@ app.controller('ItemController', ['$scope', '$state', 'ItemService', function($s
         });
     };
 
+    $scope.getItemDetails = function (itemId) {
+        Pace.restart();
+        ItemService.getItemById(itemId, function (response) {
+            $scope.item = response.data;
+            $scope.page = 'item-details';
+        }, function (response) {
+            console.log("an error occurred while trying to fetch item details");
+        });
+    };
+
     $scope.deleteItem = function (itemId) {
         ItemService.deleteItem(itemId, function (response) {
             console.log("item was successfully deleted");
@@ -36,6 +47,14 @@ app.controller('ItemController', ['$scope', '$state', 'ItemService', function($s
             $scope.getItems();
         }, function (response) {
             console.log("an error occured while trying to update the item");
+        });
+    };
+
+    $scope.getVouchers = function () {
+        ItemService.getVouchers(function (response) {
+            $scope.vouchers = response.data;
+        }, function (response) {
+            console.log("an error occurred while trying to fetch vouchers");
         });
     };
 }]);
@@ -60,5 +79,9 @@ app.service('ItemService', ['APIService', function(APIService) {
 
     this.updateItem = function (itemId, itemDetails, successHandler, errorHandler) {
         APIService.put('/api/item/update/' + itemId, itemDetails, successHandler, errorHandler);
+    };
+
+    this.getVouchers = function (successHandler, errorHandler) {
+        APIService.get('/api/vouchers', successHandler, errorHandler);
     };
 }]);

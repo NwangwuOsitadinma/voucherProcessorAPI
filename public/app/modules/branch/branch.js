@@ -19,8 +19,6 @@ app.controller('BranchController', ['$scope', '$state', 'BranchService', functio
         BranchService.getBranchById(branchId, function (response) {
             $scope.branch = response.data;
             $scope.page = 'branch-details';
-            // var html = '<span>' + response.data.finance_head.last_name + '</span> <span>' + response.data.finance_head.last_name + '</span>';
-            // $('#branchAppend' +index).append(html);
         }, function (response) {
             console.log("error occured while trying to get the branch");
         });

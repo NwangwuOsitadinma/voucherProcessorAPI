@@ -1,6 +1,6 @@
 <!--Page Title-->
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<div id="page-title">
+<div id="page-title" data-ng-init="getVouchers()">
     <h1 class="page-header text-overflow">New Item</h1>
 
     <!--Searchbox-->
@@ -70,10 +70,8 @@
                                 <div class="form-group">
                                     <label class="control-label">Select Voucher</label>
                                     <select name="voucher" data-ng-model="item.voucher" id="demo-nav-offcanvas" class="form-control">
-                                        <option value="none" selected disabled="disabled">-- Select Mode --</option>
-                                        <option value="push">Push</option>
-                                        <option value="slide">Slide in on top</option>
-                                        <option value="reveal">Reveal</option>
+                                        <option value="-1" selected disabled="disabled">-- Select Mode --</option>
+                                        <option value="<% voucher.id %>" data-ng-repeat="voucher in vouchers"><% voucher.voucher_number %></option>
                                     </select>
                                 </div>
                             </div>

@@ -28,7 +28,12 @@
     <li>
         <a href="#">Forms</a>
     </li>
-    <li class="active">View Items</li>
+    <li class="active" data-ng-show="page == 'item-details'">
+        <a href="javascript:void(0)" data-ng-click="page = 'view-items'">View Items</a>
+    </li>
+    <li class="active" data-ng-show="page == 'view-items'">
+        View Items
+    </li>
 </ol>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <!--End breadcrumb-->
@@ -38,7 +43,7 @@
 
 <!--Page content-->
 <!--===================================================-->
-<div id="page-content">
+<div id="page-content" data-ng-show="page == 'view-items'">
 
     <div class="row">
         <div class="col-sm-12">
@@ -50,15 +55,6 @@
                 <!-- Foo Table - Pagination -->
                 <!--===================================================-->
                 <div class="panel-body">
-                    <label class="form-inline">Show
-                        <select id="demo-show-entries" class="form-control input-sm">
-                            <option value="5">5</option>
-                            <option value="10">10</option>
-                            <option value="15">15</option>
-                            <option value="20">20</option>
-                        </select>
-                        entries
-                    </label>
                     <table id="demo-foo-pagination" class="table table-hover toggle-arrow-tiny" data-page-size="5">
                         <thead>
                             <tr>
@@ -71,9 +67,21 @@
                         </thead>
                         <tbody>
                             <tr data-ng-repeat="item in items">
-                                <td><span data-ng-bind="item.name"></span> </td>
-                                <td><span data-ng-bind="item.price"></span></td>
-                                <td><span data-ng-bind="item.voucher_id.voucher_number"></span> </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getItemDetails(item.id)">
+                                        <span data-ng-bind="item.name"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getItemDetails(item.id)">
+                                        <span data-ng-bind="item.price"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getItemDetails(item.id)">
+                                        <span data-ng-bind="item.voucher_id.voucher_number"></span>
+                                    </a>
+                                </td>
                                 <td>
                                     <span class="label label-table label-success">Active</span>
                                 </td>
@@ -99,3 +107,56 @@
 </div>
 <!--===================================================-->
 <!--End page content-->
+
+<div id="page-content" data-ng-show="page == 'item-details'">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title" data-ng-bind="item.name"></h3>
+                </div>
+
+                <!-- Foo Table - Pagination -->
+                <!--===================================================-->
+                <div class="panel-body">
+                    <div class="col-sm-12 col-md-12">
+
+                        <!--Profile Widget-->
+                        <!--===================================================-->
+                        <div class="panel">
+                            <div class="panel-body text-center">
+                                <img alt="Profile Picture" class="img-md img-circle mar-btm" src="img/profile-photos/1.png">
+                                <p class="text-lg text-semibold mar-no text-main" data-ng-bind="item.name"></p>
+                                <p class="text-muted" data-ng-bind="item.price"></p>
+                                <p class="text-sm" data-ng-bind="item.voucher.voucher_number"> </p>
+                                <button class="btn btn-primary mar-ver">
+                                    <i class="demo-pli-male icon-fw"></i>Follow</button>
+                                <ul class="list-unstyled text-center bord-top pad-top mar-no row">
+                                    <li class="col-xs-4">
+                                        <span class="text-lg text-semibold text-main">1,345</span>
+                                        <p class="text-muted mar-no">Following</p>
+                                    </li>
+                                    <li class="col-xs-4">
+                                        <span class="text-lg text-semibold text-main">23K</span>
+                                        <p class="text-muted mar-no">Followers</p>
+                                    </li>
+                                    <li class="col-xs-4">
+                                        <span class="text-lg text-semibold text-main">278</span>
+                                        <p class="text-muted mar-no">Post</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--===================================================-->
+
+
+                    </div>
+                </div>
+                <!--===================================================-->
+                <!-- End Foo Table - Pagination -->
+
+            </div>
+        </div>
+    </div>
+</div>
