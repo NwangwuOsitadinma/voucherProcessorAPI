@@ -33,6 +33,7 @@ app.controller('ItemController', ['$scope', '$state', 'ItemService', function($s
     };
 
     $scope.deleteItem = function (itemId) {
+        Pace.restart();
         ItemService.deleteItem(itemId, function (response) {
             console.log("item was successfully deleted");
             $scope.getItems();

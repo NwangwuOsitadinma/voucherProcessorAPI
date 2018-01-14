@@ -43307,6 +43307,7 @@ app.service('MainService', ['APIService', function (APIService) {
     };
 
     $scope.deleteBranch = function (branchId) {
+        Pace.restart();
         BranchService.deleteBranch(branchId, function (response) {
             console.log("branch has been deleted");
             $scope.getBranches();
@@ -43393,6 +43394,7 @@ app.service('BranchService', ['APIService', function (APIService) {
     };
 
     $scope.deleteItem = function (itemId) {
+        Pace.restart();
         ItemService.deleteItem(itemId, function (response) {
             console.log("item was successfully deleted");
             $scope.getItems();
@@ -43479,6 +43481,7 @@ app.service('ItemService', ['APIService', function(APIService) {
     };
 
     $scope.deleteOfficeEntityType = function (officeEntityId) {
+        Pace.restart();
         OfficeEntityTypeService.deleteOfficeEntityType(officeEntityId, function (response) {
             console.log("office entity type was succesfully deleted");
             $scope.getOfficeEntityTypes();
@@ -43558,6 +43561,7 @@ app.service('OfficeEntityTypeService', ['APIService', function(APIService) {
     };
 
     $scope.deleteOfficeEntity = function (officeEntityId) {
+        Pace.restart();
         OfficeEntityService.deleteOfficeEntity(officeEntityId, function (response) {
             console.log("office entity was succesfully deleted");
             $scope.getOfficeEntities();
@@ -43668,6 +43672,7 @@ app.service('OfficeEntityService', ['APIService', function(APIService) {
     };
 
     $scope.deleteVoucher = function (voucherId) {
+        Pace.restart();
         VoucherService.deleteVoucher(voucherId, function (response) {
             console.log("voucher was successfully updated");
             $scope.getVouchers();

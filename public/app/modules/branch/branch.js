@@ -33,6 +33,7 @@ app.controller('BranchController', ['$scope', '$state', 'BranchService', functio
     };
 
     $scope.deleteBranch = function (branchId) {
+        Pace.restart();
         BranchService.deleteBranch(branchId, function (response) {
             console.log("branch has been deleted");
             $scope.getBranches();

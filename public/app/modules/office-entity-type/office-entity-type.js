@@ -33,6 +33,7 @@ app.controller('OfficeEntityTypeController', ['$scope', '$state', 'OfficeEntityT
     };
 
     $scope.deleteOfficeEntityType = function (officeEntityId) {
+        Pace.restart();
         OfficeEntityTypeService.deleteOfficeEntityType(officeEntityId, function (response) {
             console.log("office entity type was succesfully deleted");
             $scope.getOfficeEntityTypes();

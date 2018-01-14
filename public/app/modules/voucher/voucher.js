@@ -33,6 +33,7 @@ app.controller('VoucherController', ['$scope', '$state', 'VoucherService', funct
     };
 
     $scope.deleteVoucher = function (voucherId) {
+        Pace.restart();
         VoucherService.deleteVoucher(voucherId, function (response) {
             console.log("voucher was successfully updated");
             $scope.getVouchers();
