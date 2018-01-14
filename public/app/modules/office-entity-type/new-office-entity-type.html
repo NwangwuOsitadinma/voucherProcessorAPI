@@ -41,7 +41,7 @@
 <div id="page-content">
 
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-12">
             <div class="panel">
                 <div class="panel-heading">
                     <h3 class="panel-title">Register a new office entity type</h3>
@@ -49,22 +49,24 @@
 
                 <!--Block Styled Form -->
                 <!--===================================================-->
-                <form>
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label class="control-label">Name</label>
-                                    <input type="text" data-ng-model="officeEntityType.name" name="name" class="form-control">
+                <div style="margin-right:20%;margin-left:20%">
+                    <form>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Name</label>
+                                        <input type="text" data-ng-model="officeEntityType.name" name="name" class="form-control">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="panel-footer text-right">
-                        <button class="btn btn-success" data-ng-click="createOfficeEntityType()" type="submit">Submit</button>
-                    </div>
-                </form>
+                        <div class="panel-footer text-right">
+                            <button class="btn btn-success" data-ng-click="createOfficeEntityType()" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
                 <!--===================================================-->
                 <!--End Block Styled Form -->
 
