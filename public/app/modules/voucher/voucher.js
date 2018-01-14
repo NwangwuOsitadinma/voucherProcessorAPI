@@ -1,7 +1,8 @@
-app.controller('VoucherController', ['$scope',, '$state', 'VoucherService', function ($scope, $state, VoucherService) {
+app.controller('VoucherController', ['$scope', '$state', 'VoucherService', function ($scope, $state, VoucherService) {
 
     $scope.voucher = {};
     $scope.vouchers = [];
+    $scope.page = 'view-vouchers';
 
     $scope.getVouchers = function () {
         VoucherService.getVouchers(function (response) {
@@ -12,10 +13,22 @@ app.controller('VoucherController', ['$scope',, '$state', 'VoucherService', func
     };
 
     $scope.createVoucher = function () {
+        Pace.restart();
         VoucherService.createVoucher($scope.voucher, function(response) {
             console.log("voucher was successfully created");
+            $state.go('view-vouchers');
         }, function (response) {
             console.log("error occurred while trying to create voucher");
+        });
+    };
+
+    $scope.getVoucherDetails = function (voucherId) {
+        Pace.restart();
+        VoucherService.getVoucherById(voucherId, function(response) {
+            $scope.voucher = response.data;
+            $scope.page = 'voucher-details';
+        }, function (response) {
+            console.log("error occured while getting voucher details");
         });
     };
 
