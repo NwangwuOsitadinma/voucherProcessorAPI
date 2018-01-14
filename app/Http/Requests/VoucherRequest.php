@@ -30,4 +30,16 @@ class VoucherRequest extends FormRequest
             'office_entity' => 'required'
         ];
     }
+
+    public function getAttributesArray()
+    {
+        return [
+            'voucher_number' => $this->voucher_number,
+            'description' => $this->description,
+            'reason' => $this->reason,
+            'office_entity_id' => $this->office_entity,
+            // 'user_id' => $this->user()->id ?? 1
+            'user_id' => 1
+        ];
+    }
 }

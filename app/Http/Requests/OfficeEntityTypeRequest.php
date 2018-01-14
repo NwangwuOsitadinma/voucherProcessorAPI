@@ -27,4 +27,11 @@ class OfficeEntityTypeRequest extends FormRequest
             'name' => 'required'
         ];
     }
+
+    public function getAttributesArray()
+    {
+        return [
+            'name' => $this->name
+        ];
+    }
 }

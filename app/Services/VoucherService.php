@@ -12,6 +12,7 @@ namespace App\Services;
 
 use App\Repositories\VoucherRepository;
 use Illuminate\Http\Request;
+use App\Http\Requests\VoucherRequest;
 
 class VoucherService
 {
@@ -41,33 +42,20 @@ class VoucherService
     }
 
 
-    public function create(Request $request)
+    public function create(VoucherRequest $request)
     {
-        //TODO $user = $request->user()->id; replace this after testing
-        $user = 1;
-        $voucher = ['voucher_number' => $request->voucher_number,
-            'description' => $request->description,
-            'reason' => $request->reason,
-            'office_entity_id' => $request->office_entity,
-            'user_id' => $user
-        ];
-        if (!$this->repository->create($voucher)) {
-            return response()->json(['message' => 'the resource was not created', 'data' => $voucher], 500);
+        if (!$this->repository->create($request->getAttributesArray())) {
+            return response()->json(['message' => 'the resource was not created', 'data' => $request->getAttributesArray()], 500);
         }
-        return response()->json(['message' => 'the resource was successfully created', 'data' => $voucher], 200);
+        return response()->json(['message' => 'the resource was successfully created', 'data' => $request->getAttributesArray()], 200);
     }
 
-    public function update($id, Request $request)
+    public function update($id, VoucherRequest $request)
     {
-        $voucher = ['voucher_number' => $request->voucher_number,
-            'description' => $request->description,
-            'office_entity_type_id' => $request->office_entity_type,
-            'office_entity_id' => $request->office_entity
-        ];
-        if (!$this->repository->update($id, $voucher)) {
-            return response()->json(['message' => 'the resource was not updated', 'data' => $voucher], 500);
+        if (!$this->repository->update($id, $request->getAttributesArray())) {
+            return response()->json(['message' => 'the resource was not updated', 'data' => $request->getAttributesArray()], 500);
         }
-        return response()->json(['message' => 'the resource was successfully updated', 'data' => $voucher], 200);
+        return response()->json(['message' => 'the resource was successfully updated', 'data' => $request->getAttributesArray()], 200);
     }
 
     public function delete($id)

@@ -31,4 +31,15 @@ class BranchRequest extends FormRequest
             'payer' => 'required'
         ];
     }
+
+    public function getAttributesArray()
+    {
+        return [
+            'name' => $this->name,
+            'finance_head_id' => $this->finance_head,
+            'payer_id' => $this->payer,
+            'location' => $this->location,
+            'description' => $this->description
+        ];
+    }
 }

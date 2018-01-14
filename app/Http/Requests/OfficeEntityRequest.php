@@ -30,4 +30,14 @@ class OfficeEntityRequest extends FormRequest
             'office_entity_type' => 'required'
         ];
     }
+
+    public function getAttributesArray()
+    {
+        return [
+            'name' => $this->name,
+            'lead_id' => $this->lead,
+            'branch_id' => $this->branch,
+            'office_entity_type_id' => $this->office_entity_type,
+        ];
+    }
 }

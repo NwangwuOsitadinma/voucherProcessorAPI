@@ -11,7 +11,7 @@ namespace App\Services;
 
 use App\Repositories\OfficeEntityRepository;
 use Illuminate\Http\Request;
-use function MongoDB\BSON\toJSON;
+use App\Http\Requests\OfficeEntityRequest;
 
 class OfficeEntityService
 {
@@ -38,29 +38,20 @@ class OfficeEntityService
         return $this->repository->getById($id);
     }
 
-    public function createEntity(Request $request)
+    public function createEntity(OfficeEntityRequest $request)
     {
-        $c = ['name' => $request->name,
-            'lead_id' => $request->lead,
-            'branch_id' => $request->branch,
-            'office_entity_type_id' => $request->office_entity_type,
-        ];
-        if (!$this->repository->create($c)) {
-            return response()->json(['message' => 'the resource was not created', 'data' => $c], 500);
+        if (!$this->repository->create($request->getAttributesArray())) {
+            return response()->json(['message' => 'the resource was not created', 'data' => $request->getAttributesArray()], 500);
         }
-        return response()->json(['message' => 'the resource was successfully created', 'data' => $c], 200);
+        return response()->json(['message' => 'the resource was successfully created', 'data' => $request->getAttributesArray()], 200);
     }
-    public  function updateEntity($id, Request $request){
-        $data = ['name' => $request->name,
-            'lead_id' => $request->lead,
-            'branch_id' => $request->branch,
-            'office_entity_type_id' => $request->office_entity_type,
-        ];
+    public  function updateEntity($id, OfficeEntityRequest $request)
+    {
         if(!$this->repository->getById($id)){
             return response()->json(['message' => 'The resource you requested was not found']);
         }
-        $this->repository->update($id, $data);
-        return response()->json(['message' => 'The update was successful', $data]);
+        $this->repository->update($id, $request->getAttributesArray());
+        return response()->json(['message' => 'The update was successful', $request->getAttributesArray()]);
     }
 
     public function delete($id)
@@ -70,6 +61,4 @@ class OfficeEntityService
         }
         return response()->json(['message' => 'the resource was successfully deleted'], 200);
     }
-
-
 }

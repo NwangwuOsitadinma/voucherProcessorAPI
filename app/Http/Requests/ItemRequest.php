@@ -29,4 +29,13 @@ class ItemRequest extends FormRequest
             'voucher' => 'required'
         ];
     }
+
+    public function getAttributesArray()
+    {
+        return [
+            'name' => $this->name,
+            'price' => $this->price,
+            'voucher_id' => $this->voucher
+        ];
+    }
 }

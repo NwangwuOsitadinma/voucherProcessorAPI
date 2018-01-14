@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Repositories\OfficeEntityTypeRepository;
 use Illuminate\Http\Request;
+use App\Http\Requests\OfficeEntityTypeRequest;
 
 class OfficeEntityTypeService
 {
@@ -37,23 +38,21 @@ class OfficeEntityTypeService
         return $this->repository->getById($id);
     }
 
-    public function createEntityType(Request $request)
+    public function createEntityType(OfficeEntityTypeRequest $request)
     {
-        $c = ['name' => $request->name];
-        if (!$this->repository->create($c)) {
+        if (!$this->repository->create($request->getAttributesArray())) {
             return response()->json(['message' => 'something went wrong and the entity type could not be create'], 503);
         }
-        return response()->json(['message' => 'The Office Entity Type was created successfully', 'data' => $c], 200);
+        return response()->json(['message' => 'The Office Entity Type was created successfully', 'data' => $request->getAttributesArray()], 200);
     }
 
-    public function updateEntityType($id, Request $request)
+    public function updateEntityType($id, OfficeEntityTypeRequest $request)
     {
-        $data = ['name' => $request->name];
         if (!$this->repository->getById($id)) {
             return response()->json(['message' => 'The resource you requested was not found']);
         }
-        $this->repository->update($id, $data);
-        return response()->json(['message' => 'The update was successful', $data]);
+        $this->repository->update($id, $request->getAttributesArray());
+        return response()->json(['message' => 'The update was successful', $request->getAttributesArray()]);
     }
 
     public function deleteEntityType($id)
