@@ -47,6 +47,7 @@ app.controller('BranchController', ['$scope', '$state', 'BranchService', functio
         BranchService.updateBranch($scope.branch.id, $scope.branch, function (response) {
             console.log("branch was successfully updated");
             $scope.getBranches();
+            $scope.page = 'view-branches';
         }, function (response) {
             console.log("error occured while trying to update the branch");
         });

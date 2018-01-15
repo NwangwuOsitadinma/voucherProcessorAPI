@@ -43,9 +43,11 @@ app.controller('VoucherController', ['$scope', '$state', 'VoucherService', funct
     };
 
     $scope.updateVoucher = function () {
+        Pace.restart();
         VoucherService.updateVoucher($scope.voucher.id, $scope.voucher, function (response) {
             console.log("voucher was successfully updated");
             $scope.getVouchers();
+            $scope.page = 'view-vouchers';
         }, function (response) {
             console.log("error occurred while trying to update the voucher");
         });

@@ -48,6 +48,7 @@ app.controller('OfficeEntityTypeController', ['$scope', '$state', 'OfficeEntityT
         OfficeEntityTypeService.updateOfficeEntityType($scope.officeEntityType.id, $scope.officeEntityType, function (response) {
             console.log("office entity type was successfully updated");
             $scope.getOfficeEntityTypes();
+            $scope.page = 'view-office-entity-types';
         }, function (response) {
             console.log("an error occured while trying to update office entity types");
         });
