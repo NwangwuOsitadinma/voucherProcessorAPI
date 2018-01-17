@@ -27,7 +27,8 @@ class VoucherRequest extends FormRequest
             'voucher_number' => 'required',
             'description' => 'required',
             'reason' => 'required',
-            'office_entity' => 'required'
+            'office_entity' => 'required',
+            'items' => 'required'
         ];
     }
 

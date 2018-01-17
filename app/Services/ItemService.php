@@ -36,12 +36,12 @@ class ItemService {
             : response()->json(['message' => 'the resource you requested was not found']);
     }
 
-    public function create(ItemRequest $request)
+    public function create(array $item)
     {
-        if (!$this->repository->create($request->getAttributesArray())) {
-            return response()->json(['message' => 'the resource was not created', 'data' => $request->getAttributesArray()], 500);
+        if (!$this->repository->create($item)) {
+            return response()->json(['message' => 'the resource was not created', 'data' => $item], 500);
         }
-        return response()->json(['message' => 'the resource was successfully created', 'data' => $request->getAttributesArray()], 200);
+        return response()->json(['message' => 'the resource was successfully created', 'data' => $item], 200);
     }
 
     public function update($id, ItemRequest $request)

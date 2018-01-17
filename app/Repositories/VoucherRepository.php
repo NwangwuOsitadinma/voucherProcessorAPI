@@ -23,7 +23,7 @@ class VoucherRepository extends BaseRepository
 
     public function getById($id)
     {
-        return $this->model->with(['user', 'office_entity'])->find($id);
+        return $this->model->with(['user', 'office_entity', 'items'])->find($id);
     }
 
 }

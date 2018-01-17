@@ -150,20 +150,34 @@
                                 <p class="text-sm" data-ng-bind="voucher.description"> </p>
                                 <button class="btn btn-primary mar-ver" data-ng-click="getUpdatePage()">
                                     <i class="demo-pli-check icon-fw"></i>Update</button>
-                                <!-- <ul class="list-unstyled text-center bord-top pad-top mar-no row">
-                                    <li class="col-xs-4">
-                                        <span class="text-lg text-semibold text-main">1,345</span>
-                                        <p class="text-muted mar-no">Following</p>
-                                    </li>
-                                    <li class="col-xs-4">
-                                        <span class="text-lg text-semibold text-main">23K</span>
-                                        <p class="text-muted mar-no">Followers</p>
-                                    </li>
-                                    <li class="col-xs-4">
-                                        <span class="text-lg text-semibold text-main">278</span>
-                                        <p class="text-muted mar-no">Post</p>
-                                    </li>
-                                </ul> -->
+                                <hr>
+                                <table id="demo-foo-pagination1" class="table table-hover toggle-arrow-tiny text-left" data-page-size="5">
+                                    <thead>
+                                        <tr>
+                                            <th data-toggle="true">Item Name</th>
+                                            <th>Item Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="item in voucher.items">
+                                            <td>
+                                                <span data-ng-bind="item.name"></span>
+                                            </td>
+                                            <td>
+                                                <span data-ng-bind="item.price"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5">
+                                                <div class="text-right">
+                                                    <ul class="pagination"></ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                         <!--===================================================-->
@@ -231,6 +245,10 @@
                     </div>
 
                     <div class="panel-footer text-right">
+                        <div class="col-sm-3">
+                            <button class="btn btn-warning pull-left" data-ng-click="page = 'voucher-details'">
+                                <i class="fa fa-times"></i> Cancel</button>
+                        </div>
                         <button class="btn btn-success" data-ng-click="updateVoucher()" type="submit">Update</button>
                     </div>
                 </form>

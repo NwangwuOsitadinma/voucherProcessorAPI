@@ -50,7 +50,7 @@
                 <!--Block Styled Form -->
                 <!--===================================================-->
                 <form>
-                    <div class="panel-body">
+                    <div class="panel-body" id="items">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -63,7 +63,9 @@
                                     <label class="control-label">Office Entity</label>
                                     <select id="demo-nav-offcanvas" data-ng-model="voucher.office_entity" name="office_entity" class="form-control">
                                         <option value="none" selected disabled="disabled">-- Select Mode --</option>
-                                        <option value="<% officeEntity.id %>" data-ng-repeat="officeEntity in officeEntities"><% officeEntity.name %></option>
+                                        <option value="<% officeEntity.id %>" data-ng-repeat="officeEntity in officeEntities">
+                                            <% officeEntity.name %>
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -72,7 +74,8 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label" for="description-textarea-input">Description</label>
-                                    <textarea id="description-textarea-input" data-ng-model="voucher.description" rows="9" class="form-control" name="description" placeholder="Your description here.."></textarea>
+                                    <textarea id="description-textarea-input" data-ng-model="voucher.description" rows="9" class="form-control" name="description"
+                                        placeholder="Your description here.."></textarea>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -82,9 +85,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row" id="item_0">
+                        </div>
                     </div>
 
                     <div class="panel-footer text-right">
+                        <div class="col-sm-3">
+                            <button class="btn btn-info pull-left" data-ng-click="addItem()" id="add_item">
+                                <i class="demo-pli-add"></i> Add Item</button>
+                            <button class="btn btn-danger pull-right" data-ng-click="deleteLastItem()" type="button" id="delete_item">
+                                <i class="demo-pli-remove"></i> Remove Last Item</button>
+                        </div>
+
                         <button class="btn btn-success" data-ng-click="createVoucher()" type="submit">Submit</button>
                     </div>
                 </form>
@@ -97,3 +109,10 @@
 </div>
 <!--===================================================-->
 <!--End page content-->
+
+<script type="text/javascript">
+    
+    function removeItem(n) {
+        $('#item_' + n).html('');
+    }
+</script>

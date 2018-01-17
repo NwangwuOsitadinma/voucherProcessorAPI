@@ -19,10 +19,11 @@ class VoucherService
     protected $repository;
     protected $departmentService;
 
-    public function __construct(VoucherRepository $voucherRepository, DepartmentService $departmentService)
+    public function __construct(VoucherRepository $voucherRepository, DepartmentService $departmentService, ItemService $itemService)
     {
         $this->repository = $voucherRepository;
         $this->departmentService = $departmentService;
+        $this->itemService = $itemService;
     }
 
     public function getAll(int $n = null, array $fields = null)
@@ -44,8 +45,13 @@ class VoucherService
 
     public function create(VoucherRequest $request)
     {
-        if (!$this->repository->create($request->getAttributesArray())) {
+        $voucher = $this->repository->create($request->getAttributesArray());
+        if (!$voucher) {
             return response()->json(['message' => 'the resource was not created', 'data' => $request->getAttributesArray()], 500);
+        }
+        foreach($request->items as $item) {
+            $item['voucher_id'] = $voucher->id;
+            $this->itemService->create($item);
         }
         return response()->json(['message' => 'the resource was successfully created', 'data' => $request->getAttributesArray()], 200);
     }

@@ -1012,16 +1012,16 @@
                                     </li>
 
                                     <!--Menu list item-->
-                                    <li>
+                                    <!-- <li>
                                         <a href="#">
                                             <i class="demo-psi-gear-2"></i>
                                             <span class="menu-title">
                                                 <strong>Items</strong>
                                             </span>
                                             <i class="arrow"></i>
-                                        </a>
+                                        </a> -->
                                         <!--Submenu-->
-                                        <ul class="collapse">
+                                        <!-- <ul class="collapse">
                                             <li>
                                                 <a href="javascript:;" ui-sref="new-item">New Item</a>
                                             </li>
@@ -1030,7 +1030,7 @@
                                             </li>
 
                                         </ul>
-                                    </li>
+                                    </li> -->
 
 
                                     <!--Menu list item-->
