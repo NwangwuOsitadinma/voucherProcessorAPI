@@ -55,13 +55,13 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Name</label>
-                                    <input type="text" data-ng-model="item.name" name="name" class="form-control">
+                                    <input type="text" data-ng-model="item.name" name="name" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Price</label>
-                                    <input type="text" data-ng-model="item.price" name="price" class="form-control">
+                                    <input type="text" data-ng-model="item.price" name="price" class="form-control" required>
                                 </div>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Select Voucher</label>
-                                    <select name="voucher" data-ng-model="item.voucher" id="demo-nav-offcanvas" class="form-control">
+                                    <select name="voucher" data-ng-model="item.voucher" id="demo-nav-offcanvas" class="form-control" required>
                                         <option value="-1" selected disabled="disabled">-- Select Mode --</option>
                                         <option value="<% voucher.id %>" data-ng-repeat="voucher in vouchers"><% voucher.voucher_number %></option>
                                     </select>

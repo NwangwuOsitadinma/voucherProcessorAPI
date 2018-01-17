@@ -55,13 +55,13 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Name</label>
-                                    <input type="text" data-ng-model="branch.name" name="name" class="form-control">
+                                    <input type="text" data-ng-model="branch.name" name="name" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Branch Finance Head</label>
-                                    <select name="finance_head" data-ng-model="branch.finance_head" id="demo-nav-offcanvas" class="form-control">
+                                    <select name="finance_head" data-ng-model="branch.finance_head" id="demo-nav-offcanvas" class="form-control" required>
                                         <option value="none" selected disabled="disabled">-- Select Mode --</option>
                                         <option value="<% user.id %>" data-ng-repeat="user in users">
                                             <% user.last_name + " " +user.first_name %>
@@ -74,7 +74,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Who pays for vouchers in this branch</label>
-                                    <select name="payer" data-ng-model="branch.payer" id="demo-nav-offcanvas" class="form-control">
+                                    <select name="payer" data-ng-model="branch.payer" id="demo-nav-offcanvas" class="form-control" required>
                                         <option value="none" selected disabled="disabled">-- Select Mode --</option>
                                         <option value="<% user.id %>" data-ng-repeat="user in users">
                                             <% user.last_name + " " +user.first_name %>
@@ -85,7 +85,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Location</label>
-                                    <input type="text" data-ng-model="branch.location" name="name" class="form-control">
+                                    <input type="text" data-ng-model="branch.location" name="name" class="form-control" required>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Description of this branch</label>
-                                    <textarea name="description" data-ng-model="branch.description" class="form-control"></textarea>
+                                    <textarea name="description" data-ng-model="branch.description" class="form-control" required></textarea>
                                 </div>
                             </div>
                         </div>
