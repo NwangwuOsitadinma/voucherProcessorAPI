@@ -52,13 +52,13 @@ class CreateRelationships extends Migration
                 ->onDelete('cascade');
         });
 
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreign('office_entity_id')
-                ->references('id')
-                ->on('office_entities')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-        });
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->foreign('office_entities')
+        //         ->references('id')
+        //         ->on('office_entities')
+        //         ->onUpdate('cascade')
+        //         ->onDelete('cascade');
+        // });
 
     }
 

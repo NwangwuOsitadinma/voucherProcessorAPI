@@ -11,18 +11,24 @@
 |
 */
 
-$router->get('/', function () {
-    return view('index');
-});
+$router->get('/', 'Controller@index');
+
+$router->get('/login', 'Controller@login');
+
+$router->get('/register', 'Controller@register');
+
+$router->post('/login', 'UserController@login');
+
+$router->post('/register', 'UserController@create');
 
 $router->group(['prefix' => 'api'], function () use($router){
-    $router->get('/office_entity_types', 'OfficeEntityTypeController@index');
+    $router->get('/office_entity_types', 'OfficeEntityTypeController@getAllOfficeEntityTypes');
     $router->get('/office_entity_type/{id}','OfficeEntityTypeController@show');
     $router->post('/office_entity_type/create', 'OfficeEntityTypeController@create');
     $router->put('/office_entity_type/update/{id}', 'OfficeEntityTypeController@update');
     $router->delete('/office_entity_type/delete/{id}', 'OfficeEntityTypeController@delete');
 
-    $router->get('/office_entities', 'OfficeEntityController@index');
+    $router->get('/office_entities', 'OfficeEntityController@getAllEntities');
     $router->get('/office_entity/{id}', 'OfficeEntityController@show');
     $router->post('/office_entity/create', 'OfficeEntityController@create');
     $router->put('/office_entity/update/{id}', 'OfficeEntityController@update');

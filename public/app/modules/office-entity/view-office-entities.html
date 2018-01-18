@@ -124,20 +124,42 @@
                                 <p class="text-sm" data-ng-bind="officeEntity.office_entity_type.name"> </p>
                                 <button class="btn btn-primary mar-ver" data-ng-click="getUpdatePage()">
                                     <i class="demo-pli-check icon-fw"></i>Update</button>
-                                <!-- <ul class="list-unstyled text-center bord-top pad-top mar-no row">
-                                    <li class="col-xs-4">
-                                        <span class="text-lg text-semibold text-main">1,345</span>
-                                        <p class="text-muted mar-no">Following</p>
-                                    </li>
-                                    <li class="col-xs-4">
-                                        <span class="text-lg text-semibold text-main">23K</span>
-                                        <p class="text-muted mar-no">Followers</p>
-                                    </li>
-                                    <li class="col-xs-4">
-                                        <span class="text-lg text-semibold text-main">278</span>
-                                        <p class="text-muted mar-no">Post</p>
-                                    </li>
-                                </ul> -->
+                                <hr>
+                                <table id="demo-foo-pagination1" class="table table-hover toggle-arrow-tiny text-left" data-page-size="5">
+                                    <thead>
+                                        <tr>
+                                            <th data-toggle="true">Employee Name</th>
+                                            <th>Employee Email</th>
+                                            <th>Employee Id</th>
+                                            <th>Employee Gender</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="employee in officeEntity.office_entity_users">
+                                            <td>
+                                                <span data-ng-bind="employee.user.full_name"></span>
+                                            </td>
+                                            <td>
+                                                <span data-ng-bind="employee.user.email_address"></span>
+                                            </td>
+                                            <td>
+                                                <span data-ng-bind="employee.user.employee_id"></span>
+                                            </td>
+                                            <td>
+                                                <span data-ng-bind="employee.user.sex"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5">
+                                                <div class="text-right">
+                                                    <ul class="pagination"></ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                         <!--===================================================-->

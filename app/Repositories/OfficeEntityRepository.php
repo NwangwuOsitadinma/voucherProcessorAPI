@@ -21,7 +21,7 @@ class OfficeEntityRepository extends BaseRepository
     }
 
     public function getById($id) {
-        return $this->model->with(['lead', 'branch', 'office_entity_type'])->find($id);
+        return $this->model->with(['lead', 'branch', 'office_entity_type', 'office_entity_users.user'])->find($id);
     }
 
 

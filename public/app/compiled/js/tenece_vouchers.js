@@ -43546,7 +43546,7 @@ app.service('OfficeEntityTypeService', ['APIService', function(APIService) {
     this.updateOfficeEntityType = function (officeEntityTypeId, officeEntityTypeDetails, successHandler, errorHandler) {
         APIService.put('/api/office_entity_type/update/' + officeEntityTypeId, officeEntityTypeDetails, successHandler, errorHandler);
     };
-}]);;app.controller('OfficeEntityController', ['$scope', '$state', 'OfficeEntityService', function($scope, $state, OfficeEntityService) {
+}]);;app.controller('OfficeEntityController', ['$scope', '$state', 'OfficeEntityService', function ($scope, $state, OfficeEntityService) {
 
     $scope.officeEntity = {};
     $scope.officeEntities = [];
@@ -43559,6 +43559,8 @@ app.service('OfficeEntityTypeService', ['APIService', function(APIService) {
     };
 
     $scope.createOfficeEntity = function () {
+        console.log($('#multiselect').chosen().val());
+        $scope.officeEntity.employees = $('#multiselect').chosen().val();
         Pace.restart();
         OfficeEntityService.createOfficeEntity($scope.officeEntity, function (response) {
             console.log("office entity was successfully created");
@@ -43569,7 +43571,7 @@ app.service('OfficeEntityTypeService', ['APIService', function(APIService) {
     };
 
     $scope.getOfficeEntities = function () {
-        OfficeEntityService.getOfficeEntities(function(response) {
+        OfficeEntityService.getOfficeEntities(function (response) {
             $scope.officeEntities = response.data;
         }, function (response) {
             console.log("an error occured while fetching list of office entities");
@@ -43577,7 +43579,7 @@ app.service('OfficeEntityTypeService', ['APIService', function(APIService) {
     };
 
     $scope.getOfficeEntityDetails = function (officeEntityId) {
-        OfficeEntityService.getOfficeEntityById(officeEntityId, function(response) {
+        OfficeEntityService.getOfficeEntityById(officeEntityId, function (response) {
             $scope.officeEntity = response.data;
             $scope.page = 'office-entity-details';
         }, function (response) {
@@ -43615,8 +43617,11 @@ app.service('OfficeEntityTypeService', ['APIService', function(APIService) {
     };
 
     $scope.getAllUsers = function () {
-        OfficeEntityService.getAllUsers(['last_name', 'first_name', 'id'], function (response) {
+        OfficeEntityService.getAllUsers(['full_name', 'id'], function (response) {
             $scope.users = response.data;
+            setTimeout(function(){
+                $('#multiselect').chosen();
+            }, 5);
         }, function (response) {
             console.log("error occurred while trying to get the list of users");
         });
@@ -43639,7 +43644,7 @@ app.service('OfficeEntityTypeService', ['APIService', function(APIService) {
     };
 }]);
 
-app.service('OfficeEntityService', ['APIService', function(APIService) {
+app.service('OfficeEntityService', ['APIService', function (APIService) {
 
     this.createOfficeEntity = function (officeEntityDetails, successHandler, errorHandler) {
         APIService.post('/api/office_entity/create', officeEntityDetails, successHandler, errorHandler);
@@ -43692,13 +43697,11 @@ app.service('OfficeEntityService', ['APIService', function(APIService) {
     $scope.createVoucher = function () {
         Pace.restart();
         for (var i = 0; i < j; i++) {
-            $itemName = document.getElementById('#itemName' + i);
-            $itemPrice = document.getElementById('#itemPrice' + i);
-            if ($itemName && $itemName.value && $itemPrice && $itemPrice.value) {
+            if ($('#itemName' + i).val() && $('#itemPrice' + i).val()) {
                 var item = {
                     'name': $('#itemName' + i).val(),
                     'price': $('#itemPrice' + i).val()
-                }
+                };
                 // console.log(item);
                 $scope.voucher.items.push(item);
             }
@@ -43759,20 +43762,20 @@ app.service('OfficeEntityService', ['APIService', function(APIService) {
     $scope.addItem = function () {
 
         $('#item_' + j)
-            .html('<div class="col-sm-1">\n' +
-            '<a href="javascript:void(0)" class="btn btn-danger pull-left" onclick="removeItem(' + j + ')">\n' +
-            '<i class="fa fa-times"></i> </a>' +
+            .html('<div class="col-sm-6">\n' +
+            '<div class="form-group">\n' +
+            '<input class="form-control" id="itemName' + j + '" name="name[]" type="text" placeholder="Item Name">\n' +
+            '</div>\n' +
             '</div>\n' +
             '<div class="col-sm-5">\n' +
             '<div class="form-group">\n' +
-            '<input class="form-control" id="itemName' + j + '" data-ng-model="itemName' + j + '" name="name[]" type="text" placeholder="Item Name" required>\n' +
-            '</div>\n' +
-            '</div>\n' +
-            '<div class="col-sm-6">\n' +
-            '<div class="form-group">\n' +
-            '<input class="form-control" id="itemPrice' + j + '" data-ng-model="itemPrice' + j + '" name="price[]" type="number" placeholder="Item Price" required>\n' +
+            '<input class="form-control" id="itemPrice' + j + '" name="price[]" type="number" placeholder="Item Price">\n' +
             '</div>' +
-            '</div>');
+            '</div>' +
+            '<div class="col-sm-1">\n' +
+            '<a href="javascript:void(0)" class="btn btn-danger pull-right" onclick="removeItem(' + j + ')">\n' +
+            '<i class="fa fa-times"></i> </a>' +
+            '</div>\n');
 
         $('#items').append('<div class="row" id="item_' + (j + 1) + '"></div>');
 

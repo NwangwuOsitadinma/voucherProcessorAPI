@@ -11,6 +11,9 @@ namespace App\Services;
 
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
+
+use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
@@ -39,42 +42,25 @@ class UserService
         return $this->repository->getByParam($param, $value);
     }
 
-    public function create(Request $request, $role)
+    public function create(UserRequest $request, $role)
     {
-        $user = [
-            'first_name' => $request->firstName,
-            'last_name' => $request->lastName,
-            'email_address' => $request->emailAddress,
-            'password' => $request->password,
-            'sex' => $request->sex,
-            'office_entity_id' => $request->officeEntity
-        ];
-        if (!$this->repository->create($user)) {
-            return response()->json(['message' => 'the resource was not created', 'data' => $user], 500);
+        if (!$this->repository->create($request->getAttributesArray())) {
+            return response()->json(['message' => 'the resource was not created', 'data' => $request->getAttributesArray()], 500);
         }
-        return $this->rolesAndClaimsService->assignRole($user, $role) != null
-            ? response()->json(['message' => 'the resource was successfully created', 'data' => $user], 200)
+        return $this->rolesAndClaimsService->assignRole($request->getAttributesArray(), $role) != null
+            ? response()->json(['message' => 'the resource was successfully created', 'data' => $request->getAttributesArray()], 200)
             : response()->json(['message' => 'the user was created but the role was not set']);
     }
 
     public function updateUserRole($user, $newRole, $previousRole)
     {
         return $this->rolesAndClaimsService->retractUserRole($user, $previousRole)
-            && $this->rolesAndClaimsService->assignRole($user, $newRole)
-            != null;
+            && $this->rolesAndClaimsService->assignRole($user, $newRole) != null;
     }
 
-    public function update($id, Request $request)
+    public function update($id, UserRequest $request)
     {
-        $user = [
-            'first_name' => $request->firstName,
-            'last_name' => $request->lastName,
-            'email_address' => $request->emailAddress,
-            'password' => $request->password,
-            'sex' => $request->sex,
-            'office_entity_id' => $request->officeEntity
-        ];
-        if (!$this->repository->update($id, $user)) {
+        if (!$this->repository->update($id, $request->getAttributesArray())) {
             return response()->json(['message' => 'the resource was not updated', 'data' => $user], 500);
         }
         return response()->json(['message' => 'the resource was successfully updated', 'data' => $user], 200);

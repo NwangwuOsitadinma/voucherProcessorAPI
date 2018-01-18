@@ -27,7 +27,8 @@ class OfficeEntityRequest extends FormRequest
             'name' => 'required',
             'lead' => 'required',
             'branch' => 'required',
-            'office_entity_type' => 'required'
+            'office_entity_type' => 'required',
+            'employees' => 'required'
         ];
     }
 

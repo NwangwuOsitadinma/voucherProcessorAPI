@@ -15,11 +15,6 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call('UsersTableSeeder');
         $faker = Faker::create();
-        // foreach(range(1,1) as $index) {
-        //     DB::table('departments')->insert([
-        //         'name' => 'software'
-        //     ]);
-        // }
 
         DB::table('branches')->insert([
             'name' => $faker->word
@@ -36,13 +31,12 @@ class DatabaseSeeder extends Seeder
         ]);
     	foreach (range(1,3) as $index) {
 	        DB::table('users')->insert([
-	            'first_name' => $faker->name,
-                'last_name' => $faker->lastName,
+	            'full_name' => $faker->lastName,
 	            'email_address' => $faker->email,
                 'password' => Hash::make('password'),
-                'employee_id' => '343fdfd2',
-                'sex' => $faker->word,
-                'office_entity_id' => 1
+                'employee_id' => $faker->word,
+                'sex' => $faker->word
+                // 'office_entity_id' => 1
 	        ]);
         }
         $this->call(RolesAndClaimsSeeder::class);

@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
@@ -40,31 +41,13 @@ class UserController extends Controller
         return $this->service->getById($id);
     }
 
-    public function create(Request $request)
+    public function create(UserRequest $request)
     {
-        $required = [
-            'firstName' => 'required',
-            'lastName' => 'required',
-            'emailAddress' => 'required',
-            'password' => 'required',
-            'sex' => 'required',
-            'officeEntity' => 'required'
-        ];
-        $this->validate($request, $required);
         return $this->service->create($request, 'User');
     }
 
-    public function update($id, Request $request)
+    public function update($id, UserRequest $request)
     {
-        $required = [
-            'firstName' => 'required',
-            'lastName' => 'required',
-            'emailAddress' => 'required',
-            'password' => 'required',
-            'sex' => 'required',
-            'officeEntity' => 'required'
-        ];
-        $this->validate($request, $required);
         return $this->service->update($id, $request);
     }
 

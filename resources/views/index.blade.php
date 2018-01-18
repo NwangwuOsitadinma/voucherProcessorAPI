@@ -47,8 +47,8 @@
     <!--Magic Checkbox [ OPTIONAL ]-->
     <link href="plugins/magic-check/css/magic-check.min.css" rel="stylesheet">
 
-
-
+    <!--Chosen [ OPTIONAL ]-->
+    <link href="plugins/chosen/chosen.min.css" rel="stylesheet">
 
 
 
@@ -62,6 +62,9 @@
 
     <!--jQuery [ REQUIRED ]-->
     <script src="js/jquery.min.js"></script>
+
+    <!--Chosen [ OPTIONAL ]-->
+    <script src="plugins/chosen/chosen.jquery.min.js"></script>
 
 
     <!--BootstrapJS [ RECOMMENDED ]-->

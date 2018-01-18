@@ -64,7 +64,7 @@
                                     <select name="payer" data-ng-model="officeEntity.lead" id="demo-nav-offcanvas" class="form-control" required>
                                         <option value="none" selected disabled="disabled">-- Select Mode --</option>
                                         <option value="<% user.id %>" data-ng-repeat="user in users">
-                                            <% user.last_name + " " +user.first_name %>
+                                            <% user.full_name %>
                                         </option>
                                     </select>
                                 </div>
@@ -76,16 +76,36 @@
                                     <label class="control-label">Select Branch</label>
                                     <select name="branch_id" data-ng-model="officeEntity.branch" id="demo-nav-offcanvas" class="form-control" required>
                                         <option value="none" selected disabled="disabled">-- Select Mode --</option>
-                                        <option value="<% branch.id%>" data-ng-repeat="branch in branches"><% branch.name %></option>
+                                        <option value="<% branch.id%>" data-ng-repeat="branch in branches">
+                                            <% branch.name %>
+                                        </option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Select the type of office entity</label>
-                                    <select name="office_entity_type_id" data-ng-model="officeEntity.office_entity_type" id="demo-nav-offcanvas" class="form-control" required>
+                                    <select name="office_entity_type_id" data-ng-model="officeEntity.office_entity_type" id="demo-nav-offcanvas" class="form-control"
+                                        required>
                                         <option value="none" selected disabled="disabled">-- Select Mode --</option>
-                                        <option value="<% officeEntityType.id%>" data-ng-repeat="officeEntityType in officeEntityTypes"><% officeEntityType.name %></option>
+                                        <option value="<% officeEntityType.id%>" data-ng-repeat="officeEntityType in officeEntityTypes">
+                                            <% officeEntityType.name %>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Select the employees in this office entity</label>
+                                    <!-- Multiple Select Choosen -->
+                                    <!--===================================================-->
+                                    <select id="multiselect" class="form-control" data-placeholder="Select one or more employees in this office entity..."
+                                        multiple tabindex="4">
+                                        <option value="<% user.id %>" data-ng-repeat="user in users">
+                                            <% user.full_name %>
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -105,3 +125,7 @@
 </div>
 <!--===================================================-->
 <!--End page content-->
+
+<script>
+
+</script>

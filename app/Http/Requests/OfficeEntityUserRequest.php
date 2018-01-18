@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\FormRequest;
 
-class UserOfficeEntityRequest extends FormRequest
+class OfficeEntityUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

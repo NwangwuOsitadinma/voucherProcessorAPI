@@ -77,7 +77,7 @@
                                     <select name="payer" data-ng-model="branch.payer" id="demo-nav-offcanvas" class="form-control" required>
                                         <option value="none" selected disabled="disabled">-- Select Mode --</option>
                                         <option value="<% user.id %>" data-ng-repeat="user in users">
-                                            <% user.last_name + " " +user.first_name %>
+                                            <% user.full_name %>
                                         </option>
                                     </select>
                                 </div>

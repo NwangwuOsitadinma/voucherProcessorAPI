@@ -12,10 +12,21 @@ namespace App\Models;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 
-class UserOfficeEntity extends Model
+class OfficeEntityUser extends Model
 {
 
     protected $guarded = [];
+
+    public $userId;
+    public $officeEntityId;
+
+    public function getAttributesArray()
+    {
+        return [
+            'user_id' => $this->userId,
+            'office_entity_id' => $this->officeEntityId
+        ];
+    }
 
     public function user()
     {

@@ -21,7 +21,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'full_name', 'email_address', 'employee_id', 'password', 'sex',
     ];
 
     /**
@@ -33,9 +33,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
     ];
 
-    public function office_entity()
+    public function office_entities()
     {
-        return $this->belongsTo(OfficeEntity::class);
+        return $this->hasMany(OfficeEntity::class);
     }
 
     public function voucher()

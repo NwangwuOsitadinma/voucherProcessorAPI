@@ -1,4 +1,4 @@
-app.controller('OfficeEntityController', ['$scope', '$state', 'OfficeEntityService', function($scope, $state, OfficeEntityService) {
+app.controller('OfficeEntityController', ['$scope', '$state', 'OfficeEntityService', function ($scope, $state, OfficeEntityService) {
 
     $scope.officeEntity = {};
     $scope.officeEntities = [];
@@ -11,6 +11,8 @@ app.controller('OfficeEntityController', ['$scope', '$state', 'OfficeEntityServi
     };
 
     $scope.createOfficeEntity = function () {
+        console.log($('#multiselect').chosen().val());
+        $scope.officeEntity.employees = $('#multiselect').chosen().val();
         Pace.restart();
         OfficeEntityService.createOfficeEntity($scope.officeEntity, function (response) {
             console.log("office entity was successfully created");
@@ -21,7 +23,7 @@ app.controller('OfficeEntityController', ['$scope', '$state', 'OfficeEntityServi
     };
 
     $scope.getOfficeEntities = function () {
-        OfficeEntityService.getOfficeEntities(function(response) {
+        OfficeEntityService.getOfficeEntities(function (response) {
             $scope.officeEntities = response.data;
         }, function (response) {
             console.log("an error occured while fetching list of office entities");
@@ -29,7 +31,7 @@ app.controller('OfficeEntityController', ['$scope', '$state', 'OfficeEntityServi
     };
 
     $scope.getOfficeEntityDetails = function (officeEntityId) {
-        OfficeEntityService.getOfficeEntityById(officeEntityId, function(response) {
+        OfficeEntityService.getOfficeEntityById(officeEntityId, function (response) {
             $scope.officeEntity = response.data;
             $scope.page = 'office-entity-details';
         }, function (response) {
@@ -67,8 +69,11 @@ app.controller('OfficeEntityController', ['$scope', '$state', 'OfficeEntityServi
     };
 
     $scope.getAllUsers = function () {
-        OfficeEntityService.getAllUsers(['last_name', 'first_name', 'id'], function (response) {
+        OfficeEntityService.getAllUsers(['full_name', 'id'], function (response) {
             $scope.users = response.data;
+            setTimeout(function(){
+                $('#multiselect').chosen();
+            }, 5);
         }, function (response) {
             console.log("error occurred while trying to get the list of users");
         });
@@ -91,7 +96,7 @@ app.controller('OfficeEntityController', ['$scope', '$state', 'OfficeEntityServi
     };
 }]);
 
-app.service('OfficeEntityService', ['APIService', function(APIService) {
+app.service('OfficeEntityService', ['APIService', function (APIService) {
 
     this.createOfficeEntity = function (officeEntityDetails, successHandler, errorHandler) {
         APIService.post('/api/office_entity/create', officeEntityDetails, successHandler, errorHandler);

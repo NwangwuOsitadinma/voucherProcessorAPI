@@ -9,7 +9,9 @@
 namespace App\Services;
 
 
+use App\Models\OfficeEntityUser;
 use App\Repositories\OfficeEntityRepository;
+use App\Repositories\OfficeEntityUserRepository;
 use Illuminate\Http\Request;
 use App\Http\Requests\OfficeEntityRequest;
 
@@ -17,12 +19,13 @@ class OfficeEntityService
 {
     protected $repository;
 
-    public function __construct(OfficeEntityRepository $repository)
+    public function __construct(OfficeEntityRepository $repository, OfficeEntityUserRepository $officeEntityUserRepository)
     {
         $this->repository = $repository;
+        $this->officeEntityUserRepository = $officeEntityUserRepository;
     }
 
-    public function getEntities($n)
+    public function getEntities($n = null)
     {
         if (!$this->repository->getAll($n)) {
             return response()->json(['message' => 'the resource you requested was not found']);
@@ -40,9 +43,18 @@ class OfficeEntityService
 
     public function createEntity(OfficeEntityRequest $request)
     {
-        if (!$this->repository->create($request->getAttributesArray())) {
+        $createdOfficeEntity = $this->repository->create($request->getAttributesArray());
+        if (!$createdOfficeEntity) {
             return response()->json(['message' => 'the resource was not created', 'data' => $request->getAttributesArray()], 500);
         }
+        $employees = $request->employees;
+        foreach($employees as $userId){
+            $officeEntityUser = new OfficeEntityUser();
+            $officeEntityUser->userId = $userId;
+            $officeEntityUser->officeEntityId = $createdOfficeEntity->id;
+            $this->officeEntityUserRepository->create($officeEntityUser->getAttributesArray());
+        }
+        
         return response()->json(['message' => 'the resource was successfully created', 'data' => $request->getAttributesArray()], 200);
     }
     public  function updateEntity($id, OfficeEntityRequest $request)
