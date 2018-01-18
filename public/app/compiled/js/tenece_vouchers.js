@@ -43764,7 +43764,7 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
         $('#item_' + j)
             .html('<div class="col-sm-6">\n' +
             '<div class="form-group">\n' +
-            '<input class="form-control" id="itemName' + j + '" name="name[]" type="text" placeholder="Item Name">\n' +
+            '<input class="form-control" id="itemName' + j + '" name="name[]" type="text" placeholder="Item Name" required>\n' +
             '</div>\n' +
             '</div>\n' +
             '<div class="col-sm-5">\n' +
