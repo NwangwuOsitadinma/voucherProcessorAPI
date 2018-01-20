@@ -9,10 +9,8 @@
 namespace App\Services;
 
 
-use App\Repositories\UserRepository;
-use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
-
+use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
@@ -25,6 +23,18 @@ class UserService
     {
         $this->repository = $userRepository;
         $this->rolesAndClaimsService = $rolesAndClaimsService;
+    }
+
+    public function authenticateUser($email, $password)
+    {
+        $user = $this->confirmUserDetails($email, $password);
+        return $user ? $user->createToken(env('APP_TOKEN_KEY', 'VOUCHER PROCESSOR'))->accessToken : null;
+    }
+
+    public function confirmUserDetails($email, $password)
+    {
+        $user = $this->repository->getOneByParam('email_address', $email);
+        return $user && Hash::check($password, $user->password) ? $user : null;
     }
 
     public function getAll(int $n = null, array $fields = null)
@@ -55,7 +65,7 @@ class UserService
     public function updateUserRole($user, $newRole, $previousRole)
     {
         return $this->rolesAndClaimsService->retractUserRole($user, $previousRole)
-            && $this->rolesAndClaimsService->assignRole($user, $newRole) != null;
+        && $this->rolesAndClaimsService->assignRole($user, $newRole) != null;
     }
 
     public function update($id, UserRequest $request)

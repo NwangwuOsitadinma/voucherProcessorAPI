@@ -27,7 +27,7 @@ class VoucherRequest extends FormRequest
             'voucher_number' => 'required',
             'description' => 'required',
             'reason' => 'required',
-            'office_entity' => 'required',
+            'office_entity_id' => 'required',
             'items' => 'required'
         ];
     }
@@ -38,7 +38,7 @@ class VoucherRequest extends FormRequest
             'voucher_number' => $this->voucher_number,
             'description' => $this->description,
             'reason' => $this->reason,
-            'office_entity_id' => $this->office_entity,
+            'office_entity_id' => $this->office_entity_id,
             // 'user_id' => $this->user()->id ?? 1
             'user_id' => 1
         ];

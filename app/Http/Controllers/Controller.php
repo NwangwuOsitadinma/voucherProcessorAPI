@@ -17,12 +17,12 @@ class Controller extends BaseController
         return view('index');
     }
 
-    public function login()
+    public function loginPage()
     {
         return view('login');
     }
 
-    public function register()
+    public function registerPage()
     {
         return view('register', ['officeEntities' => $this->officeEntityService->getEntities()]);
     }

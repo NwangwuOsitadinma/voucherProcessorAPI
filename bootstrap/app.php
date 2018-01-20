@@ -69,6 +69,8 @@ $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
 ]);
 
+$app->configure('auth');
+
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers
@@ -80,9 +82,13 @@ $app->routeMiddleware([
 |
 */
 
-$app->register(App\Providers\FormRequestServiceProvider::class);
 
 $app->register(Silber\Bouncer\BouncerServiceProvider::class);
+
+$app->register(Laravel\Passport\PassportServiceProvider::class);
+$app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
+
+$app->register(App\Providers\FormRequestServiceProvider::class);
 
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);

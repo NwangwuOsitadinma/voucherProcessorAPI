@@ -135,20 +135,25 @@
                                 <p class="text-sm" data-ng-bind="branch.description"> </p>
                                 <button class="btn btn-primary mar-ver" data-ng-click="getUpdatePage()">
                                     <i class="demo-pli-check icon-fw"></i>Update</button>
-                                <!-- <ul class="list-unstyled text-center bord-top pad-top mar-no row">
-                                    <li class="col-xs-4">
-                                        <span class="text-lg text-semibold text-main">1,345</span>
-                                        <p class="text-muted mar-no">Following</p>
-                                    </li>
-                                    <li class="col-xs-4">
-                                        <span class="text-lg text-semibold text-main">23K</span>
-                                        <p class="text-muted mar-no">Followers</p>
-                                    </li>
-                                    <li class="col-xs-4">
-                                        <span class="text-lg text-semibold text-main">278</span>
-                                        <p class="text-muted mar-no">Post</p>
-                                    </li>
-                                </ul> -->
+                                <hr>
+                                <table id="demo-foo-pagination1" class="table table-hover toggle-arrow-tiny text-left" data-page-size="5">
+                                    <thead>
+                                        <tr>
+                                            <th data-toggle="true">Branch Finance Head</th>
+                                            <th>Branch Payer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span data-ng-bind="branch.finance_head.full_name"></span>
+                                            </td>
+                                            <td>
+                                                <span data-ng-bind="branch.payer.full_name"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <!--===================================================-->
@@ -189,10 +194,10 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Branch Finance Head</label>
-                                    <select name="finance_head" data-ng-model="branch.finance_head" id="demo-nav-offcanvas" class="form-control">
+                                    <select name="finance_head" data-ng-model="branch.finance_head_id" id="demo-nav-offcanvas" class="form-control">
                                         <option value="none" selected disabled="disabled">-- Select Mode --</option>
-                                        <option value="<% user.id %>" data-ng-repeat="user in users">
-                                            <% user.last_name + " " +user.first_name %>
+                                        <option value="<% user.id %>" data-ng-repeat="user in users" data-ng-selected="user.id == branch.finance_head_id">
+                                            <% user.full_name %>
                                         </option>
                                     </select>
                                 </div>
@@ -202,10 +207,10 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Who pays for vouchers in this branch</label>
-                                    <select name="payer" data-ng-model="branch.payer" id="demo-nav-offcanvas" class="form-control">
+                                    <select name="payer" data-ng-model="branch.payer_id" id="demo-nav-offcanvas" class="form-control">
                                         <option value="none" selected disabled="disabled">-- Select Mode --</option>
-                                        <option value="<% user.id %>" data-ng-repeat="user in users">
-                                            <% user.last_name + " " +user.first_name %>
+                                        <option value="<% user.id %>" data-ng-repeat="user in users" data-ng-selected="user.id == branch.payer_id">
+                                            <% user.full_name %>
                                         </option>
                                     </select>
                                 </div>

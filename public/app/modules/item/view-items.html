@@ -189,9 +189,9 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Select Voucher</label>
-                                    <select name="voucher" data-ng-model="item.voucher" id="demo-nav-offcanvas" class="form-control">
+                                    <select name="voucher_id" data-ng-model="item.voucher_id" id="demo-nav-offcanvas" class="form-control">
                                         <option value="-1" selected disabled="disabled">-- Select Mode --</option>
-                                        <option value="<% voucher.id %>" data-ng-repeat="voucher in vouchers">
+                                        <option value="<% voucher.id %>" data-ng-repeat="voucher in vouchers" data-ng-selected="voucher.id == item.voucher_id">
                                             <% voucher.voucher_number %>
                                         </option>
                                     </select>

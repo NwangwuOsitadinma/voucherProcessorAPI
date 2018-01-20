@@ -27,8 +27,8 @@ class BranchRequest extends FormRequest
             'name' => 'required',
             'location' => 'required',
             'description' => 'required',
-            'finance_head' => 'required',
-            'payer' => 'required'
+            'finance_head_id' => 'required',
+            'payer_id' => 'required'
         ];
     }
 
@@ -36,8 +36,8 @@ class BranchRequest extends FormRequest
     {
         return [
             'name' => $this->name,
-            'finance_head_id' => $this->finance_head,
-            'payer_id' => $this->payer,
+            'finance_head_id' => $this->finance_head_id,
+            'payer_id' => $this->payer_id,
             'location' => $this->location,
             'description' => $this->description
         ];

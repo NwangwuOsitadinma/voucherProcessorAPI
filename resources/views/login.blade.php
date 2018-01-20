@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-ng-app="tenece">
 
 
 <!-- Mirrored from www.themeon.net/nifty/v2.6/pages-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 10 Apr 2017 22:43:21 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<!-- /Added by HTTrack -->
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,7 +32,7 @@
     <link href="css/demo/nifty-demo-icons.min.css" rel="stylesheet">
 
 
-        
+
     <!--Demo [ DEMONSTRATION ]-->
     <link href="css/demo/nifty-demo.min.css" rel="stylesheet">
 
@@ -41,7 +44,7 @@
 
 
 
-    
+
     <!--JAVASCRIPT-->
     <!--=================================================-->
 
@@ -67,14 +70,14 @@
 
 
     <!--=================================================-->
-    
+
     <!--Background Image [ DEMONSTRATION ]-->
     <script src="js/demo/bg-images.js"></script>
 
 
 
 
-    
+
     <!--=================================================
 
     REQUIRED
@@ -100,90 +103,102 @@
     Detailed information and more samples can be found in the document.
 
     =================================================-->
-        
+
+    <base href="/" />
 
 </head>
 
 <!--TIPS-->
 <!--You may remove all ID or Class names which contain "demo-", they are only used for demonstration. -->
 
-<body>
-	<div id="container" class="cls-container">
-		
-		<!-- BACKGROUND IMAGE -->
-		<!--===================================================-->
-		<div id="bg-overlay"></div>
-		
-		
-		<!-- LOGIN FORM -->
-		<!--===================================================-->
-		<div class="cls-content">
-		    <div class="cls-content-sm panel">
-		        <div class="panel-body">
-		            <div class="mar-ver pad-btm">
-		                <h3 class="h4 mar-no">Tenece Voucher Processing</h3>
-		                <p class="text-muted">Sign In to your account</p>
-		            </div>
-		            <form action="/login" method="post">
-		                <div class="form-group">
-		                    <input type="text" name="email_address" class="form-control" placeholder="Email Address" autofocus>
-		                </div>
-		                <div class="form-group">
-		                    <input type="password" name="password" class="form-control" placeholder="Password">
-		                </div>
-		                <div class="checkbox pad-btm text-left">
-		                    <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox">
-		                    <label for="demo-form-checkbox">Remember me</label>
-		                </div>
-		                <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
-		            </form>
-		        </div>
-		
-		        <div class="pad-all">
-		            <a href="pages-password-reminder.html" class="btn-link mar-rgt">Forgot password ?</a>
-		            <a href="pages-register.html" class="btn-link mar-lft">Create a new account</a>
-		
-		            <div class="media pad-top bord-top">
-		                <div class="pull-right">
-		                    <a href="#" class="pad-rgt"><i class="demo-psi-facebook icon-lg text-primary"></i></a>
-		                    <a href="#" class="pad-rgt"><i class="demo-psi-twitter icon-lg text-info"></i></a>
-		                    <a href="#" class="pad-rgt"><i class="demo-psi-google-plus icon-lg text-danger"></i></a>
-		                </div>
-		                <div class="media-body text-left">
-		                    Login with
-		                </div>
-		            </div>
-		        </div>
-		    </div>
-		</div>
-		<!--===================================================-->
-		
-		
-		<!-- DEMO PURPOSE ONLY -->
-		<!--===================================================-->
-		<div class="demo-bg">
-		    <div id="demo-bg-list">
-		        <div class="demo-loading"><i class="psi-repeat-2"></i></div>
-		        <img class="demo-chg-bg bg-trans active" src="img/bg-img/thumbs/bg-trns.jpg" alt="Background Image">
-		        <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-1.jpg" alt="Background Image">
-		        <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-2.jpg" alt="Background Image">
-		        <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-3.jpg" alt="Background Image">
-		        <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-4.jpg" alt="Background Image">
-		        <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-5.jpg" alt="Background Image">
-		        <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-6.jpg" alt="Background Image">
-		        <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-7.jpg" alt="Background Image">
-		    </div>
-		</div>
-		<!--===================================================-->
-		
-		
-		
-	</div>
-	<!--===================================================-->
-	<!-- END OF CONTAINER -->
+<body data-ng-controller="UserController">
+    <div id="container" class="cls-container">
+
+        <!-- BACKGROUND IMAGE -->
+        <!--===================================================-->
+        <div id="bg-overlay"></div>
 
 
-		</body>
+        <!-- LOGIN FORM -->
+        <!--===================================================-->
+        <div class="cls-content">
+            <div class="cls-content-sm panel">
+                <div class="panel-body">
+                    <div class="mar-ver pad-btm">
+                        <h3 class="h4 mar-no">Tenece Voucher Processing</h3>
+                        <p class="text-muted">Sign In to your account</p>
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" name="email" data-ng-model="user.email" class="form-control" placeholder="Email Address" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" data-ng-model="user.password" name="password" class="form-control" placeholder="Password">
+                        </div>
+                        <div class="checkbox pad-btm text-left">
+                            <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox">
+                            <label for="demo-form-checkbox">Remember me</label>
+                        </div>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit" data-ng-click="login()">Sign In</button>
+                    </form>
+                </div>
+
+                <div class="pad-all">
+                    <a href="pages-password-reminder.html" class="btn-link mar-rgt">Forgot password ?</a>
+                    <a href="pages-register.html" class="btn-link mar-lft">Create a new account</a>
+
+                    <div class="media pad-top bord-top">
+                        <div class="pull-right">
+                            <a href="#" class="pad-rgt">
+                                <i class="demo-psi-facebook icon-lg text-primary"></i>
+                            </a>
+                            <a href="#" class="pad-rgt">
+                                <i class="demo-psi-twitter icon-lg text-info"></i>
+                            </a>
+                            <a href="#" class="pad-rgt">
+                                <i class="demo-psi-google-plus icon-lg text-danger"></i>
+                            </a>
+                        </div>
+                        <div class="media-body text-left">
+                            Login with
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--===================================================-->
+
+
+        <!-- DEMO PURPOSE ONLY -->
+        <!--===================================================-->
+        <div class="demo-bg">
+            <div id="demo-bg-list">
+                <div class="demo-loading">
+                    <i class="psi-repeat-2"></i>
+                </div>
+                <img class="demo-chg-bg bg-trans active" src="img/bg-img/thumbs/bg-trns.jpg" alt="Background Image">
+                <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-1.jpg" alt="Background Image">
+                <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-2.jpg" alt="Background Image">
+                <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-3.jpg" alt="Background Image">
+                <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-4.jpg" alt="Background Image">
+                <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-5.jpg" alt="Background Image">
+                <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-6.jpg" alt="Background Image">
+                <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-7.jpg" alt="Background Image">
+            </div>
+        </div>
+        <!--===================================================-->
+
+
+
+    </div>
+    <!--===================================================-->
+    <!-- END OF CONTAINER -->
+
+    <!-- tenece js -->
+    <script src="app/compiled/js/tenece_vouchers.js"></script>
+
+</body>
 
 <!-- Mirrored from www.themeon.net/nifty/v2.6/pages-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 10 Apr 2017 22:43:26 GMT -->
+
 </html>

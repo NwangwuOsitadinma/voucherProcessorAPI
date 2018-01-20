@@ -71,3 +71,7 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
             });
 
     }]);
+
+    app.run(function($http) {
+        $http.defaults.headers.common['Authorization'] = window.sessionStorage.getItem('Authorization');
+    });

@@ -26,7 +26,7 @@ class ItemRequest extends FormRequest
         return [
             'name' => 'required',
             'price' => 'required',
-            'voucher' => 'required'
+            'voucher_id' => 'required'
         ];
     }
 
@@ -35,7 +35,7 @@ class ItemRequest extends FormRequest
         return [
             'name' => $this->name,
             'price' => $this->price,
-            'voucher_id' => $this->voucher
+            'voucher_id' => $this->voucher_id
         ];
     }
 }

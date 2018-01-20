@@ -43223,7 +43223,11 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 controller: 'OfficeEntityTypeController'
             });
 
-    }]);;app.service('APIService', ['$http', function ($http) {
+    }]);
+
+    app.run(function($http) {
+        $http.defaults.headers.common['Authorization'] = window.sessionStorage.getItem('Authorization');
+    });;app.service('APIService', ['$http', function ($http) {
 
     this.get = function (url, successHandler, errorHandler) {
         $http.get(url)
@@ -43335,7 +43339,7 @@ app.service('MainService', ['APIService', function (APIService) {
     };
 
     $scope.getAllUsers = function () {
-        BranchService.getAllUsers(['last_name', 'first_name', 'id'], function (response) {
+        BranchService.getAllUsers(['full_name', 'id'], function (response) {
             $scope.users = response.data;
         }, function (response) {
             console.log("error occurred while trying to get the list of users");
@@ -43677,6 +43681,38 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
     this.getAllOfficeEntityTypes = function (successHandler, errorHandler) {
         APIService.get('/api/office_entity_types', successHandler, errorHandler);
     };
+}]);;app.controller('UserController', ['$scope', 'UserService', function ($scope, UserService) {
+
+    $scope.user = {};
+    $scope.users = [];
+
+    $scope.login = function () {
+        UserService.login($scope.user, function (response) {
+            if(response.data) {
+                if (typeof(Storage) !== "undefined") {
+                    window.sessionStorage.setItem('Authorization', 'Bearer ' +response.data);
+                    window.location.href = '/';
+                } else {
+                    console.log('Sorry! No Web Storage support..');
+                }
+            } else {
+                $scope.loginError = 'Invalid login details';
+            }
+        }, function (response) {
+            console.log("error occurred while trying to authenticate the user");
+        });
+    };
+}]);
+
+app.service('UserService', ['APIService', function (APIService) {
+
+    this.login = function (userDetails, successHandler, errorHandler) {
+        APIService.post('/login', userDetails, successHandler, errorHandler);
+    };
+
+    this.register = function (userDetails, successHandler, errorHandler) {
+        APIService.post('/register', userDetails, successHandler, errorHandler);
+    };
 }]);;app.controller('VoucherController', ['$scope', '$state', 'VoucherService', function ($scope, $state, VoucherService) {
 
     var j = 0;
@@ -43769,7 +43805,7 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
             '</div>\n' +
             '<div class="col-sm-5">\n' +
             '<div class="form-group">\n' +
-            '<input class="form-control" id="itemPrice' + j + '" name="price[]" type="number" placeholder="Item Price">\n' +
+            '<input class="form-control" id="itemPrice' + j + '" name="price[]" type="number" placeholder="Item Price" required>\n' +
             '</div>' +
             '</div>' +
             '<div class="col-sm-1">\n' +

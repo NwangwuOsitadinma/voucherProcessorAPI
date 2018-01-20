@@ -13,15 +13,15 @@
 
 $router->get('/', 'Controller@index');
 
-$router->get('/login', 'Controller@login');
+$router->get('/login', 'Controller@loginPage');
 
-$router->get('/register', 'Controller@register');
+$router->get('/register', 'Controller@registerPage');
 
 $router->post('/login', 'UserController@login');
 
 $router->post('/register', 'UserController@create');
 
-$router->group(['prefix' => 'api'], function () use($router){
+$router->group(['prefix' => 'api', 'middleware' => ['auth:api']], function () use($router){
     $router->get('/office_entity_types', 'OfficeEntityTypeController@getAllOfficeEntityTypes');
     $router->get('/office_entity_type/{id}','OfficeEntityTypeController@show');
     $router->post('/office_entity_type/create', 'OfficeEntityTypeController@create');

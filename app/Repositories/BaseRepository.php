@@ -51,4 +51,9 @@ abstract class BaseRepository
         return $this->model->where($param, $value)->get();
     }
 
+    public function getOneByParam($param, $value)
+    {
+        return $this->model->where($param, $value)->first();
+    }
+
 }

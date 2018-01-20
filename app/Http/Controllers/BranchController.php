@@ -26,7 +26,7 @@ class BranchController extends Controller
 
     public function getAllBranches(Request $request)
     {
-        $n = $request->input('n') ?? null;
+        $n = $request->input('n') ?: null;
         $fields = $request->input('fields') ? explode(',', $request->input('fields')) : null;
         return $this->service->getAll($n, $fields);
     }

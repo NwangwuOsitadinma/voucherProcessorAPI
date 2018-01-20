@@ -142,7 +142,7 @@
                             <div class="panel-body text-center">
                                 <img alt="Profile Picture" class="img-md img-circle mar-btm" src="img/profile-photos/1.png">
                                 <p class="text-lg text-semibold mar-no text-main" data-ng-bind="voucher.voucher_number"></p>
-                                <p class="text-muted" data-ng-bind="voucher.user.last_name"></p>
+                                <p class="text-muted" data-ng-bind="voucher.user.full_name"></p>
                                 <p class="text-muted" data-ng-bind="voucher.office_entity.name"></p>
                                 <p class="text-muted" data-ng-bind="voucher.status"></p>
                                 <p class="text-muted" data-ng-bind="voucher.reason"></p>
@@ -218,9 +218,9 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Office Entity</label>
-                                    <select id="demo-nav-offcanvas" data-ng-model="voucher.office_entity" name="office_entity" class="form-control">
+                                    <select id="demo-nav-offcanvas" data-ng-model="voucher.office_entity_id" name="office_entity_id" class="form-control">
                                         <option value="none" selected disabled="disabled">-- Select Mode --</option>
-                                        <option value="<% officeEntity.id %>" data-ng-repeat="officeEntity in officeEntities">
+                                        <option value="<% officeEntity.id %>" data-ng-repeat="officeEntity in officeEntities" data-ng-selected="officeEntity.id == voucher.office_entity_id">
                                             <% officeEntity.name %>
                                         </option>
                                     </select>

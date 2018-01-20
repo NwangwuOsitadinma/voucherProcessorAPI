@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract
 {
-    use Authenticatable, Authorizable;
-    use HasRolesAndAbilities;
+    use Authenticatable, Authorizable, HasApiTokens, HasRolesAndAbilities;
 
     /**
      * The attributes that are mass assignable.

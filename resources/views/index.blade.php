@@ -1187,7 +1187,7 @@
     <!-- END OF CONTAINER -->
 
     <!-- tenece js -->
-    <script src="app/compiled/js/tenece_vouchers.min.js"></script>
+    <script src="app/compiled/js/tenece_vouchers.js"></script>
 
 
 

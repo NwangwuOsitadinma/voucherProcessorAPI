@@ -61,7 +61,7 @@ app.controller('BranchController', ['$scope', '$state', 'BranchService', functio
     };
 
     $scope.getAllUsers = function () {
-        BranchService.getAllUsers(['last_name', 'first_name', 'id'], function (response) {
+        BranchService.getAllUsers(['full_name', 'id'], function (response) {
             $scope.users = response.data;
         }, function (response) {
             console.log("error occurred while trying to get the list of users");
