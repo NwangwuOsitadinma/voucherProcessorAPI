@@ -8,19 +8,16 @@
 
 namespace App\Services;
 
-use Silber\Bouncer\BouncerFacade as Bouncer;
-// use Bouncer;
+// use Silber\Bouncer\BouncerFacade as Bouncer;
+use Bouncer;
 
 class RolesAndClaimsService {
 
     private $roleService;
 
-    public function __construct()
-    {
-//        $this->roleService = new Bouncer();
-    }
+    public function __construct(){}
 
-    public function newRoleWithClaims($role, array $claims)
+    public function createRoleWithClaims($role, array $claims)
     {
         return Bouncer::allow($role)->to($claims);
     }

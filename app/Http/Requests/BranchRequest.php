@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\FormRequest;
+
+use Illuminate\Foundation\Http\FormRequest;
 
 class BranchRequest extends FormRequest
 {

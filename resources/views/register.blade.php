@@ -128,14 +128,15 @@
                         <h3 class="h4 mar-no">Create a New Account</h3>
                         <p class="text-muted">Tenece Voucher proccessing! Let's set up your account.</p>
                     </div>
-                    <form action="/register" method="post">
+                    <form action="/user/register" method="post">
+                    {{ csrf_field() }}
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="Full Name" name="full_name" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="E-mail Address" name="email_address" required>
+                                    <input type="text" class="form-control" placeholder="E-mail Address" name="email" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -155,7 +156,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <!-- <div class="col-sm-6">
+                            <div class="col-sm-6">
                                 <div class="form-group">
                                     <select id="demo-nav-offcanvas1" name="office_entity" class="form-control" required>
                                         <option value="none" selected disabled="disabled">-- Select Office Entity --</option>
@@ -166,7 +167,7 @@
                                         @endforeach
                                     </select>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                         <div class="checkbox pad-btm text-left">
                             <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox">

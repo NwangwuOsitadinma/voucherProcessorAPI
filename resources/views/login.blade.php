@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-ng-app="tenece">
+<html lang="en">
 
 
 <!-- Mirrored from www.themeon.net/nifty/v2.6/pages-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 10 Apr 2017 22:43:21 GMT -->
@@ -104,14 +104,12 @@
 
     =================================================-->
 
-    <base href="/" />
-
 </head>
 
 <!--TIPS-->
 <!--You may remove all ID or Class names which contain "demo-", they are only used for demonstration. -->
 
-<body data-ng-controller="UserController">
+<body>
     <div id="container" class="cls-container">
 
         <!-- BACKGROUND IMAGE -->
@@ -128,18 +126,20 @@
                         <h3 class="h4 mar-no">Tenece Voucher Processing</h3>
                         <p class="text-muted">Sign In to your account</p>
                     </div>
-                    <form>
+                    <form method="post" action="{{ route('login') }}">
+
+                    {{ csrf_field() }}
                         <div class="form-group">
-                            <input type="text" name="email" data-ng-model="user.email" class="form-control" placeholder="Email Address" autofocus>
+                            <input type="text" name="email" value="{{ old('email')}}" class="form-control" placeholder="Email Address" autofocus>
                         </div>
                         <div class="form-group">
-                            <input type="password" data-ng-model="user.password" name="password" class="form-control" placeholder="Password">
+                            <input type="password" name="password" class="form-control" placeholder="Password">
                         </div>
                         <div class="checkbox pad-btm text-left">
-                            <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox">
+                            <input name="remember" value="{{ old('remember')}}" id="demo-form-checkbox" class="magic-checkbox" type="checkbox">
                             <label for="demo-form-checkbox">Remember me</label>
                         </div>
-                        <button class="btn btn-primary btn-lg btn-block" type="submit" data-ng-click="login()">Sign In</button>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
                     </form>
                 </div>
 
@@ -195,7 +195,7 @@
     <!-- END OF CONTAINER -->
 
     <!-- tenece js -->
-    <script src="app/compiled/js/tenece_vouchers.js"></script>
+    <!-- <script src="app/compiled/js/tenece_vouchers.js"></script> -->
 
 </body>
 

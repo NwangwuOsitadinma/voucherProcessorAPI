@@ -2,28 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Laravel\Lumen\Routing\Controller as BaseController;
-use App\Services\OfficeEntityService;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class Controller extends BaseController
 {
-    public function __construct(OfficeEntityService $officeEntityService)
-    {
-        $this->officeEntityService = $officeEntityService;
-    }
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function index()
-    {
-        return view('index');
-    }
-
-    public function loginPage()
-    {
-        return view('login');
-    }
-
-    public function registerPage()
-    {
-        return view('register', ['officeEntities' => $this->officeEntityService->getEntities()]);
-    }
 }

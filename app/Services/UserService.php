@@ -13,6 +13,8 @@ use App\Http\Requests\UserRequest;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
 
+use Auth;
+
 class UserService
 {
 
@@ -25,18 +27,30 @@ class UserService
         $this->rolesAndClaimsService = $rolesAndClaimsService;
     }
 
-    public function authenticateUser($email, $password)
+    public function authenticate($email, $password, $rememberMe = false)
     {
-        $user = $this->confirmUserDetails($email, $password);
-        return $user ? $user->createToken(env('APP_TOKEN_KEY', 'VOUCHER PROCESSOR'))->accessToken : null;
+        return Auth::attempt(['email' => $email, 'password' => $password], $rememberMe);
     }
-
+    
     public function confirmUserDetails($email, $password)
     {
         $user = $this->repository->getOneByParam('email_address', $email);
         return $user && Hash::check($password, $user->password) ? $user : null;
     }
 
+    public function create(UserRequest $request, $role)
+    {
+        $user = $this->repository->create($request->getAttributesArray());
+        if (!$user) {
+            return back()->withInput();
+        }
+        return $this->rolesAndClaimsService->assignRole($user, $role) != null
+            ? $this->authenticate($request->email, $request->password) 
+                ? redirect()->intended('/')
+                : redirect('/login')
+            : redirect('/login');
+    }
+    
     public function getAll(int $n = null, array $fields = null)
     {
         return $this->repository->getAll($n, $fields);
@@ -50,16 +64,6 @@ class UserService
     public function getByParam($param, $value)
     {
         return $this->repository->getByParam($param, $value);
-    }
-
-    public function create(UserRequest $request, $role)
-    {
-        if (!$this->repository->create($request->getAttributesArray())) {
-            return response()->json(['message' => 'the resource was not created', 'data' => $request->getAttributesArray()], 500);
-        }
-        return $this->rolesAndClaimsService->assignRole($request->getAttributesArray(), $role) != null
-            ? response()->json(['message' => 'the resource was successfully created', 'data' => $request->getAttributesArray()], 200)
-            : response()->json(['message' => 'the user was created but the role was not set']);
     }
 
     public function updateUserRole($user, $newRole, $previousRole)

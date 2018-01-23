@@ -2,67 +2,73 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It is a breeze. Simply tell Lumen the URIs it should respond to
-| and give it the Closure to call when that URI is requested.
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
 
-$router->get('/', 'Controller@index');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-$router->get('/login', 'Controller@loginPage');
+Auth::routes();
 
-$router->get('/register', 'Controller@registerPage');
+Route::get('/', 'MainController@index')->middleware('auth');
 
-$router->post('/login', 'UserController@login');
+// Route::get('/login', 'MainController@loginPage');
 
-$router->post('/register', 'UserController@create');
+// Route::get('/register', 'MainController@registerPage');
 
-$router->group(['prefix' => 'api', 'middleware' => ['auth:api']], function () use($router){
-    $router->get('/office_entity_types', 'OfficeEntityTypeController@getAllOfficeEntityTypes');
-    $router->get('/office_entity_type/{id}','OfficeEntityTypeController@show');
-    $router->post('/office_entity_type/create', 'OfficeEntityTypeController@create');
-    $router->put('/office_entity_type/update/{id}', 'OfficeEntityTypeController@update');
-    $router->delete('/office_entity_type/delete/{id}', 'OfficeEntityTypeController@delete');
+// Route::post('/login', 'UserController@login');
 
-    $router->get('/office_entities', 'OfficeEntityController@getAllEntities');
-    $router->get('/office_entity/{id}', 'OfficeEntityController@show');
-    $router->post('/office_entity/create', 'OfficeEntityController@create');
-    $router->put('/office_entity/update/{id}', 'OfficeEntityController@update');
-    $router->delete('/office_entity/delete/{id}', 'OfficeEntityController@delete');
+Route::post('/user/authenticate', 'UserController@login');
 
-    $router->get('/items', 'ItemController@getAllItems');
-    $router->get('/item/{id}', 'ItemController@getById');
-    $router->post('/item/create', 'ItemController@create');
-    $router->put('/item/update/{id}', 'ItemController@update');
-    $router->delete('/item/delete/{id}', 'ItemController@delete');
+Route::post('/user/register', 'UserController@create');
 
-    $router->get('/branches', 'BranchController@getAllBranches');
-    $router->get('/branch/{id}', 'BranchController@getById');
-    $router->post('/branch/create', 'BranchController@create');
-    $router->put('/branch/update/{id}', 'BranchController@update');
-    $router->delete('/branch/delete/{id}', 'BranchController@delete');
+Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
+    Route::get('/office_entity_types', 'OfficeEntityTypeController@getAllOfficeEntityTypes');
+    Route::get('/office_entity_type/{id}','OfficeEntityTypeController@show');
+    Route::post('/office_entity_type/create', 'OfficeEntityTypeController@create');
+    Route::put('/office_entity_type/update/{id}', 'OfficeEntityTypeController@update');
+    Route::delete('/office_entity_type/delete/{id}', 'OfficeEntityTypeController@delete');
 
-    $router->get('/vouchers', 'VoucherController@getAllVouchers');
-    $router->get('/voucher/{id}', 'VoucherController@getById');
-    $router->post('/voucher/create', 'VoucherController@create');
-    $router->put('/voucher/update/{id}', 'VoucherController@update');
-    $router->delete('/voucher/delete/{id}', 'VoucherController@delete');
-    $router->get('/vouchers/user', 'VoucherController@getUserVouchers');
-    $router->get('/vouchers/office_entities', 'VoucherController@getOfficeEntityVouchers');
-    $router->get('/vouchers/payable', 'VoucherController@getPayableVouchers');
-    $router->put('/voucher/approve/{voucherId}', 'VoucherController@approveVoucher');
-    $router->put('/voucher/paid/{voucherId}', 'VoucherController@hasPaidVoucher');
+    Route::get('/office_entities', 'OfficeEntityController@getAllEntities');
+    Route::get('/office_entity/{id}', 'OfficeEntityController@show');
+    Route::post('/office_entity/create', 'OfficeEntityController@create');
+    Route::put('/office_entity/update/{id}', 'OfficeEntityController@update');
+    Route::delete('/office_entity/delete/{id}', 'OfficeEntityController@delete');
 
-    $router->get('/users', 'UserController@getAllUsers');
-    $router->get('/user/{id}', 'UserController@getById');
-    $router->put('/user/update/{id}', 'UserController@update');
-    $router->delete('/user/delete/{id}', 'UserController@delete');
+    Route::get('/items', 'ItemController@getAllItems');
+    Route::get('/item/{id}', 'ItemController@getById');
+    Route::post('/item/create', 'ItemController@create');
+    Route::put('/item/update/{id}', 'ItemController@update');
+    Route::delete('/item/delete/{id}', 'ItemController@delete');
+
+    Route::get('/branches', 'BranchController@getAllBranches');
+    Route::get('/branch/{id}', 'BranchController@getById');
+    Route::post('/branch/create', 'BranchController@create');
+    Route::put('/branch/update/{id}', 'BranchController@update');
+    Route::delete('/branch/delete/{id}', 'BranchController@delete');
+
+    Route::get('/vouchers', 'VoucherController@getAllVouchers');
+    Route::get('/voucher/{id}', 'VoucherController@getById');
+    Route::post('/voucher/create', 'VoucherController@create');
+    Route::put('/voucher/update/{id}', 'VoucherController@update');
+    Route::delete('/voucher/delete/{id}', 'VoucherController@delete');
+    Route::get('/vouchers/user', 'VoucherController@getUserVouchers');
+    Route::get('/vouchers/office_entities', 'VoucherController@getOfficeEntityVouchers');
+    Route::get('/vouchers/payable', 'VoucherController@getPayableVouchers');
+    Route::put('/voucher/approve/{voucherId}', 'VoucherController@approveVoucher');
+    Route::put('/voucher/paid/{voucherId}', 'VoucherController@hasPaidVoucher');
+
+    Route::get('/users', 'UserController@getAllUsers');
+    Route::get('/user/{id}', 'UserController@getById');
+    Route::put('/user/update/{id}', 'UserController@update');
+    Route::delete('/user/delete/{id}', 'UserController@delete');
 
 
 });
-
-

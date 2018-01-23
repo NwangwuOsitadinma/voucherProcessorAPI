@@ -8,6 +8,7 @@ app.controller('UserController', ['$scope', 'UserService', function ($scope, Use
             if(response.data) {
                 if (typeof(Storage) !== "undefined") {
                     window.sessionStorage.setItem('Authorization', 'Bearer ' +response.data);
+                    // document.cookie = 'access_token=Bearer ' +response.data + '; path=/; secure=false;';
                     window.location.href = '/';
                 } else {
                     console.log('Sorry! No Web Storage support..');

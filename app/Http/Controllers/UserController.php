@@ -26,7 +26,12 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        return response()->json($this->service->authenticateUser($request->email, $request->password));
+        return response()->json($request);
+        if ($this->service->authenticate($request->email, $request->password)) {
+            return redirect()->intended('/');
+        } else {
+            return back()->withInput();
+        }
     }
 
     public function getAllUsers(Request $request)

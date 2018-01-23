@@ -2,18 +2,14 @@
 
 namespace App;
 
-use App\Models\OfficeEntity;
-use Illuminate\Auth\Authenticatable;
-use Laravel\Lumen\Auth\Authorizable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Silber\Bouncer\Database\HasRolesAndAbilities;
-use Laravel\Passport\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract
+use App\Models\OfficeEntity;
+
+class User extends Authenticatable
 {
-    use Authenticatable, Authorizable, HasApiTokens, HasRolesAndAbilities;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +17,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'full_name', 'email_address', 'employee_id', 'password', 'sex',
+        'full_name', 'email', 'employee_id', 'password', 'sex',
     ];
 
     /**
@@ -42,5 +38,4 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return $this->belongsTo(User::class);
     }
-
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\FormRequest;
+use Illuminate\Foundation\Http\FormRequest;
 
 use Illuminate\Support\Facades\Hash;
 
@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
     {
         return [
             'full_name' => 'required',
-            'email_address' => 'required',
+            'email' => 'required',
             'password' => 'required',
             'employee_id' => 'required',
             'sex' => 'required'
@@ -38,7 +38,7 @@ class UserRequest extends FormRequest
     {
         return [
             'full_name' => $this->full_name,
-            'email_address' => $this->email_address,
+            'email' => $this->email,
             'password' => Hash::make($this->password),
             'employee_id' => $this->employee_id,
             'sex' => $this->sex
