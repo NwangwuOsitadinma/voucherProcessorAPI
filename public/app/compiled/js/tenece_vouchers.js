@@ -43182,6 +43182,11 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 templateUrl: '/app/modules/voucher/view-vouchers.html',
                 controller: 'VoucherController'
             })
+            .state('view-user-vouchers', {
+                url: '/my-vouchers',
+                templateUrl: '/app/modules/voucher/view-user-vouchers.html',
+                controller: 'VoucherController'
+            })
             .state('new-item', {
                 url: '/new-item',
                 templateUrl: '/app/modules/item/new-item.html',
@@ -43226,7 +43231,7 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
     }]);
 
     app.run(function($http) {
-        $http.defaults.headers.common['Authorization'] = window.sessionStorage.getItem('Authorization');
+        // $http.defaults.headers.common['Authorization'] = window.sessionStorage.getItem('Authorization');
     });;app.service('APIService', ['$http', function ($http) {
 
     this.get = function (url, successHandler, errorHandler) {
@@ -43681,6 +43686,31 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
     this.getAllOfficeEntityTypes = function (successHandler, errorHandler) {
         APIService.get('/api/office_entity_types', successHandler, errorHandler);
     };
+}]);;app.controller('RolesAndClaimsController', ['$scope', 'RolesAndClaimsService', function ($scope, RolesAndClaimsService) {
+
+}]);
+
+app.service('RolesAndClaimsService', ['APIService', function(APIService)  {
+
+    this.createRoleWithClaims = function (roleWithClaims, successHandler, errorHandler) {
+        APIService.post('/api/role-with-claims/create', roleWithClaims, successHandler, errorHandler);
+    };
+
+    this.assignRole = function (details, successHandler, errorHandler) {
+        APIService.put('/api/role-with-claims/assign', details, successHandler, errorHandler);
+    };
+
+    this.retractUserRole = function (userId, roleId, successHandler, errorHandler) {
+        APIService.delete('/api/role-with-claims/retract-user-role?user=' +userId + '&role=' +roleId, successHandler, errorHandler);
+    };
+
+    this.retractUserClaims = function (userId, claims, successHandler, errorHandler) {
+        APIService.delete('/api/role-with-claims/retract-user-claims?user=' +userId + '&claims=' +claims, successHandler, errorHandler);
+    };
+
+    this.retractRoleClaims = function (roleId, claims, successHandler, errorHandler) {
+        APIService.delete('/api/role-with-claims/retract-role-claims?role=' + roleId + '&claims=' + claims, successHandler, errorHandler);
+    };
 }]);;app.controller('UserController', ['$scope', 'UserService', function ($scope, UserService) {
 
     $scope.user = {};
@@ -43691,6 +43721,7 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
             if(response.data) {
                 if (typeof(Storage) !== "undefined") {
                     window.sessionStorage.setItem('Authorization', 'Bearer ' +response.data);
+                    // document.cookie = 'access_token=Bearer ' +response.data + '; path=/; secure=false;';
                     window.location.href = '/';
                 } else {
                     console.log('Sorry! No Web Storage support..');
@@ -43721,12 +43752,21 @@ app.service('UserService', ['APIService', function (APIService) {
     $scope.vouchers = [];
     $scope.page = 'view-vouchers';
     $scope.voucher.items = [];
+    $scope.voucherUpdate = {};
 
     $scope.getVouchers = function () {
         VoucherService.getVouchers(function (response) {
             $scope.vouchers = response.data;
         }, function (response) {
             console.log("error occurred while trying to fetch list of vouchers");
+        });
+    };
+
+    $scope.getUserVouchers = function () {
+        VoucherService.getUserVouchers(function (response) {
+            $scope.vouchers = response.data;
+        }, function (response) {
+            console.log("error occurred while trying to fetch the user's vouchers");
         });
     };
 
@@ -43778,6 +43818,18 @@ app.service('UserService', ['APIService', function (APIService) {
             $scope.page = 'view-vouchers';
         }, function (response) {
             console.log("error occurred while trying to update the voucher");
+        });
+    };
+
+    $scope.approveVoucher = function (voucherId) {
+        Pace.restart();
+        VoucherService.approveVoucher(voucherId, { 'status': $scope.voucherUpdate.status }, function (response) {
+            console.log(response.data);
+            $scope.getVouchers();
+            $scope.page = 'view-vouchers';
+            console.log("voucher was approved successfully");
+        }, function (response) {
+            console.log("error occurred while trying to approve the voucher");
         });
     };
 
@@ -43846,12 +43898,20 @@ app.service('VoucherService', ['APIService', function (APIService) {
         APIService.get('/api/voucher/' + voucherId, successHandler, errorHandler);
     };
 
+    this.getUserVouchers = function (successHandler, errorHandler) {
+        APIService.get('/vouchers/user', successHandler, errorHandler);
+    };
+
     this.deleteVoucher = function (voucherId, successHandler, errorHandler) {
         APIService.delete('/api/voucher/delete/' + voucherId, successHandler, errorHandler);
     };
 
     this.updateVoucher = function (voucherId, voucherDetails, successHandler, errorHandler) {
         APIService.put('/api/voucher/update/' + voucherId, voucherDetails, successHandler, errorHandler);
+    };
+
+    this.approveVoucher = function (voucherId, details, successHandler, errorHandler) {
+        APIService.put('/api/voucher/approve/' + voucherId, details, successHandler, errorHandler);
     };
 
     this.getOfficeEntities = function (successHandler, errorHandler) {

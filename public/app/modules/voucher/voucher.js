@@ -6,12 +6,21 @@ app.controller('VoucherController', ['$scope', '$state', 'VoucherService', funct
     $scope.vouchers = [];
     $scope.page = 'view-vouchers';
     $scope.voucher.items = [];
+    $scope.voucherUpdate = {};
 
     $scope.getVouchers = function () {
         VoucherService.getVouchers(function (response) {
             $scope.vouchers = response.data;
         }, function (response) {
             console.log("error occurred while trying to fetch list of vouchers");
+        });
+    };
+
+    $scope.getUserVouchers = function () {
+        VoucherService.getUserVouchers(function (response) {
+            $scope.vouchers = response.data;
+        }, function (response) {
+            console.log("error occurred while trying to fetch the user's vouchers");
         });
     };
 
@@ -63,6 +72,18 @@ app.controller('VoucherController', ['$scope', '$state', 'VoucherService', funct
             $scope.page = 'view-vouchers';
         }, function (response) {
             console.log("error occurred while trying to update the voucher");
+        });
+    };
+
+    $scope.approveVoucher = function (voucherId) {
+        Pace.restart();
+        VoucherService.approveVoucher(voucherId, { 'status': $scope.voucherUpdate.status }, function (response) {
+            console.log(response.data);
+            $scope.getVouchers();
+            $scope.page = 'view-vouchers';
+            console.log("voucher was approved successfully");
+        }, function (response) {
+            console.log("error occurred while trying to approve the voucher");
         });
     };
 
@@ -131,12 +152,20 @@ app.service('VoucherService', ['APIService', function (APIService) {
         APIService.get('/api/voucher/' + voucherId, successHandler, errorHandler);
     };
 
+    this.getUserVouchers = function (successHandler, errorHandler) {
+        APIService.get('/vouchers/user', successHandler, errorHandler);
+    };
+
     this.deleteVoucher = function (voucherId, successHandler, errorHandler) {
         APIService.delete('/api/voucher/delete/' + voucherId, successHandler, errorHandler);
     };
 
     this.updateVoucher = function (voucherId, voucherDetails, successHandler, errorHandler) {
         APIService.put('/api/voucher/update/' + voucherId, voucherDetails, successHandler, errorHandler);
+    };
+
+    this.approveVoucher = function (voucherId, details, successHandler, errorHandler) {
+        APIService.put('/api/voucher/approve/' + voucherId, details, successHandler, errorHandler);
     };
 
     this.getOfficeEntities = function (successHandler, errorHandler) {

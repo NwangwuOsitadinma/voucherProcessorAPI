@@ -29,6 +29,11 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 templateUrl: '/app/modules/voucher/view-vouchers.html',
                 controller: 'VoucherController'
             })
+            .state('view-user-vouchers', {
+                url: '/my-vouchers',
+                templateUrl: '/app/modules/voucher/view-user-vouchers.html',
+                controller: 'VoucherController'
+            })
             .state('new-item', {
                 url: '/new-item',
                 templateUrl: '/app/modules/item/new-item.html',
@@ -73,5 +78,5 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
     }]);
 
     app.run(function($http) {
-        $http.defaults.headers.common['Authorization'] = window.sessionStorage.getItem('Authorization');
+        // $http.defaults.headers.common['Authorization'] = window.sessionStorage.getItem('Authorization');
     });

@@ -30,7 +30,7 @@ class RolesAndClaimsSeeder extends Seeder
             'create-voucher', 'view-vouchers', 'edit-voucher', 'delete-voucher', 'approve-voucher', 'create-item', 'view-items', 'edit-items', 'delete-items']);
             $this->rolesAndClaimsService->createRoleWithClaims('MODERATOR', ['create-office-entity', 'view-office-entities', 'edit-office-entity', 'delete-office-entity', 
             'create-voucher', 'view-vouchers', 'edit-voucher', 'delete-voucher', 'approve-voucher', 'create-item', 'view-items', 'edit-items', 'delete-items']);
-            $this->rolesAndClaimsService->createRoleWithClaims('USER', ['create-voucher', 'view-vouchers', 'edit-voucher', 'delete-voucher', 'approve-voucher', 'create-item', 'view-items', 'edit-items', 'delete-items']);
+            $this->rolesAndClaimsService->createRoleWithClaims('USER', ['create-voucher', 'view-vouchers', 'edit-voucher', 'delete-voucher', 'create-item', 'view-items', 'edit-items', 'delete-items']);
             $this->rolesAndClaimsService->assignRole($user, 'ADMIN');
         });
         Bouncer::seed();

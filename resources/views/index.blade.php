@@ -1007,9 +1007,15 @@
                                             <li>
                                                 <a href="javascript:;" ui-sref="new-voucher">New Voucher</a>
                                             </li>
+                                            @if($user && $user->can('approve-voucher'))
                                             <li>
                                                 <a href="javascript:;" ui-sref="view-vouchers">View Vouchers</a>
                                             </li>
+                                            @else
+                                            <li>
+                                                <a href="javascript:;" ui-sref="view-user-vouchers">My Vouchers</a>
+                                            </li>
+                                            @endif
 
                                         </ul>
                                     </li>
@@ -1037,6 +1043,7 @@
 
 
                                     <!--Menu list item-->
+                                    @if($user && $user->can('create-branch'))
                                     <li>
                                         <a href="#">
                                             <i class="demo-psi-tactic"></i>
@@ -1056,8 +1063,10 @@
 
                                         </ul>
                                     </li>
+                                    @endif
 
                                     <!--Menu list item-->
+                                    @if($user && $user->can('create-office-entity'))
                                     <li>
                                         <a href="#">
                                             <i class="demo-psi-medal-2"></i>
@@ -1077,8 +1086,10 @@
 
                                         </ul>
                                     </li>
+                                    @endif
 
                                     <!--Menu list item-->
+                                    @if($user && $user->can('create-office-entity-type'))
                                     <li>
                                         <a href="#">
                                             <i class="demo-psi-inbox-full"></i>
@@ -1098,6 +1109,7 @@
 
                                         </ul>
                                     </li>
+                                    @endif
 
                                     <!--Menu list item-->
                                     <li>

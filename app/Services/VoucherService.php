@@ -73,10 +73,10 @@ class VoucherService
     }
 
 
-    public function approveVoucher($voucherId)
+    public function approveVoucher($voucherId, $voucherStatus = 'Waiting')
     {
         $voucher = [
-            'status' => 'Accepted'
+            'status' => $voucherStatus
         ];
         if (!$this->repository->update($voucherId, $voucher)) {
             return response()->json(['message' => 'the resource was not updated', 'data' => $voucher], 500);

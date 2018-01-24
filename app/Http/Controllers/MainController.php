@@ -13,9 +13,9 @@ class MainController extends Controller
         $this->officeEntityService = $officeEntityService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('index');
+        return view('index', ['user' => $request->user()]);
     }
 
     public function loginPage()

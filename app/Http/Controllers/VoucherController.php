@@ -67,9 +67,9 @@ class VoucherController extends Controller
         return $this->service->getPayableVouchers();
     }
 
-    public function approveVoucher($voucherId)
+    public function approveVoucher($voucherId, Request $request)
     {
-        return $this->service->approveVoucher($voucherId);
+        return $this->service->approveVoucher($voucherId, $request->status);
     }
 
     public function hasPaidVoucher($voucherId)

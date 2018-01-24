@@ -81,7 +81,8 @@
                                 </td>
                                 <td>
                                     <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
-                                        <div class="label label-table" data-ng-class="{'label-warning' : voucher.status == 'Waiting', 'label-success' : voucher.status == 'Accepted', 'label-danger' : voucher.status == 'Declined'}" data-ng-bind="voucher.status"></div>
+                                        <div class="label label-table" data-ng-class="{'label-warning' : voucher.status == 'Waiting', 'label-success' : voucher.status == 'Accepted', 'label-danger' : voucher.status == 'Declined'}"
+                                            data-ng-bind="voucher.status"></div>
                                     </a>
                                 </td>
                                 <td>
@@ -95,6 +96,11 @@
                                     </a>
                                 </td>
                                 <td>
+                                    <select name="status" data-ng-model="voucherUpdate.status" data-ng-change="approveVoucher(voucher.id)">
+                                        <option value="Accepted" ng-selected="voucher.status == 'Accepted'">Accepted</option>
+                                        <option value="Declined" ng-selected="voucher.status == 'Declined'">Declined</option>
+                                        <option value="Waiting" ng-selected="voucher.status == 'Waiting'">Waiting</option>
+                                    </select>
                                     <a href="javascript:void(0)" data-ng-click="deleteVoucher(voucher.id)">
                                         <span class="label label-table label-danger">
                                             <i class="fa fa-trash"></i> Delete</span>
@@ -145,6 +151,11 @@
                                 <p class="text-muted" data-ng-bind="voucher.user.full_name"></p>
                                 <p class="text-muted" data-ng-bind="voucher.office_entity.name"></p>
                                 <p class="text-muted" data-ng-bind="voucher.status"></p>
+                                <select name="status" data-ng-model="voucherUpdate.status" data-ng-change="approveVoucher(voucher.id)">
+                                    <option value="Accepted" ng-selected="voucher.status == 'Accepted'">Accepted</option>
+                                    <option value="Declined" ng-selected="voucher.status == 'Declined'">Declined</option>
+                                    <option value="Waiting" ng-selected="voucher.status == 'Waiting'">Waiting</option>
+                                </select>
                                 <p class="text-muted" data-ng-bind="voucher.reason"></p>
                                 <p class="text-muted" data-ng-bind="voucher.paid ? 'Paid' : 'Not yet paid'"></p>
                                 <p class="text-sm" data-ng-bind="voucher.description"> </p>
