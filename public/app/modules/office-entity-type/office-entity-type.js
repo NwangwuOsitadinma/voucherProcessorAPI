@@ -1,57 +1,69 @@
-app.controller('OfficeEntityTypeController', ['$scope', '$state', 'OfficeEntityTypeService', function($scope, $state, OfficeEntityTypeService) {
+app.controller('OfficeEntityTypeController', ['$rootScope', '$scope', '$state', 'OfficeEntityTypeService', function ($rootScope, $scope, $state, OfficeEntityTypeService) {
 
     $scope.officeEntityType = {};
     $scope.officeEntityTypes = [];
     $scope.page = 'view-office-entity-types';
 
     $scope.createOfficeEntityType = function () {
-        Pace.restart();
-        OfficeEntityTypeService.createOfficeEntityType($scope.officeEntityType, function (response) {
-            console.log("office entity type was successfully created");
-            $state.go('view-office-entity-types');
-        }, function (response) {
-            console.log("an error occured while trying to create the office entity type");
-        });
+        if ($rootScope.role == 'ADMIN') {
+            Pace.restart();
+            OfficeEntityTypeService.createOfficeEntityType($scope.officeEntityType, function (response) {
+                console.log("office entity type was successfully created");
+                $state.go('view-office-entity-types');
+            }, function (response) {
+                console.log("an error occured while trying to create the office entity type");
+            });
+        } else {
+            return;
+        }
     };
 
     $scope.getOfficeEntityTypes = function () {
-        OfficeEntityTypeService.getOfficeEntityTypes(function(response) {
+        OfficeEntityTypeService.getOfficeEntityTypes(function (response) {
             $scope.officeEntityTypes = response.data;
         }, function (response) {
             console.log("an error occured while fetching list of office entity types");
         });
     };
 
-    $scope.getOfficeEntityTypeDetails = function(officeEntityId) {
+    $scope.getOfficeEntityTypeDetails = function (officeEntityId) {
         Pace.restart();
         OfficeEntityTypeService.getOfficeEntityTypeById(officeEntityId, function (response) {
             $scope.officeEntityType = response.data;
             $scope.page = 'office-entity-type-details';
-        }, function(response) {
+        }, function (response) {
             console.log("an error occurred while trying to fetch the office entity type details");
         });
     };
 
     $scope.deleteOfficeEntityType = function (officeEntityId) {
         Pace.restart();
-        OfficeEntityTypeService.deleteOfficeEntityType(officeEntityId, function (response) {
-            console.log("office entity type was succesfully deleted");
-            $scope.getOfficeEntityTypes();
-            $scope.page = 'view-office-entity-types';
-        }, function (response) {
-            console.log("an error occurred while trying to delete office entity type");
-        });
+        if ($rootScope.role == 'ADMIN') {
+            OfficeEntityTypeService.deleteOfficeEntityType(officeEntityId, function (response) {
+                console.log("office entity type was succesfully deleted");
+                $scope.getOfficeEntityTypes();
+                $scope.page = 'view-office-entity-types';
+            }, function (response) {
+                console.log("an error occurred while trying to delete office entity type");
+            });
+        } else {
+            return;
+        }
     };
 
     $scope.updateOfficeEntityType = function () {
         Pace.restart();
-        OfficeEntityTypeService.updateOfficeEntityType($scope.officeEntityType.id, $scope.officeEntityType, function (response) {
-            console.log("office entity type was successfully updated");
-            $scope.getOfficeEntityTypes();
-            $scope.page = 'view-office-entity-types';
-        }, function (response) {
-            console.log("an error occured while trying to update office entity types");
-        });
+        if ($rootScope.role == 'ADMIN') {
+            OfficeEntityTypeService.updateOfficeEntityType($scope.officeEntityType.id, $scope.officeEntityType, function (response) {
+                console.log("office entity type was successfully updated");
+                $scope.getOfficeEntityTypes();
+                $scope.page = 'view-office-entity-types';
+            }, function (response) {
+                console.log("an error occured while trying to update office entity types");
+            });
+        } else {
+            return;
+        }
     };
 
     $scope.getUpdatePage = function () {
@@ -60,7 +72,7 @@ app.controller('OfficeEntityTypeController', ['$scope', '$state', 'OfficeEntityT
     };
 }]);
 
-app.service('OfficeEntityTypeService', ['APIService', function(APIService) {
+app.service('OfficeEntityTypeService', ['APIService', function (APIService) {
 
     this.createOfficeEntityType = function (officeEntityTypeDetails, successHandler, errorHandler) {
         APIService.post('/api/office_entity_type/create', officeEntityTypeDetails, successHandler, errorHandler);

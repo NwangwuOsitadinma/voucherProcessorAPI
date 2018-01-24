@@ -1,4 +1,4 @@
-app.controller('ItemController', ['$scope', '$state', 'ItemService', function($scope, $state, ItemService) {
+app.controller('ItemController', ['$rootScope', '$scope', '$state', 'ItemService', function($rootScope, $scope, $state, ItemService) {
 
     $scope.item = {};
     $scope.items = [];

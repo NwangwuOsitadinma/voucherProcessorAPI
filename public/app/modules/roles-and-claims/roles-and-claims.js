@@ -1,4 +1,4 @@
-app.controller('RolesAndClaimsController', ['$scope', 'RolesAndClaimsService', function ($scope, RolesAndClaimsService) {
+app.controller('RolesAndClaimsController', ['$rootScope', '$scope', 'RolesAndClaimsService', function ($rootScope, $scope, RolesAndClaimsService) {
 
 }]);
 

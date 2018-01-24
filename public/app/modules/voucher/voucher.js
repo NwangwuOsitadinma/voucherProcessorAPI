@@ -1,4 +1,4 @@
-app.controller('VoucherController', ['$scope', '$state', 'VoucherService', function ($scope, $state, VoucherService) {
+app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherService', function ($rootScope, $scope, $state, VoucherService) {
 
     var j = 0;
 
@@ -9,11 +9,15 @@ app.controller('VoucherController', ['$scope', '$state', 'VoucherService', funct
     $scope.voucherUpdate = {};
 
     $scope.getVouchers = function () {
-        VoucherService.getVouchers(function (response) {
-            $scope.vouchers = response.data;
-        }, function (response) {
-            console.log("error occurred while trying to fetch list of vouchers");
-        });
+        if ($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') {
+            VoucherService.getVouchers(function (response) {
+                $scope.vouchers = response.data;
+            }, function (response) {
+                console.log("error occurred while trying to fetch list of vouchers");
+            });
+        } else {
+            $scope.getUserVouchers();
+        }
     };
 
     $scope.getUserVouchers = function () {
@@ -38,7 +42,8 @@ app.controller('VoucherController', ['$scope', '$state', 'VoucherService', funct
         }
         VoucherService.createVoucher($scope.voucher, function (response) {
             console.log("voucher was successfully created");
-            $state.go('view-vouchers');
+            if($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') $state.go('view-vouchers');
+            else $state.go('view-user-vouchers')
         }, function (response) {
             console.log("error occurred while trying to create voucher");
         });
@@ -76,15 +81,19 @@ app.controller('VoucherController', ['$scope', '$state', 'VoucherService', funct
     };
 
     $scope.approveVoucher = function (voucherId) {
-        Pace.restart();
-        VoucherService.approveVoucher(voucherId, { 'status': $scope.voucherUpdate.status }, function (response) {
-            console.log(response.data);
-            $scope.getVouchers();
-            $scope.page = 'view-vouchers';
-            console.log("voucher was approved successfully");
-        }, function (response) {
-            console.log("error occurred while trying to approve the voucher");
-        });
+        if ($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') {
+            Pace.restart();
+            VoucherService.approveVoucher(voucherId, { 'status': $scope.voucherUpdate.status }, function (response) {
+                console.log(response.data);
+                $scope.getVouchers();
+                $scope.page = 'view-vouchers';
+                console.log("voucher was approved successfully");
+            }, function (response) {
+                console.log("error occurred while trying to approve the voucher");
+            });
+        } else {
+            return;
+        }
     };
 
     $scope.getUpdatePage = function () {
@@ -153,7 +162,7 @@ app.service('VoucherService', ['APIService', function (APIService) {
     };
 
     this.getUserVouchers = function (successHandler, errorHandler) {
-        APIService.get('/vouchers/user', successHandler, errorHandler);
+        APIService.get('/api/vouchers/user', successHandler, errorHandler);
     };
 
     this.deleteVoucher = function (voucherId, successHandler, errorHandler) {

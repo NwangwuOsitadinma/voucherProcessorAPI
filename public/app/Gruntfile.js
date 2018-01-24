@@ -10,7 +10,7 @@ module.exports = function (grunt) {
             dist: {
                 src: ['angular/angular.js',
                     'angular/angular-ui-router.js',
-                    // 'angular/angular-sanitize.js',
+                    'angular/angular-cookies.js',
                     'config/*.js',
                     'service/*.js',
                     'main.js',

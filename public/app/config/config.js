@@ -1,4 +1,4 @@
-var app = angular.module('tenece', ['ui.router']);
+var app = angular.module('tenece', ['ui.router', 'ngCookies']);
 
 app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stateProvider', '$urlRouterProvider',
     function ($httpProvider, $interpolateProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
@@ -77,6 +77,7 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
 
     }]);
 
-    app.run(function($http) {
+    app.run(function($http, $rootScope, $cookies) {
+        $rootScope.role = atob($cookies.get('r'));
         // $http.defaults.headers.common['Authorization'] = window.sessionStorage.getItem('Authorization');
     });

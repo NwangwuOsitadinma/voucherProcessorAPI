@@ -1,4 +1,4 @@
-app.controller('OfficeEntityController', ['$scope', '$state', 'OfficeEntityService', function ($scope, $state, OfficeEntityService) {
+app.controller('OfficeEntityController', ['$rootScope', '$scope', '$state', 'OfficeEntityService', function ($rootScope, $scope, $state, OfficeEntityService) {
 
     $scope.officeEntity = {};
     $scope.officeEntities = [];
@@ -14,12 +14,16 @@ app.controller('OfficeEntityController', ['$scope', '$state', 'OfficeEntityServi
         console.log($('#multiselect').chosen().val());
         $scope.officeEntity.employees = $('#multiselect').chosen().val();
         Pace.restart();
-        OfficeEntityService.createOfficeEntity($scope.officeEntity, function (response) {
-            console.log("office entity was successfully created");
-            $state.go('view-office-entities');
-        }, function (response) {
-            console.log("an error occured while trying to create the office entity");
-        });
+        if ($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') {
+            OfficeEntityService.createOfficeEntity($scope.officeEntity, function (response) {
+                console.log("office entity was successfully created");
+                $state.go('view-office-entities');
+            }, function (response) {
+                console.log("an error occured while trying to create the office entity");
+            });
+        } else {
+            return;
+        }
     };
 
     $scope.getOfficeEntities = function () {
@@ -41,23 +45,31 @@ app.controller('OfficeEntityController', ['$scope', '$state', 'OfficeEntityServi
 
     $scope.deleteOfficeEntity = function (officeEntityId) {
         Pace.restart();
-        OfficeEntityService.deleteOfficeEntity(officeEntityId, function (response) {
-            console.log("office entity was succesfully deleted");
-            $scope.getOfficeEntities();
-        }, function (response) {
-            console.log("an error occurred while trying to delete office entity");
-        });
+        if ($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') {
+            OfficeEntityService.deleteOfficeEntity(officeEntityId, function (response) {
+                console.log("office entity was succesfully deleted");
+                $scope.getOfficeEntities();
+            }, function (response) {
+                console.log("an error occurred while trying to delete office entity");
+            });
+        } else {
+            return;
+        }
     };
 
     $scope.updateOfficeEntity = function () {
         Pace.restart();
-        OfficeEntityService.updateOfficeEntity($scope.officeEntity.id, $scope.officeEntity, function (response) {
-            console.log("office entity was successfully updated");
-            $scope.getOfficeEntities();
-            $scope.page = 'view-office-entities';
-        }, function (response) {
-            console.log("an error occured while trying to update office entity");
-        });
+        if ($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') {
+            OfficeEntityService.updateOfficeEntity($scope.officeEntity.id, $scope.officeEntity, function (response) {
+                console.log("office entity was successfully updated");
+                $scope.getOfficeEntities();
+                $scope.page = 'view-office-entities';
+            }, function (response) {
+                console.log("an error occured while trying to update office entity");
+            });
+        } else {
+            return;
+        }
     };
 
     $scope.getUpdatePage = function () {
@@ -71,7 +83,7 @@ app.controller('OfficeEntityController', ['$scope', '$state', 'OfficeEntityServi
     $scope.getAllUsers = function () {
         OfficeEntityService.getAllUsers(['full_name', 'id'], function (response) {
             $scope.users = response.data;
-            setTimeout(function(){
+            setTimeout(function () {
                 $('#multiselect').chosen();
             }, 5);
         }, function (response) {

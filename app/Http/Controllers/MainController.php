@@ -15,6 +15,8 @@ class MainController extends Controller
 
     public function index(Request $request)
     {
+        $role = $request->user() ? base64_encode($request->user()->roles()->pluck('name')[0]) : null;
+        setcookie('r', $role);
         return view('index', ['user' => $request->user()]);
     }
 

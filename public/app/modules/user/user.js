@@ -1,4 +1,4 @@
-app.controller('UserController', ['$scope', 'UserService', function ($scope, UserService) {
+app.controller('UserController', ['$rootScope', '$scope', 'UserService', function ($rootScope, $scope, UserService) {
 
     $scope.user = {};
     $scope.users = [];

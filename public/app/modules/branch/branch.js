@@ -1,4 +1,4 @@
-app.controller('BranchController', ['$scope', '$state', 'BranchService', function ($scope, $state, BranchService) {
+app.controller('BranchController', ['$rootScope', '$scope', '$state', 'BranchService', function ($rootScope, $scope, $state, BranchService) {
 
     $scope.branch = {};
     $scope.branches = [];
@@ -6,12 +6,16 @@ app.controller('BranchController', ['$scope', '$state', 'BranchService', functio
 
     $scope.createBranch = function () {
         Pace.restart();
-        BranchService.createBranch($scope.branch, function (response) {
-            console.log("branch was successfully created");
-            $state.go('view-branches');
-        }, function (response) {
-            console.log("branch could not be created");
-        });
+        if ($rootScope.role == 'ADMIN') {
+            BranchService.createBranch($scope.branch, function (response) {
+                console.log("branch was successfully created");
+                $state.go('view-branches');
+            }, function (response) {
+                console.log("branch could not be created");
+            });
+        } else {
+            return;
+        }
     };
 
     $scope.getBranchDetails = function (branchId) {
@@ -34,23 +38,31 @@ app.controller('BranchController', ['$scope', '$state', 'BranchService', functio
 
     $scope.deleteBranch = function (branchId) {
         Pace.restart();
-        BranchService.deleteBranch(branchId, function (response) {
-            console.log("branch has been deleted");
-            $scope.getBranches();
-        }, function (response) {
-            console.log("an error occured while trying to delete the branch");
-        });
+        if ($rootScope.role == 'ADMIN') {
+            BranchService.deleteBranch(branchId, function (response) {
+                console.log("branch has been deleted");
+                $scope.getBranches();
+            }, function (response) {
+                console.log("an error occured while trying to delete the branch");
+            });
+        } else {
+            return;
+        }
     };
 
     $scope.updateBranch = function () {
         Pace.restart();
-        BranchService.updateBranch($scope.branch.id, $scope.branch, function (response) {
-            console.log("branch was successfully updated");
-            $scope.getBranches();
-            $scope.page = 'view-branches';
-        }, function (response) {
-            console.log("error occured while trying to update the branch");
-        });
+        if ($rootScope.role == 'ADMIN') {
+            BranchService.updateBranch($scope.branch.id, $scope.branch, function (response) {
+                console.log("branch was successfully updated");
+                $scope.getBranches();
+                $scope.page = 'view-branches';
+            }, function (response) {
+                console.log("error occured while trying to update the branch");
+            });
+        } else {
+            return;
+        }
     };
 
     $scope.getUpdatePage = function () {
