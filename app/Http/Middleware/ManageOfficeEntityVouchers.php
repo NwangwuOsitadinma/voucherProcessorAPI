@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class Admin
+class ManageOfficeEntityVouchers
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,10 @@ class Admin
     public function handle($request, Closure $next)
     {
         $user = $request->user();
-        if($user && $user->isAn('ADMIN')){
+        if($user && $user->can('manage-office-entity-vouchers')) {
             return $next($request);
+        } else {
+            return redirect()->back()->intended('/');
         }
-        return redirect()->intended('/');
     }
 }

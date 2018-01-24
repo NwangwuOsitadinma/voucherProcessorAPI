@@ -57,5 +57,10 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'admin' => \App\Http\Middleware\Admin::class,
+        'moderator' => \App\Http\Middleware\Moderator::class,
+        'manage-office-entity-vouchers' => \App\Http\Middleware\ManageOfficeEntityVouchers::class,
+        'pay-voucher' => \App\Http\Middleware\PayVoucher::class,
+        'approve-voucher' => \App\Http\Middleware\ApproveVoucher::class,
     ];
 }

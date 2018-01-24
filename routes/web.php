@@ -32,15 +32,15 @@ Route::post('/user/register', 'UserController@create');
 Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::get('/office_entity_types', 'OfficeEntityTypeController@getAllOfficeEntityTypes');
     Route::get('/office_entity_type/{id}','OfficeEntityTypeController@show');
-    Route::post('/office_entity_type/create', 'OfficeEntityTypeController@create');
-    Route::put('/office_entity_type/update/{id}', 'OfficeEntityTypeController@update');
-    Route::delete('/office_entity_type/delete/{id}', 'OfficeEntityTypeController@delete');
+    Route::post('/office_entity_type/create', 'OfficeEntityTypeController@create')->middleware('admin');
+    Route::put('/office_entity_type/update/{id}', 'OfficeEntityTypeController@update')->middleware('admin');
+    Route::delete('/office_entity_type/delete/{id}', 'OfficeEntityTypeController@delete')->middleware('admin');
 
     Route::get('/office_entities', 'OfficeEntityController@getAllEntities');
     Route::get('/office_entity/{id}', 'OfficeEntityController@show');
-    Route::post('/office_entity/create', 'OfficeEntityController@create');
-    Route::put('/office_entity/update/{id}', 'OfficeEntityController@update');
-    Route::delete('/office_entity/delete/{id}', 'OfficeEntityController@delete');
+    Route::post('/office_entity/create', 'OfficeEntityController@create')->middleware('moderator');
+    Route::put('/office_entity/update/{id}', 'OfficeEntityController@update')->middleware('moderator');
+    Route::delete('/office_entity/delete/{id}', 'OfficeEntityController@delete')->middleware('moderator');
 
     Route::get('/items', 'ItemController@getAllItems');
     Route::get('/item/{id}', 'ItemController@getById');
@@ -50,9 +50,9 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
 
     Route::get('/branches', 'BranchController@getAllBranches');
     Route::get('/branch/{id}', 'BranchController@getById');
-    Route::post('/branch/create', 'BranchController@create');
-    Route::put('/branch/update/{id}', 'BranchController@update');
-    Route::delete('/branch/delete/{id}', 'BranchController@delete');
+    Route::post('/branch/create', 'BranchController@create')->middleware('admin');
+    Route::put('/branch/update/{id}', 'BranchController@update')->middleware('admin');
+    Route::delete('/branch/delete/{id}', 'BranchController@delete')->middleware('admin');
 
     Route::get('/vouchers', 'VoucherController@getAllVouchers');
     Route::get('/voucher/{id}', 'VoucherController@getById');
@@ -60,15 +60,15 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::put('/voucher/update/{id}', 'VoucherController@update');
     Route::delete('/voucher/delete/{id}', 'VoucherController@delete');
     Route::get('/vouchers/user', 'VoucherController@getUserVouchers');
-    Route::get('/vouchers/office_entities', 'VoucherController@getOfficeEntityVouchers');
-    Route::get('/vouchers/payable', 'VoucherController@getPayableVouchers');
-    Route::put('/voucher/approve/{voucherId}', 'VoucherController@approveVoucher');
-    Route::put('/voucher/paid/{voucherId}', 'VoucherController@hasPaidVoucher');
+    Route::get('/vouchers/office_entities', 'VoucherController@getOfficeEntityVouchers')->middleware('manage-office-entity-vouchers');
+    Route::get('/vouchers/payable', 'VoucherController@getPayableVouchers')->middleware('pay-voucher');
+    Route::put('/voucher/approve/{voucherId}', 'VoucherController@approveVoucher')->middleware('approve-voucher');
+    Route::put('/voucher/paid/{voucherId}', 'VoucherController@hasPaidVoucher')->middleware('pay-voucher');
 
     Route::get('/users', 'UserController@getAllUsers');
     Route::get('/user/{id}', 'UserController@getById');
     Route::put('/user/update/{id}', 'UserController@update');
-    Route::delete('/user/delete/{id}', 'UserController@delete');
+    Route::delete('/user/delete/{id}', 'UserController@delete')->middleware('moderator');
 
 
 });

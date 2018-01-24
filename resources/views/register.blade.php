@@ -136,12 +136,12 @@
                                     <input type="text" class="form-control" placeholder="Full Name" name="full_name" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="E-mail Address" name="email" required>
+                                    <input type="text" class="form-control" placeholder="Employee Id" name="employee_id" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Employee Id" name="employee_id" required>
+                                    <input type="text" class="form-control" placeholder="E-mail Address" name="email" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="password" class="form-control" placeholder="Password" name="password" required>

@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class Admin
+class Moderator
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,9 @@ class Admin
     public function handle($request, Closure $next)
     {
         $user = $request->user();
-        if($user && $user->isAn('ADMIN')){
+        if($user && ($user->isA('MODERATOR') || $user->isAn('ADMIN'))){
             return $next($request);
         }
-        return redirect()->intended('/');
+        return redirect()->back()->intended('/');
     }
 }

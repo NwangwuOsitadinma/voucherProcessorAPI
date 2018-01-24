@@ -48,7 +48,7 @@ class UserController extends Controller
 
     public function create(UserRequest $request)
     {
-        return $this->service->create($request, 'User');
+        return $this->service->create($request, 'USER');
     }
 
     public function update($id, UserRequest $request)
