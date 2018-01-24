@@ -60,4 +60,10 @@ class UserController extends Controller
     {
         return $this->service->delete($id);
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return redirect('/login');
+    }
 }

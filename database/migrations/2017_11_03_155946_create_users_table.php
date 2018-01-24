@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('employee_id');
             $table->string('sex');
             // $table->integer('office_entities')->unsigned();
+            $table->rememberToken();
             $table->timestamps();
         });
     }

@@ -317,9 +317,9 @@
                         <!--Mega dropdown-->
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <li class="mega-dropdown">
-                            <a href="#" class="mega-dropdown-toggle">
+                            <!-- <a href="#" class="mega-dropdown-toggle">
                                 <i class="demo-pli-layout-grid"></i>
-                            </a>
+                            </a> -->
                             <div class="dropdown-menu mega-dropdown-menu">
                                 <div class="row">
                                     <div class="col-sm-4 col-md-3">
@@ -453,57 +453,57 @@
 
                         <!--Language selector-->
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-                        <li class="dropdown">
+                        <!-- <li class="dropdown">
                             <a id="demo-lang-switch" class="lang-selector dropdown-toggle" href="#" data-toggle="dropdown">
                                 <span class="lang-selected">
                                     <img class="lang-flag" src="img/flags/united-kingdom.png" alt="English">
                                 </span>
-                            </a>
+                            </a> -->
 
-                            <!--Language selector menu-->
-                            <ul class="head-list dropdown-menu">
-                                <li>
-                                    <!--English-->
-                                    <a href="#" class="active">
+                        <!--Language selector menu-->
+                        <!-- <ul class="head-list dropdown-menu">
+                                <li> -->
+                        <!--English-->
+                        <!-- <a href="#" class="active">
                                         <img class="lang-flag" src="img/flags/united-kingdom.png" alt="English">
                                         <span class="lang-id">EN</span>
                                         <span class="lang-name">English</span>
                                     </a>
                                 </li>
-                                <li>
-                                    <!--France-->
-                                    <a href="#">
+                                <li> -->
+                        <!--France-->
+                        <!-- <a href="#">
                                         <img class="lang-flag" src="img/flags/france.png" alt="France">
                                         <span class="lang-id">FR</span>
                                         <span class="lang-name">Fran&ccedil;ais</span>
                                     </a>
                                 </li>
-                                <li>
-                                    <!--Germany-->
-                                    <a href="#">
+                                <li> -->
+                        <!--Germany-->
+                        <!-- <a href="#">
                                         <img class="lang-flag" src="img/flags/germany.png" alt="Germany">
                                         <span class="lang-id">DE</span>
                                         <span class="lang-name">Deutsch</span>
                                     </a>
                                 </li>
-                                <li>
-                                    <!--Italy-->
-                                    <a href="#">
+                                <li> -->
+                        <!--Italy-->
+                        <!-- <a href="#">
                                         <img class="lang-flag" src="img/flags/italy.png" alt="Italy">
                                         <span class="lang-id">IT</span>
                                         <span class="lang-name">Italiano</span>
                                     </a>
                                 </li>
-                                <li>
-                                    <!--Spain-->
-                                    <a href="#">
+                                <li> -->
+                        <!--Spain-->
+                        <!-- <a href="#">
                                         <img class="lang-flag" src="img/flags/spain.png" alt="Spain">
                                         <span class="lang-id">ES</span>
                                         <span class="lang-name">Espa&ntilde;ol</span>
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li> -->
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!--End language selector-->
 
@@ -517,7 +517,7 @@
                                     <!--<img class="img-circle img-user media-object" src="img/profile-photos/1.png" alt="Profile Picture">-->
                                     <i class="demo-pli-male ic-user"></i>
                                 </span>
-                                <div class="username hidden-xs">Aaron Chavez</div>
+                                <div class="username hidden-xs">{{ $user->full_name }}</div>
                             </a>
 
 
@@ -568,20 +568,23 @@
 
                                 <!-- Dropdown footer -->
                                 <div class="pad-all text-right">
-                                    <a href="/logout" class="btn btn-primary">
-                                        <i class="demo-pli-unlock"></i> Logout
-                                    </a>
+                                    <form action="/logout" method="post">
+                                        {{ csrf_field() }}
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="demo-pli-unlock"></i> Logout
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </li>
                         <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
                         <!--End user dropdown-->
 
-                        <li>
+                        <!-- <li>
                             <a href="#" class="aside-toggle navbar-aside-icon">
                                 <i class="pci-ver-dots"></i>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
                 <!--================================-->
@@ -925,8 +928,8 @@
                                             <span class="pull-right dropdown-toggle">
                                                 <i class="dropdown-caret"></i>
                                             </span>
-                                            <p class="mnp-name">Aaron Chavez</p>
-                                            <span class="mnp-desc">aaron.cha@themeon.net</span>
+                                            <p class="mnp-name">{{ $user->full_name }}</p>
+                                            <span class="mnp-desc">{{ $user->email }}</span>
                                         </a>
                                     </div>
                                     <div id="profile-nav" class="collapse list-group bg-trans">
@@ -939,9 +942,12 @@
                                         <a href="#" class="list-group-item">
                                             <i class="demo-pli-information icon-lg icon-fw"></i> Help
                                         </a>
-                                        <a href="#" class="list-group-item">
-                                            <i class="demo-pli-unlock icon-lg icon-fw"></i> Logout
-                                        </a>
+                                        <form action="/logout" method="post">
+                                            {{ csrf_field() }}
+                                            <button type="submit" class="list-group-item">
+                                                <i class="demo-pli-unlock icon-lg icon-fw"></i> Logout
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
 
@@ -1029,8 +1035,8 @@
                                             </span>
                                             <i class="arrow"></i>
                                         </a> -->
-                                        <!--Submenu-->
-                                        <!-- <ul class="collapse">
+                                    <!--Submenu-->
+                                    <!-- <ul class="collapse">
                                             <li>
                                                 <a href="javascript:;" ui-sref="new-item">New Item</a>
                                             </li>
@@ -1176,7 +1182,8 @@
             <!-- Remove the class "show-fixed" and "hide-fixed" to make the content always appears. -->
             <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
-            <p class="pad-lft">&#0169; <?php echo Date('Y'); ?> Your Company</p>
+            <p class="pad-lft">&#0169;
+                <?php echo Date('Y'); ?> Your Company</p>
 
 
 
@@ -1205,7 +1212,7 @@
 
     <!--FooTable [ OPTIONAL ]-->
     <!-- <link href="plugins/fooTable/css/footable.core.css" rel="stylesheet"> -->
-    
+
     <!--FooTable [ OPTIONAL ]-->
     <!-- <script src="plugins/fooTable/dist/footable.all.min.js"></script> -->
 

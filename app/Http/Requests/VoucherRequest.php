@@ -24,7 +24,6 @@ class VoucherRequest extends FormRequest
     public function rules()
     {
         return [
-            'voucher_number' => 'required',
             'description' => 'required',
             'reason' => 'required',
             'office_entity_id' => 'required',
@@ -35,7 +34,7 @@ class VoucherRequest extends FormRequest
     public function getAttributesArray()
     {
         return [
-            'voucher_number' => $this->voucher_number,
+            'voucher_number' => mt_rand(),
             'description' => $this->description,
             'reason' => $this->reason,
             'office_entity_id' => $this->office_entity_id,
