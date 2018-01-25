@@ -144,8 +144,8 @@
                 </div>
 
                 <div class="pad-all">
-                    <a href="pages-password-reminder.html" class="btn-link mar-rgt">Forgot password ?</a>
-                    <a href="pages-register.html" class="btn-link mar-lft">Create a new account</a>
+                    <!-- <a href="pages-password-reminder.html" class="btn-link mar-rgt">Forgot password ?</a> -->
+                    <a href="/register" class="btn-link mar-lft">Create a new account</a>
 
                     <div class="media pad-top bord-top">
                         <div class="pull-right">
