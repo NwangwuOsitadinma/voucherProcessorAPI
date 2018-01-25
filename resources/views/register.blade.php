@@ -180,7 +180,7 @@
                 </div>
                 <div class="pad-all">
                     Already have an account ?
-                    <a href="pages-login.html" class="btn-link mar-rgt">Sign In</a>
+                    <a href="/login" class="btn-link mar-rgt">Sign In</a>
 
                     <div class="media pad-top bord-top">
                         <div class="pull-right">
@@ -193,9 +193,6 @@
                             <a href="#" class="pad-rgt">
                                 <i class="demo-psi-google-plus icon-lg text-danger"></i>
                             </a>
-                        </div>
-                        <div class="media-body text-left text-muted">
-                            Sign Up with
                         </div>
                     </div>
                 </div>
