@@ -43,7 +43,7 @@ app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherS
         VoucherService.createVoucher($scope.voucher, function (response) {
             console.log("voucher was successfully created");
             if($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') $state.go('view-vouchers');
-            else $state.go('view-user-vouchers')
+            else $state.go('view-user-vouchers');
         }, function (response) {
             console.log("error occurred while trying to create voucher");
         });

@@ -43556,7 +43556,28 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 url: '/view-office-entity-types',
                 templateUrl: '/app/modules/office-entity-type/view-office-entity-types.html',
                 controller: 'OfficeEntityTypeController'
+            })
+            .state('new-role', {
+                url: '/create-role',
+                templateUrl: '/app/modules/roles-and-claims/new-role-with-claim.html',
+                controller: 'RolesAndClaimsController'
+            })
+            .state('view-roles', {
+                url: '/view-roles',
+                templateUrl: '/app/modules/roles-and-claims/view-roles-with-claims.html',
+                controller: 'RolesAndClaimsController'
+            })
+            .state('new-claim', {
+                url: '/create-claim',
+                templateUrl: '/app/modules/roles-and-claims/new-role-with-claim.html',
+                controller: 'RolesAndClaimsController'
+            })
+            .state('view-claims', {
+                url: '/view-claims',
+                templateUrl: '/app/modules/roles-and-claims/view-roles-with-claims.html',
+                controller: 'RolesAndClaimsController'
             });
+            
 
     }]);
 
@@ -43581,8 +43602,15 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
     };
 
     this.postWithHeader = function(url, data, headers, successHandler, errorHandler) {
-        $http.get(url, data, headers)
+        $http.post(url, data, headers)
             .then(successHandler, errorHandler);
+
+        $http.post({
+            url: url,
+            method: "POST",
+            data: data,
+            headers: headers
+        }).then(successHandler, errorHandler);
     };
 
     this.delete = function (url, successHandler, errorHandler) {
@@ -44053,14 +44081,65 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
     this.getAllOfficeEntityTypes = function (successHandler, errorHandler) {
         APIService.get('/api/office_entity_types', successHandler, errorHandler);
     };
-}]);;app.controller('RolesAndClaimsController', ['$rootScope', '$scope', 'RolesAndClaimsService', function ($rootScope, $scope, RolesAndClaimsService) {
+}]);;app.controller('RolesAndClaimsController', ['$rootScope', '$scope', '$state', 'RolesAndClaimsService', function ($rootScope, $scope, $state, RolesAndClaimsService) {
 
+    var j = 0;
+
+    $scope.new_role = {};
+
+    $scope.createRoleWithClaims = function () {
+        Pace.restart();
+        $scope.new_role.claims = [];
+        for (var i = 0; i < j; i++) {
+            if ($('#itemName' + i).val()) {
+                $scope.new_role.claims.push($('#itemName' + i).val());
+            }
+        }
+        console.log($scope.new_role);
+        RolesAndClaimsService.createRoleWithClaims($scope.new_role, function(response) {
+            console.log("role was successfully created");
+            $state.go('view-roles');
+        }, function (response) {
+            console.log("error occurred while trying to create the new role");
+        });
+    };
+
+    $scope.addItem = function () {
+        $('#item_' + j)
+            .html('<div class="col-sm-6">\n' +
+            '<div class="form-group">\n' +
+            '<input class="form-control" id="itemName' + j + '" name="claim[]" type="text" placeholder="Claim Name" required>\n' +
+            '</div>\n' +
+            '</div>\n' +
+            '<div class="col-sm-1">\n' +
+            '<a href="javascript:void(0)" class="btn btn-danger pull-right" onclick="removeItem(' + j + ')">\n' +
+            '<i class="fa fa-times"></i> </a>' +
+            '</div>\n');
+
+        $('#items').append('<div class="row" id="item_' + (j + 1) + '"></div>');
+
+        j++;
+    };
+
+    $scope.deleteLastItem = function () {
+        if (j >= 1) {
+            $('#item_' + (j - 1)).html('');
+            j--;
+        }
+    };
+
+    $scope.removeItem = function (n) {
+        console.log('sup i just got to remove item');
+        $('#item_' + n).html('');
+    };
 }]);
 
 app.service('RolesAndClaimsService', ['APIService', function(APIService)  {
 
     this.createRoleWithClaims = function (roleWithClaims, successHandler, errorHandler) {
-        APIService.post('/api/role-with-claims/create', roleWithClaims, successHandler, errorHandler);
+        console.log("from the service");
+        console.log(roleWithClaims);
+        APIService.post('/api/voucher/create', roleWithClaims, successHandler, errorHandler);
     };
 
     this.assignRole = function (details, successHandler, errorHandler) {
@@ -44156,7 +44235,7 @@ app.service('UserService', ['APIService', function (APIService) {
         VoucherService.createVoucher($scope.voucher, function (response) {
             console.log("voucher was successfully created");
             if($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') $state.go('view-vouchers');
-            else $state.go('view-user-vouchers')
+            else $state.go('view-user-vouchers');
         }, function (response) {
             console.log("error occurred while trying to create voucher");
         });

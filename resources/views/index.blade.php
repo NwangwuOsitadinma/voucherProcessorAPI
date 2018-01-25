@@ -1027,25 +1027,43 @@
                                     </li>
 
                                     <!--Menu list item-->
-                                    <!-- <li>
+                                    @if($user && ($user->isAn('ADMIN') || $user->isA('MODERATOR')))
+                                    <li>
                                         <a href="#">
                                             <i class="demo-psi-gear-2"></i>
                                             <span class="menu-title">
-                                                <strong>Items</strong>
+                                                <strong>Roles And Claims</strong>
                                             </span>
                                             <i class="arrow"></i>
-                                        </a> -->
-                                    <!--Submenu-->
-                                    <!-- <ul class="collapse">
+                                        </a>
+                                        <!--Submenu-->
+                                        <ul class="collapse">
                                             <li>
-                                                <a href="javascript:;" ui-sref="new-item">New Item</a>
+                                                <a href="javascript:;">Roles <i class="arrow"></i></a>
+                                                <ul class="collapse">
+                                                    <li>
+                                                        <a href="javascript:;" ui-sref="new-role">New Role</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;" ui-sref="view-roles">View Role</a>
+                                                    </li>
+                                                </ul>
                                             </li>
                                             <li>
-                                                <a href="javascript:;" ui-sref="view-items">View Items</a>
+                                                <a href="javascript:;">Claims <i class="arrow"></i></a>
+                                                <ul class="collapse">
+                                                    <li>
+                                                        <a href="javascript:;" ui-sref="new-claim">New Claims</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:;" ui-sref="view-claims">View Claims</a>
+                                                    </li>
+                                                </ul>
                                             </li>
 
                                         </ul>
-                                    </li> -->
+                                    </li>
+                                    @endif
 
 
                                     <!--Menu list item-->

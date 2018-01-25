@@ -19,6 +19,7 @@ class CreateOfficeEntitiesTable extends Migration
             $table->integer('lead_id')->unsigned()->nullable();
             $table->integer('branch_id')->unsigned();
             $table->integer('office_entity_type_id')->unsigned();
+            $table->string('description');
             $table->timestamps();
         });
     }

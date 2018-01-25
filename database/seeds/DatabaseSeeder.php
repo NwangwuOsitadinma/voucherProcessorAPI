@@ -23,13 +23,15 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('office_entity_types')->insert([
-            'name' => 'department'
+            'name' => 'department',
+            'description' => 'this is a test description'
         ]);
 
         DB::table('office_entities')->insert([
             'name' => $faker->word,
             'branch_id' => 1,
-            'office_entity_type_id' => 1
+            'office_entity_type_id' => 1,
+            'description' => 'this is a test description'
         ]);
         DB::table('users')->insert([
             'id' => 1,

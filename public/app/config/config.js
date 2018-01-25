@@ -73,7 +73,28 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 url: '/view-office-entity-types',
                 templateUrl: '/app/modules/office-entity-type/view-office-entity-types.html',
                 controller: 'OfficeEntityTypeController'
+            })
+            .state('new-role', {
+                url: '/create-role',
+                templateUrl: '/app/modules/roles-and-claims/new-role-with-claim.html',
+                controller: 'RolesAndClaimsController'
+            })
+            .state('view-roles', {
+                url: '/view-roles',
+                templateUrl: '/app/modules/roles-and-claims/view-roles-with-claims.html',
+                controller: 'RolesAndClaimsController'
+            })
+            .state('new-claim', {
+                url: '/create-claim',
+                templateUrl: '/app/modules/roles-and-claims/new-role-with-claim.html',
+                controller: 'RolesAndClaimsController'
+            })
+            .state('view-claims', {
+                url: '/view-claims',
+                templateUrl: '/app/modules/roles-and-claims/view-roles-with-claims.html',
+                controller: 'RolesAndClaimsController'
             });
+            
 
     }]);
 

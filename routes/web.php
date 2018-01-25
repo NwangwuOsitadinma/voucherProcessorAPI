@@ -70,5 +70,10 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::put('/user/update/{id}', 'UserController@update');
     Route::delete('/user/delete/{id}', 'UserController@delete')->middleware('moderator');
 
+    Route::post('/role-with-claims/create', 'RolesAndClaimsController@create');
+    Route::put('/role-with-claims/assign', 'RolesAndClaimsController@assignRole')->middleware('moderator');
+    Route::delete('/role-with-claims/retract-user-role', 'RolesAndClaimsController@retractUserRole')->middleware('moderator');
+    Route::delete('/role-with-claims/retract-user-claims', 'RolesAndClaimsController@retractUserClaims')->middleware('moderator');
+    Route::delete('/role-with-claims/retract-role-claims', 'RolesAndClaimsController@retractRoleClaims')->middleware('moderator');
 
 });

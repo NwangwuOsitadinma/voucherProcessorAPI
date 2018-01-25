@@ -117,11 +117,12 @@
                         <!--===================================================-->
                         <div class="panel">
                             <div class="panel-body text-center">
-                                <img alt="Profile Picture" class="img-md img-circle mar-btm" src="img/profile-photos/1.png">
+                                <!-- <img alt="Profile Picture" class="img-md img-circle mar-btm" src="img/profile-photos/1.png"> -->
                                 <p class="text-lg text-semibold mar-no text-main" data-ng-bind="officeEntity.name"></p>
                                 <p class="text-muted" data-ng-bind="officeEntity.lead.full_name"></p>
-                                <p class="text-sm" data-ng-bind="officeEntity.branch.name"> </p>
+                                <p class="text-sm" data-ng-bind="officeEntity.branch.name"></p>
                                 <p class="text-sm" data-ng-bind="officeEntity.office_entity_type.name"> </p>
+                                <p class="text-muted" data-ng-bind="officeEntity.description"></p>
                                 <button class="btn btn-primary mar-ver" data-ng-click="getUpdatePage()">
                                     <i class="demo-pli-check icon-fw"></i>Update</button>
                                 <hr>

@@ -16,8 +16,15 @@ app.service('APIService', ['$http', function ($http) {
     };
 
     this.postWithHeader = function(url, data, headers, successHandler, errorHandler) {
-        $http.get(url, data, headers)
+        $http.post(url, data, headers)
             .then(successHandler, errorHandler);
+
+        $http.post({
+            url: url,
+            method: "POST",
+            data: data,
+            headers: headers
+        }).then(successHandler, errorHandler);
     };
 
     this.delete = function (url, successHandler, errorHandler) {
