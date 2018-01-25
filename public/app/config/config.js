@@ -74,6 +74,11 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 templateUrl: '/app/modules/office-entity-type/view-office-entity-types.html',
                 controller: 'OfficeEntityTypeController'
             })
+            .state('view-users', {
+                url: '/view-users',
+                templateUrl: '/app/modules/user/view-users.html',
+                controller: 'UserController'
+            })
             .state('new-role', {
                 url: '/create-role',
                 templateUrl: '/app/modules/roles-and-claims/new-role-with-claim.html',

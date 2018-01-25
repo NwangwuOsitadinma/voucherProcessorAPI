@@ -1146,7 +1146,6 @@
                                         </a>
                                         <!--Submenu-->
                                         <ul class="collapse">
-                                            <!-- <li><a href="#">New Branch</a></li> -->
                                             <li>
                                                 <a href="javascript:;" ui-sref="view-users">View Users</a>
                                             </li>

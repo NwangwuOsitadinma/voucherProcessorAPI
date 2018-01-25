@@ -43557,6 +43557,11 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 templateUrl: '/app/modules/office-entity-type/view-office-entity-types.html',
                 controller: 'OfficeEntityTypeController'
             })
+            .state('view-users', {
+                url: '/view-users',
+                templateUrl: '/app/modules/user/view-users.html',
+                controller: 'UserController'
+            })
             .state('new-role', {
                 url: '/create-role',
                 templateUrl: '/app/modules/roles-and-claims/new-role-with-claim.html',
@@ -44095,10 +44100,9 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
                 $scope.new_role.claims.push($('#itemName' + i).val());
             }
         }
-        console.log($scope.new_role);
         RolesAndClaimsService.createRoleWithClaims($scope.new_role, function(response) {
             console.log("role was successfully created");
-            $state.go('view-roles');
+            $state.go('view-users');
         }, function (response) {
             console.log("error occurred while trying to create the new role");
         });
@@ -44137,9 +44141,7 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
 app.service('RolesAndClaimsService', ['APIService', function(APIService)  {
 
     this.createRoleWithClaims = function (roleWithClaims, successHandler, errorHandler) {
-        console.log("from the service");
-        console.log(roleWithClaims);
-        APIService.post('/api/voucher/create', roleWithClaims, successHandler, errorHandler);
+        APIService.post('/api/role-with-claims/create', roleWithClaims, successHandler, errorHandler);
     };
 
     this.assignRole = function (details, successHandler, errorHandler) {
@@ -44160,13 +44162,16 @@ app.service('RolesAndClaimsService', ['APIService', function(APIService)  {
 }]);;app.controller('UserController', ['$rootScope', '$scope', 'UserService', function ($rootScope, $scope, UserService) {
 
     $scope.user = {};
+    $scope.object = {};
     $scope.users = [];
+    $scope.page = 'view-users';
+    $scope.roles = [];
 
     $scope.login = function () {
         UserService.login($scope.user, function (response) {
-            if(response.data) {
-                if (typeof(Storage) !== "undefined") {
-                    window.sessionStorage.setItem('Authorization', 'Bearer ' +response.data);
+            if (response.data) {
+                if (typeof (Storage) !== "undefined") {
+                    window.sessionStorage.setItem('Authorization', 'Bearer ' + response.data);
                     // document.cookie = 'access_token=Bearer ' +response.data + '; path=/; secure=false;';
                     window.location.href = '/';
                 } else {
@@ -44179,6 +44184,67 @@ app.service('RolesAndClaimsService', ['APIService', function(APIService)  {
             console.log("error occurred while trying to authenticate the user");
         });
     };
+
+    $scope.getAllUsers = function () {
+        UserService.getAllUsers(function (response) {
+            $scope.users = response.data;
+        }, function (response) {
+            console.log("error occured while trying to fetch the users");
+        });
+    };
+
+    $scope.getUserDetails = function (id) {
+        Pace.restart();
+        UserService.getUserById(id, function (response) {
+            $scope.object.user = response.data;
+            $scope.object.role = $scope.object.previousRole = response.data.roles[0].name;
+            $scope.page = 'user-details';
+            console.log($scope.object);
+        }, function (response) {
+            console.log("error occurred while trying to fetch the user details");
+        });
+    };
+
+    $scope.assignRoleToUser = function () {
+        Pace.restart();
+        UserService.assignRole($scope.object, function(response) {
+            console.log("role was successfully assigned to the user");
+            $scope.page = 'view-users';
+        }, function (response) {
+            console.error("an error occurred while trying to assign the role");
+        });
+    };
+
+    $scope.updateUserDetails = function (id) {
+        Pace.restart();
+        UserService.updateUserDetails(id, $scope.user, function (response) {
+            console.log("update was successful");
+            $scope.getAllUsers();
+            $scope.page = 'view-users';
+        }, function (response) {
+            console.error("error occurred while trying to update the user");
+        });
+    };
+
+    $scope.deleteUser = function (id) {
+        Pace.restart();
+        UserService.deleteUser(id, function (response) {
+            console.log("user was successfully deleted");
+            $scope.getAllUsers();
+        }, function (response) {
+            console.error("error occurred while trying to delete the user");
+        });
+    };
+
+    $scope.getAllRoles = function () {
+        UserService.getAllRoles(function(response) {
+            $scope.roles = response.data;
+        }, function (response) {
+            console.error("an error occurred while trying to fetch all the registered roles");
+        });
+    };
+
+
 }]);
 
 app.service('UserService', ['APIService', function (APIService) {
@@ -44187,8 +44253,28 @@ app.service('UserService', ['APIService', function (APIService) {
         APIService.post('/login', userDetails, successHandler, errorHandler);
     };
 
-    this.register = function (userDetails, successHandler, errorHandler) {
-        APIService.post('/register', userDetails, successHandler, errorHandler);
+    this.getAllUsers = function (successHandler, errorHandler) {
+        APIService.get('/api/users', successHandler, errorHandler);
+    };
+
+    this.getUserById = function (id, successHandler, errorHandler) {
+        APIService.get('/api/user/' + id, successHandler, errorHandler);
+    };
+
+    this.deleteUser = function (id, successHandler, errorHandler) {
+        APIService.delete('/api/user/delete/' + id, successHandler, errorHandler);
+    };
+
+    this.getAllRoles = function (successHandler, errorHandler) {
+        APIService.get('/api/roles', successHandler, errorHandler);
+    };
+
+    this.updateUserDetails = function (id, userDetails, successHandler, errorHandler) {
+        APIService.put('/api/user/update/' + id, userDetails, successHandler, errorHandler);
+    };
+
+    this.assignRole = function (details, successHandler, errorHandler) {
+        APIService.put('/api/role-with-claims/assign', details, successHandler, errorHandler);
     };
 }]);;app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherService', function ($rootScope, $scope, $state, VoucherService) {
 

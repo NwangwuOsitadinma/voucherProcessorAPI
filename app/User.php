@@ -30,6 +30,15 @@ class User extends Authenticatable
         'password',
     ];
 
+    public function setValues($fullName, $email, $employee_id, $sex, $id = null)
+    {
+        $this->id = $id;
+        $this->full_name = $fullName;
+        $this->email = $email;
+        $this->employee_id = $employee_id;
+        $this->sex = $sex;
+    }
+
     public function office_entities()
     {
         return $this->hasMany(OfficeEntity::class);

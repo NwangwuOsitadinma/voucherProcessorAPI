@@ -9,13 +9,22 @@
 namespace App\Services;
 
 // use Silber\Bouncer\BouncerFacade as Bouncer;
+use App\Repositories\RoleRepository;
 use Bouncer;
 
 class RolesAndClaimsService {
 
-    private $roleService;
+    private $repository;
 
-    public function __construct(){}
+    public function __construct(RoleRepository $roleRepository)
+    {
+        $this->repository = $roleRepository;
+    }
+
+    public function getAllRoles ()
+    {
+        return $this->repository->getAll();
+    }
 
     public function createRoleWithClaims($role, array $claims)
     {

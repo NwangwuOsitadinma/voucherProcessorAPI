@@ -12,10 +12,9 @@ app.controller('RolesAndClaimsController', ['$rootScope', '$scope', '$state', 'R
                 $scope.new_role.claims.push($('#itemName' + i).val());
             }
         }
-        console.log($scope.new_role);
         RolesAndClaimsService.createRoleWithClaims($scope.new_role, function(response) {
             console.log("role was successfully created");
-            $state.go('view-roles');
+            $state.go('view-users');
         }, function (response) {
             console.log("error occurred while trying to create the new role");
         });
@@ -54,9 +53,7 @@ app.controller('RolesAndClaimsController', ['$rootScope', '$scope', '$state', 'R
 app.service('RolesAndClaimsService', ['APIService', function(APIService)  {
 
     this.createRoleWithClaims = function (roleWithClaims, successHandler, errorHandler) {
-        console.log("from the service");
-        console.log(roleWithClaims);
-        APIService.post('/api/voucher/create', roleWithClaims, successHandler, errorHandler);
+        APIService.post('/api/role-with-claims/create', roleWithClaims, successHandler, errorHandler);
     };
 
     this.assignRole = function (details, successHandler, errorHandler) {
