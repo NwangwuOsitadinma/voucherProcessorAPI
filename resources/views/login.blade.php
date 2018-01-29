@@ -123,6 +123,7 @@
             <div class="cls-content-sm panel">
                 <div class="panel-body">
                     <div class="mar-ver pad-btm">
+                        <img src="http://tenece.com/ten/img/logo.png"><br><br>
                         <h3 class="h4 mar-no">Tenece Voucher Processing</h3>
                         <p class="text-muted">Sign In to your account</p>
                     </div>
@@ -130,13 +131,13 @@
 
                     {{ csrf_field() }}
                         <div class="form-group">
-                            <input type="text" name="email" value="{{ old('email')}}" class="form-control" placeholder="Email Address" autofocus>
+                            <input type="text" name="email" value="{{ old('email')}}" class="form-control" placeholder="Email Address" required autofocus>
                         </div>
                         <div class="form-group">
-                            <input type="password" name="password" class="form-control" placeholder="Password">
+                            <input type="password" name="password" class="form-control" placeholder="Password" required>
                         </div>
                         <div class="checkbox pad-btm text-left">
-                            <input name="remember" value="{{ old('remember')}}" id="demo-form-checkbox" class="magic-checkbox" type="checkbox">
+                            <input name="remember"id="demo-form-checkbox" class="magic-checkbox" type="checkbox">
                             <label for="demo-form-checkbox">Remember me</label>
                         </div>
                         <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
@@ -147,7 +148,7 @@
                     <!-- <a href="pages-password-reminder.html" class="btn-link mar-rgt">Forgot password ?</a> -->
                     <a href="/register" class="btn-link mar-lft">Create a new account</a>
 
-                    <div class="media pad-top bord-top">
+                    <!-- <div class="media pad-top bord-top">
                         <div class="pull-right">
                             <a href="#" class="pad-rgt">
                                 <i class="demo-psi-facebook icon-lg text-primary"></i>
@@ -162,7 +163,7 @@
                         <div class="media-body text-left">
                             Login with
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

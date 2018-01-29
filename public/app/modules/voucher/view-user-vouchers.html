@@ -1,264 +1,268 @@
 <!--Page Title-->
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <div id="page-title" data-ng-init="getUserVouchers()">
-        <h1 class="page-header text-overflow">View Vouchers</h1>
-    
-        <!--Searchbox-->
-        <div class="searchbox">
-            <div class="input-group custom-search-form">
-                <input type="text" class="form-control" placeholder="Search..">
-                <span class="input-group-btn">
-                    <button class="text-muted" type="button">
-                        <i class="demo-pli-magnifi-glass"></i>
-                    </button>
-                </span>
+    <h1 class="page-header text-overflow">View Vouchers</h1>
+
+    <!--Searchbox-->
+    <div class="searchbox">
+        <div class="input-group custom-search-form">
+            <input type="text" class="form-control" placeholder="Search..">
+            <span class="input-group-btn">
+                <button class="text-muted" type="button">
+                    <i class="demo-pli-magnifi-glass"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--End page title-->
+
+
+<!--Breadcrumb-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li>
+        <a href="#">Home</a>
+    </li>
+    <li class="active" data-ng-show="page == 'voucher-details' || page == 'update-voucher'">
+        <a href="javascript:void(0)" data-ng-click="page = 'view-vouchers'">View Vouchers</a>
+    </li>
+    <li class="active" data-ng-show="page == 'view-vouchers'">
+        View Vouchers
+    </li>
+</ol>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--End breadcrumb-->
+
+
+
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content" data-ng-show="page == 'view-vouchers'">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">View vouchers that have been created</h3>
+                </div>
+
+                <!-- Foo Table - Pagination -->
+                <!--===================================================-->
+                <div class="panel-body">
+                    <table id="demo-foo-pagination" class="table table-hover toggle-arrow-tiny" data-page-size="5">
+                        <thead>
+                            <tr>
+                                <th data-toggle="true">Voucher Number</th>
+                                <th>Description</th>
+                                <th data-hide="all">Status</th>
+                                <th data-hide="all">Reason</th>
+                                <th data-hide="all">Paid</th>
+                                <th data-hide="all">Time stamp</th>
+                                <th data-hide="all">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="voucher in vouchers">
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
+                                        <span data-ng-bind="voucher.voucher_number">
+                                        </span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
+                                        <span data-ng-bind="voucher.description"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
+                                        <div class="label label-table" data-ng-class="{'label-warning' : voucher.status == 'Waiting', 'label-success' : voucher.status == 'Accepted', 'label-danger' : voucher.status == 'Declined'}"
+                                            data-ng-bind="voucher.status"></div>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
+                                        <span data-ng-bind="voucher.reason"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
+                                        <div class="label label-table" data-ng-class="{'label-success' : voucher.paid, 'label-warning' : !voucher.paid}" data-ng-bind="voucher.paid ? 'Yes' : 'No'"></div>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
+                                        <span data-ng-bind="voucher.updated_at"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="deleteVoucher(voucher.id)">
+                                        <span class="label label-table label-danger">
+                                            <i class="fa fa-trash"></i> Delete</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="text-right">
+                                        <ul class="pagination"></ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!--===================================================-->
+                <!-- End Foo Table - Pagination -->
+
             </div>
         </div>
     </div>
-    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-    <!--End page title-->
-    
-    
-    <!--Breadcrumb-->
-    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-    <ol class="breadcrumb">
-        <li>
-            <a href="#">Home</a>
-        </li>
-        <li>
-            <a href="#">Forms</a>
-        </li>
-        <li class="active" data-ng-show="page == 'voucher-details' || page == 'update-voucher'">
-            <a href="javascript:void(0)" data-ng-click="page = 'view-vouchers'">View Vouchers</a>
-        </li>
-        <li class="active" data-ng-show="page == 'view-vouchers'">
-            View Vouchers
-        </li>
-    </ol>
-    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-    <!--End breadcrumb-->
-    
-    
-    
-    
-    <!--Page content-->
-    <!--===================================================-->
-    <div id="page-content" data-ng-show="page == 'view-vouchers'">
-    
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="panel">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">View vouchers that have been created</h3>
+</div>
+<!--===================================================-->
+<!--End page content-->
+<div id="page-content" data-ng-show="page == 'voucher-details'">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title" data-ng-bind="voucher.voucher_number"></h3>
+                </div>
+
+                <!-- Foo Table - Pagination -->
+                <!--===================================================-->
+                <div class="panel-body">
+                    <div class="col-sm-12 col-md-12">
+
+                        <!--Profile Widget-->
+                        <!--===================================================-->
+                        <div class="panel">
+                            <div class="panel-body text-center">
+                                <img alt="Profile Picture" class="img-md img-circle mar-btm" src="img/profile-photos/1.png">
+                                <p class="text-lg text-semibold mar-no text-main" data-ng-bind="voucher.voucher_number"></p>
+                                <p class="text-muted" data-ng-bind="voucher.user.full_name"></p>
+                                <p class="text-muted" data-ng-bind="voucher.office_entity.name"></p>
+                                <p class="text-muted" data-ng-bind="voucher.status"></p>
+                                <p class="text-muted" data-ng-bind="voucher.reason"></p>
+                                <p class="text-muted" data-ng-bind="voucher.paid ? 'Paid' : 'Not yet paid'"></p>
+                                <p class="text-sm" data-ng-bind="voucher.description"> </p>
+                                <button class="btn btn-primary mar-ver" data-ng-click="getUpdatePage()">
+                                    <i class="demo-pli-check icon-fw"></i>Update</button>
+                                <hr>
+                                <table id="demo-foo-pagination1" class="table table-hover toggle-arrow-tiny text-left" data-page-size="5">
+                                    <thead>
+                                        <tr>
+                                            <th data-toggle="true">Item Name</th>
+                                            <th>Item Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr data-ng-repeat="item in voucher.items">
+                                            <td>
+                                                <span data-ng-bind="item.name"></span>
+                                            </td>
+                                            <td>
+                                                <span data-ng-bind="item.price"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5">
+                                                <div class="text-right">
+                                                    <ul class="pagination"></ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                        <!--===================================================-->
+
+
                     </div>
-    
-                    <!-- Foo Table - Pagination -->
-                    <!--===================================================-->
+                </div>
+                <!--===================================================-->
+                <!-- End Foo Table - Pagination -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content" data-ng-show="page == 'update-voucher'" data-ng-init="getOfficeEntities()">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Update Voucher</h3>
+                </div>
+
+                <!--Block Styled Form -->
+                <!--===================================================-->
+                <form>
                     <div class="panel-body">
-                        <table id="demo-foo-pagination" class="table table-hover toggle-arrow-tiny" data-page-size="5">
-                            <thead>
-                                <tr>
-                                    <th data-toggle="true">Voucher Number</th>
-                                    <th>Description</th>
-                                    <th data-hide="all">Status</th>
-                                    <th data-hide="all">Reason</th>
-                                    <th data-hide="all">Paid</th>
-                                    <th data-hide="all">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr data-ng-repeat="voucher in vouchers">
-                                    <td>
-                                        <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
-                                            <span data-ng-bind="voucher.voucher_number">
-                                            </span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
-                                            <span data-ng-bind="voucher.description"></span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
-                                            <div class="label label-table" data-ng-class="{'label-warning' : voucher.status == 'Waiting', 'label-success' : voucher.status == 'Accepted', 'label-danger' : voucher.status == 'Declined'}"
-                                                data-ng-bind="voucher.status"></div>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
-                                            <span data-ng-bind="voucher.reason"></span>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
-                                            <div class="label label-table" data-ng-class="{'label-success' : voucher.paid, 'label-warning' : !voucher.paid}" data-ng-bind="voucher.paid ? 'Yes' : 'No'"></div>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="javascript:void(0)" data-ng-click="deleteVoucher(voucher.id)">
-                                            <span class="label label-table label-danger">
-                                                <i class="fa fa-trash"></i> Delete</span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="5">
-                                        <div class="text-right">
-                                            <ul class="pagination"></ul>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                    <!--===================================================-->
-                    <!-- End Foo Table - Pagination -->
-    
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--===================================================-->
-    <!--End page content-->
-    <div id="page-content" data-ng-show="page == 'voucher-details'">
-    
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="panel">
-                    <div class="panel-heading">
-                        <h3 class="panel-title" data-ng-bind="voucher.voucher_number"></h3>
-                    </div>
-    
-                    <!-- Foo Table - Pagination -->
-                    <!--===================================================-->
-                    <div class="panel-body">
-                        <div class="col-sm-12 col-md-12">
-    
-                            <!--Profile Widget-->
-                            <!--===================================================-->
-                            <div class="panel">
-                                <div class="panel-body text-center">
-                                    <img alt="Profile Picture" class="img-md img-circle mar-btm" src="img/profile-photos/1.png">
-                                    <p class="text-lg text-semibold mar-no text-main" data-ng-bind="voucher.voucher_number"></p>
-                                    <p class="text-muted" data-ng-bind="voucher.user.full_name"></p>
-                                    <p class="text-muted" data-ng-bind="voucher.office_entity.name"></p>
-                                    <p class="text-muted" data-ng-bind="voucher.status"></p>
-                                    <p class="text-muted" data-ng-bind="voucher.reason"></p>
-                                    <p class="text-muted" data-ng-bind="voucher.paid ? 'Paid' : 'Not yet paid'"></p>
-                                    <p class="text-sm" data-ng-bind="voucher.description"> </p>
-                                    <button class="btn btn-primary mar-ver" data-ng-click="getUpdatePage()">
-                                        <i class="demo-pli-check icon-fw"></i>Update</button>
-                                    <hr>
-                                    <table id="demo-foo-pagination1" class="table table-hover toggle-arrow-tiny text-left" data-page-size="5">
-                                        <thead>
-                                            <tr>
-                                                <th data-toggle="true">Item Name</th>
-                                                <th>Item Price</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr data-ng-repeat="item in voucher.items">
-                                                <td>
-                                                    <span data-ng-bind="item.name"></span>
-                                                </td>
-                                                <td>
-                                                    <span data-ng-bind="item.price"></span>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="5">
-                                                    <div class="text-right">
-                                                        <ul class="pagination"></ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Voucher Number</label>
+                                    <input type="text" data-ng-model="voucher.voucher_number" name="voucher_number" class="form-control" required>
                                 </div>
                             </div>
-                            <!--===================================================-->
-    
-    
-                        </div>
-                    </div>
-                    <!--===================================================-->
-                    <!-- End Foo Table - Pagination -->
-    
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!--Page content-->
-    <!--===================================================-->
-    <div id="page-content" data-ng-show="page == 'update-voucher'" data-ng-init="getOfficeEntities()">
-    
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="panel">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Update Voucher</h3>
-                    </div>
-    
-                    <!--Block Styled Form -->
-                    <!--===================================================-->
-                    <form>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Voucher Number</label>
-                                        <input type="text" data-ng-model="voucher.voucher_number" name="voucher_number" class="form-control">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="control-label">Office Entity</label>
-                                        <select id="demo-nav-offcanvas" data-ng-model="voucher.office_entity_id" name="office_entity_id" class="form-control">
-                                            <option value="none" selected disabled="disabled">-- Select Mode --</option>
-                                            <option value="<% officeEntity.id %>" data-ng-repeat="officeEntity in officeEntities" data-ng-selected="officeEntity.id == voucher.office_entity_id">
-                                                <% officeEntity.name %>
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="control-label" for="description-textarea-input">Description</label>
-                                        <textarea id="description-textarea-input" data-ng-model="voucher.description" rows="9" class="form-control" name="description"
-                                            placeholder="Your description here.."></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label class="control-label" for="reason-textarea-input">Reason</label>
-                                        <textarea id="reason-textarea-input" data-ng-model="voucher.reason" rows="9" class="form-control" name="reason" placeholder="Your reason here.."></textarea>
-                                    </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Unit</label>
+                                    <select id="demo-nav-offcanvas" data-ng-model="voucher.office_entity_id" name="office_entity_id" class="form-control" required>
+                                        <option value="" selected disabled="disabled">-- Select the unit --</option>
+                                        <option value="<% officeEntity.id %>" data-ng-repeat="officeEntity in officeEntities" data-ng-selected="officeEntity.id == voucher.office_entity_id">
+                                            <% officeEntity.name %>
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
-    
-                        <div class="panel-footer text-right">
-                            <div class="col-sm-3">
-                                <button class="btn btn-warning pull-left" data-ng-click="page = 'voucher-details'">
-                                    <i class="fa fa-times"></i> Cancel</button>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="description-textarea-input">Description</label>
+                                    <textarea id="description-textarea-input" data-ng-model="voucher.description" rows="9" class="form-control" name="description"
+                                        placeholder="Your description for the voucher.." required></textarea>
+                                </div>
                             </div>
-                            <button class="btn btn-success" data-ng-click="updateVoucher()" type="submit">Update</button>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="reason-textarea-input">Reason</label>
+                                    <textarea id="reason-textarea-input" data-ng-model="voucher.reason" rows="9" class="form-control" name="reason" placeholder="Your reason for the voucher.."
+                                        required></textarea>
+                                </div>
+                            </div>
                         </div>
-                    </form>
-                    <!--===================================================-->
-                    <!--End Block Styled Form -->
-    
-                </div>
+                    </div>
+
+                    <div class="panel-footer text-right">
+                        <div class="col-sm-3">
+                            <button class="btn btn-warning pull-left" data-ng-click="page = 'voucher-details'">
+                                <i class="fa fa-times"></i> Cancel</button>
+                        </div>
+                        <button class="btn btn-success" data-ng-click="updateVoucher()" type="submit">Update</button>
+                    </div>
+                </form>
+                <!--===================================================-->
+                <!--End Block Styled Form -->
+
             </div>
         </div>
     </div>
-    <!--===================================================-->
-    <!--End page content-->
+</div>
+<!--===================================================-->
+<!--End page content-->

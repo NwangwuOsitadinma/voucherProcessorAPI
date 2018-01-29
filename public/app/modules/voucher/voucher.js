@@ -40,6 +40,10 @@ app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherS
                 $scope.voucher.items.push(item);
             }
         }
+        if($scope.voucher.items.length < 1) {
+            $scope.addItem();
+            return;
+        }
         VoucherService.createVoucher($scope.voucher, function (response) {
             console.log("voucher was successfully created");
             if($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') $state.go('view-vouchers');

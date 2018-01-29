@@ -25,9 +25,6 @@
     <li>
         <a href="#">Home</a>
     </li>
-    <li>
-        <a href="#">Forms</a>
-    </li>
     <li class="active">New Item</li>
 </ol>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -70,7 +67,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Select Voucher</label>
                                     <select name="voucher_id" data-ng-model="item.voucher_id" id="demo-nav-offcanvas" class="form-control" required>
-                                        <option value="-1" selected disabled="disabled">-- Select Mode --</option>
+                                        <option value="" selected disabled="disabled">-- Select the voucher --</option>
                                         <option value="<% voucher.id %>" data-ng-repeat="voucher in vouchers"><% voucher.voucher_number %></option>
                                     </select>
                                 </div>

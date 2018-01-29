@@ -44105,6 +44105,10 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
                 $scope.new_role.claims.push($('#itemName' + i).val());
             }
         }
+        if($scope.new_role.claims.length < 1) {
+            $scope.addItem();
+            return;
+        }
         RolesAndClaimsService.createRoleWithClaims($scope.new_role, function(response) {
             console.log("role was successfully created");
             $state.go('view-users');
@@ -44322,6 +44326,10 @@ app.service('UserService', ['APIService', function (APIService) {
                 // console.log(item);
                 $scope.voucher.items.push(item);
             }
+        }
+        if($scope.voucher.items.length < 1) {
+            $scope.addItem();
+            return;
         }
         VoucherService.createVoucher($scope.voucher, function (response) {
             console.log("voucher was successfully created");

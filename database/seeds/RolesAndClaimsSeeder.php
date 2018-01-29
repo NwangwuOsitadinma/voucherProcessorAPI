@@ -27,7 +27,7 @@ class RolesAndClaimsSeeder extends Seeder
             $this->rolesAndClaimsService->createRoleWithClaims('ADMIN', ['create-branch', 'view-branches', 'edit-branch', 
             'delete-branch', 'create-office-entity', 'view-office-entities', 'edit-office-entity', 'delete-office-entity', 
             'create-office-entity-type', 'view-office-entity-types', 'edit-office-entity-type', 'delete-office-entity-type', 
-            'create-voucher', 'view-vouchers', 'edit-voucher', 'delete-voucher', 'approve-voucher', 'create-item', 'view-items', 'edit-items', 'delete-items']);
+            'create-voucher', 'view-vouchers', 'edit-voucher', 'delete-voucher', 'approve-voucher', 'create-item', 'view-items', 'edit-items', 'delete-items', 'delete-user']);
             $this->rolesAndClaimsService->createRoleWithClaims('MODERATOR', ['create-office-entity', 'view-office-entities', 'edit-office-entity', 'delete-office-entity', 
             'create-voucher', 'view-vouchers', 'edit-voucher', 'delete-voucher', 'approve-voucher', 'create-item', 'view-items', 'edit-items', 'delete-items']);
             $this->rolesAndClaimsService->createRoleWithClaims('USER', ['create-voucher', 'view-vouchers', 'edit-voucher', 'delete-voucher', 'create-item', 'view-items', 'edit-items', 'delete-items']);

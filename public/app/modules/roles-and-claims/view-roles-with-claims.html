@@ -25,11 +25,8 @@
     <li>
         <a href="#">Home</a>
     </li>
-    <li>
-        <a href="#">Forms</a>
-    </li>
     <li class="active" data-ng-show="page == 'role-details' || page == 'update-role'">
-        <a href="javascript:void(0)" data-ng-click="page = 'view-office-entities'">View All Roles</a>
+        <a href="javascript:void(0)" data-ng-click="page = 'view-roles'">View All Roles</a>
     </li>
     <li class="active" data-ng-show="page == 'view-roles'">
         View Roles
@@ -179,7 +176,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Name</label>
-                                    <input type="text" data-ng-model="role.name" name="name" class="form-control">
+                                    <input type="text" data-ng-model="role.name" name="name" class="form-control" required>
                                 </div>
                             </div>
                         </div>

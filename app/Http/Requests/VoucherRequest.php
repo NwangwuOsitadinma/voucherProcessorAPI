@@ -38,8 +38,7 @@ class VoucherRequest extends FormRequest
             'description' => $this->description,
             'reason' => $this->reason,
             'office_entity_id' => $this->office_entity_id,
-            // 'user_id' => $this->user()->id ?? 1
-            'user_id' => 1
+            'user_id' => $this->user()->id
         ];
     }
 }

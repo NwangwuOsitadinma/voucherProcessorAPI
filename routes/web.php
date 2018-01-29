@@ -72,7 +72,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::get('/users', 'UserController@getAllUsers');
     Route::get('/user/{id}', 'UserController@getById');
     Route::put('/user/update/{id}', 'UserController@update');
-    Route::delete('/user/delete/{id}', 'UserController@delete')->middleware('moderator');
+    Route::delete('/user/delete/{id}', 'UserController@delete')->middleware('admin');
 
     Route::get('/roles', 'RolesAndClaimsController@getAllRoles');
 
