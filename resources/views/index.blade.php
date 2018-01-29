@@ -1015,7 +1015,10 @@
                                             </li>
                                             @if($user && $user->can('approve-voucher'))
                                             <li>
-                                                <a href="javascript:;" ui-sref="view-vouchers">View Vouchers</a>
+                                                <a href="javascript:;" ui-sref="view-user-vouchers">My Vouchers</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;" ui-sref="view-vouchers">View All Vouchers</a>
                                             </li>
                                             @else
                                             <li>
@@ -1038,18 +1041,18 @@
                                         </a>
                                         <!--Submenu-->
                                         <ul class="collapse">
-                                            <li>
+                                            <!-- <li>
                                                 <a href="javascript:;">Roles <i class="arrow"></i></a>
-                                                <ul class="collapse">
+                                                <ul class="collapse"> -->
                                                     <li>
                                                         <a href="javascript:;" ui-sref="new-role">New Role</a>
                                                     </li>
-                                                    <li>
+                                                    <!-- <li>
                                                         <a href="javascript:;" ui-sref="view-roles">View Role</a>
                                                     </li>
                                                 </ul>
-                                            </li>
-                                            <li>
+                                            </li> -->
+                                            <!-- <li>
                                                 <a href="javascript:;">Claims <i class="arrow"></i></a>
                                                 <ul class="collapse">
                                                     <li>
@@ -1059,7 +1062,7 @@
                                                         <a href="javascript:;" ui-sref="view-claims">View Claims</a>
                                                     </li>
                                                 </ul>
-                                            </li>
+                                            </li> -->
 
                                         </ul>
                                     </li>
