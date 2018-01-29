@@ -18,6 +18,10 @@
 Auth::routes();
 
 Route::get('/', 'MainController@index')->middleware('auth');
+Route::get('/{state}', function ($state) {
+    setcookie('state', $state);
+    return redirect('/');
+});
 
 // Route::get('/login', 'MainController@loginPage');
 
