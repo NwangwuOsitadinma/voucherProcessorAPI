@@ -26,7 +26,6 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        return response()->json($request);
         if ($this->service->authenticate($request->email, $request->password)) {
             return redirect()->intended('/');
         } else {
@@ -59,6 +58,11 @@ class UserController extends Controller
     public function delete($id)
     {
         return $this->service->delete($id);
+    }
+
+    public function getCategorizedEmployees(Request $request)
+    {
+        return $this->service->getCategorizedEmployees($request->role);
     }
 
     public function logout(Request $request)

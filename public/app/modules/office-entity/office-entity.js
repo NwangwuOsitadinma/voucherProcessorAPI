@@ -5,6 +5,7 @@ app.controller('OfficeEntityController', ['$rootScope', '$scope', '$state', 'Off
     $scope.page = 'view-office-entities';
 
     $scope.initialize = function () {
+        $scope.getAllSupervisors();
         $scope.getAllUsers();
         $scope.getAllBranches();
         $scope.getAllOfficeEntityTypes();
@@ -80,6 +81,14 @@ app.controller('OfficeEntityController', ['$rootScope', '$scope', '$state', 'Off
         $scope.page = 'update-office-entity';
     };
 
+    $scope.getAllSupervisors = function () {
+        OfficeEntityService.getAllSupervisors(function (response) {
+            $scope.supervisors = response.data;
+        }, function (response) {
+            console.log("error occurred while trying to get the list of supervisors");
+        });
+    };
+
     $scope.getAllUsers = function () {
         OfficeEntityService.getAllUsers(['full_name', 'id'], function (response) {
             $scope.users = response.data;
@@ -132,6 +141,10 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
 
     this.getAllUsers = function (fields, successHandler, errorHandler) {
         APIService.get('/api/users?fields=' + fields.toString(), successHandler, errorHandler);
+    };
+
+    this.getAllSupervisors = function (successHandler, errorHandler) {
+        APIService.get('/api/employees?role=supervisor', successHandler, errorHandler);
     };
 
     this.getAllBranches = function (successHandler, errorHandler) {

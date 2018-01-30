@@ -82,6 +82,14 @@ class UserService
 
     public function delete($id)
     {
-        return $this->repository->delete($id);
+        if (!$this->repository->delete($id)) {
+            return response()->json(['message' => 'the resource was not deleted']);
+        }
+        return response()->json(['message' => 'the resource was successfully deleted']);
+    }
+
+    public function getCategorizedEmployees($role)
+    {
+        return $this->repository->getCategorizedEmployees($role);
     }
 }

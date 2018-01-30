@@ -23,4 +23,18 @@ class UserRepository extends BaseRepository{
     {
         return $this->model->with(['roles'])->find($id);
     }
+
+    public function getCategorizedEmployees($role)
+    {
+        if($role === 'supervisor'){
+            return User::whereHas('roles', function ($query) {
+                $query->where('name', 'like', '%ADMIN%')
+                    ->orWhere('name', 'like', '%MODERATOR%');
+            })->get(['full_name', 'id']);
+        } else {
+            return User::whereHas('roles', function ($query) {
+                $query->where('name', 'like', '%USER%');
+            })->get(['full_name', 'id']);
+        }
+    }
 }

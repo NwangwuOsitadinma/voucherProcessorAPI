@@ -43582,16 +43582,6 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 templateUrl: '/app/modules/roles-and-claims/view-roles-with-claims.html',
                 controller: 'RolesAndClaimsController'
             })
-            .state('new-supervisor', {
-                url: '/new-supervisor',
-                templateUrl: '/app/modules/supervisor/new-supervisor.html',
-                controller: 'SupervisorController'
-            })
-            .state('view-supervisors', {
-                url: '/view-supervisors',
-                templateUrl: '/app/modules/supervisor/view-supervisors.html',
-                controller: 'SupervisorController'
-            })
             .state('vouchers-trail', {
                 url: '/vouchers-trail',
                 templateUrl: '/app/modules/voucher-trail/voucher-trail.html',
@@ -43738,8 +43728,8 @@ app.service('MainService', ['APIService', function (APIService) {
         $scope.page = 'update-branch';
     };
 
-    $scope.getAllUsers = function () {
-        BranchService.getAllUsers(['full_name', 'id'], function (response) {
+    $scope.getAllSupervisors = function () {
+        BranchService.getAllSupervisors(function (response) {
             $scope.users = response.data;
         }, function (response) {
             console.log("error occurred while trying to get the list of users");
@@ -43769,8 +43759,8 @@ app.service('BranchService', ['APIService', function (APIService) {
         APIService.put('/api/branch/update/' + branchId, branchDetails, successHandler, errorHandler);
     };
 
-    this.getAllUsers = function (fields, successHandler, errorHandler) {
-        APIService.get('/api/users?fields=' + fields.toString(), successHandler, errorHandler);
+    this.getAllSupervisors = function (successHandler, errorHandler) {
+        APIService.get('/api/employees?role=supervisor', successHandler, errorHandler);
     };
 }]);;app.controller('ItemController', ['$rootScope', '$scope', '$state', 'ItemService', function($rootScope, $scope, $state, ItemService) {
 
@@ -43969,6 +43959,7 @@ app.service('OfficeEntityTypeService', ['APIService', function (APIService) {
     $scope.page = 'view-office-entities';
 
     $scope.initialize = function () {
+        $scope.getAllSupervisors();
         $scope.getAllUsers();
         $scope.getAllBranches();
         $scope.getAllOfficeEntityTypes();
@@ -44044,6 +44035,14 @@ app.service('OfficeEntityTypeService', ['APIService', function (APIService) {
         $scope.page = 'update-office-entity';
     };
 
+    $scope.getAllSupervisors = function () {
+        OfficeEntityService.getAllSupervisors(function (response) {
+            $scope.supervisors = response.data;
+        }, function (response) {
+            console.log("error occurred while trying to get the list of supervisors");
+        });
+    };
+
     $scope.getAllUsers = function () {
         OfficeEntityService.getAllUsers(['full_name', 'id'], function (response) {
             $scope.users = response.data;
@@ -44098,6 +44097,10 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
         APIService.get('/api/users?fields=' + fields.toString(), successHandler, errorHandler);
     };
 
+    this.getAllSupervisors = function (successHandler, errorHandler) {
+        APIService.get('/api/employees?role=supervisor', successHandler, errorHandler);
+    };
+
     this.getAllBranches = function (successHandler, errorHandler) {
         APIService.get('/api/branches', successHandler, errorHandler);
     };
@@ -44107,7 +44110,7 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
     };
 }]);;app.controller('RolesAndClaimsController', ['$rootScope', '$scope', '$state', 'RolesAndClaimsService', function ($rootScope, $scope, $state, RolesAndClaimsService) {
 
-    var j = 0;
+    var j = 1;
 
     $scope.new_role = {};
 
@@ -44120,7 +44123,7 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
             }
         }
         if($scope.new_role.claims.length < 1) {
-            $scope.addItem();
+            $scope.errorMessage = 'Please add a claim';
             return;
         }
         RolesAndClaimsService.createRoleWithClaims($scope.new_role, function(response) {
@@ -44182,7 +44185,7 @@ app.service('RolesAndClaimsService', ['APIService', function(APIService)  {
     this.retractRoleClaims = function (roleId, claims, successHandler, errorHandler) {
         APIService.delete('/api/role-with-claims/retract-role-claims?role=' + roleId + '&claims=' + claims, successHandler, errorHandler);
     };
-}]);;;app.controller('UserController', ['$rootScope', '$scope', 'UserService', function ($rootScope, $scope, UserService) {
+}]);;app.controller('UserController', ['$rootScope', '$scope', 'UserService', function ($rootScope, $scope, UserService) {
 
     $scope.user = {};
     $scope.object = {};
@@ -44373,8 +44376,7 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
         }
         VoucherService.createVoucher($scope.voucher, function (response) {
             console.log("voucher was successfully created");
-            if ($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') $state.go('view-vouchers');
-            else $state.go('view-user-vouchers');
+            $state.go('my-vouchers');
         }, function (response) {
             console.log("error occurred while trying to create voucher");
         });
@@ -44384,6 +44386,10 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
         Pace.restart();
         VoucherService.getVoucherById(voucherId, function (response) {
             $scope.voucher = response.data;
+            $scope.voucher.totalPrice = 0;
+            for(var i = 0; i < $scope.voucher.items.length; i++) {
+                $scope.voucher.totalPrice += $scope.voucher.items[i].price;
+            }
             $scope.page = 'voucher-details';
         }, function (response) {
             console.log("error occured while getting voucher details");

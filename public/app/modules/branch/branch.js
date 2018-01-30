@@ -72,8 +72,8 @@ app.controller('BranchController', ['$rootScope', '$scope', '$state', 'BranchSer
         $scope.page = 'update-branch';
     };
 
-    $scope.getAllUsers = function () {
-        BranchService.getAllUsers(['full_name', 'id'], function (response) {
+    $scope.getAllSupervisors = function () {
+        BranchService.getAllSupervisors(function (response) {
             $scope.users = response.data;
         }, function (response) {
             console.log("error occurred while trying to get the list of users");
@@ -103,7 +103,7 @@ app.service('BranchService', ['APIService', function (APIService) {
         APIService.put('/api/branch/update/' + branchId, branchDetails, successHandler, errorHandler);
     };
 
-    this.getAllUsers = function (fields, successHandler, errorHandler) {
-        APIService.get('/api/users?fields=' + fields.toString(), successHandler, errorHandler);
+    this.getAllSupervisors = function (successHandler, errorHandler) {
+        APIService.get('/api/employees?role=supervisor', successHandler, errorHandler);
     };
 }]);

@@ -49,8 +49,7 @@ app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherS
         }
         VoucherService.createVoucher($scope.voucher, function (response) {
             console.log("voucher was successfully created");
-            if ($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') $state.go('view-vouchers');
-            else $state.go('view-user-vouchers');
+            $state.go('my-vouchers');
         }, function (response) {
             console.log("error occurred while trying to create voucher");
         });
@@ -60,6 +59,10 @@ app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherS
         Pace.restart();
         VoucherService.getVoucherById(voucherId, function (response) {
             $scope.voucher = response.data;
+            $scope.voucher.totalPrice = 0;
+            for(var i = 0; i < $scope.voucher.items.length; i++) {
+                $scope.voucher.totalPrice += $scope.voucher.items[i].price;
+            }
             $scope.page = 'voucher-details';
         }, function (response) {
             console.log("error occured while getting voucher details");

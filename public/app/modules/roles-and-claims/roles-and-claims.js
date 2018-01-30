@@ -1,6 +1,6 @@
 app.controller('RolesAndClaimsController', ['$rootScope', '$scope', '$state', 'RolesAndClaimsService', function ($rootScope, $scope, $state, RolesAndClaimsService) {
 
-    var j = 0;
+    var j = 1;
 
     $scope.new_role = {};
 
@@ -13,7 +13,7 @@ app.controller('RolesAndClaimsController', ['$rootScope', '$scope', '$state', 'R
             }
         }
         if($scope.new_role.claims.length < 1) {
-            $scope.addItem();
+            $scope.errorMessage = 'Please add a claim';
             return;
         }
         RolesAndClaimsService.createRoleWithClaims($scope.new_role, function(response) {

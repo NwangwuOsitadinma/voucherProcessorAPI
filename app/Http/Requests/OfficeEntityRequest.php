@@ -27,6 +27,7 @@ class OfficeEntityRequest extends FormRequest
             'name' => 'required',
             'lead_id' => 'required',
             'branch_id' => 'required',
+            'description' => 'required',
             'office_entity_type_id' => 'required',
             'employees' => 'required'
         ];
@@ -38,6 +39,7 @@ class OfficeEntityRequest extends FormRequest
             'name' => $this->name,
             'lead_id' => $this->lead_id,
             'branch_id' => $this->branch_id,
+            'description' => $this->description,
             'office_entity_type_id' => $this->office_entity_type_id,
         ];
     }
