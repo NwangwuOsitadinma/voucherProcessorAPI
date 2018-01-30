@@ -69,10 +69,12 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::put('/voucher/approve/{voucherId}', 'VoucherController@approveVoucher')->middleware('approve-voucher');
     Route::put('/voucher/paid/{voucherId}', 'VoucherController@hasPaidVoucher')->middleware('pay-voucher');
 
+    Route::get('/voucher-trails', 'VoucherTrailController@getAllVoucherTrails')->middleware('admin');
+
     Route::get('/users', 'UserController@getAllUsers');
     Route::get('/user/{id}', 'UserController@getById');
     Route::put('/user/update/{id}', 'UserController@update');
-    Route::delete('/user/delete/{id}', 'UserController@delete')->middleware('moderator');
+    Route::delete('/user/delete/{id}', 'UserController@delete')->middleware('admin');
 
     Route::get('/roles', 'RolesAndClaimsController@getAllRoles');
 

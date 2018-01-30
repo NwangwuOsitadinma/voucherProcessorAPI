@@ -1,7 +1,7 @@
 <!--Page Title-->
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <div id="page-title" data-ng-init="getOfficeEntityTypes()">
-    <h1 class="page-header text-overflow">View Office Entity Types</h1>
+    <h1 class="page-header text-overflow">View Unit Types</h1>
 
     <!--Searchbox-->
     <div class="searchbox">
@@ -25,14 +25,11 @@
     <li>
         <a href="#">Home</a>
     </li>
-    <li>
-        <a href="#">Forms</a>
-    </li>
     <li class="active" data-ng-show="page == 'office-entity-type-details' || page == 'update-office-entity-type'">
-        <a href="javascript:void(0)" data-ng-click="page = 'view-office-entity-types'">View Office Entity Types</a>
+        <a href="javascript:void(0)" data-ng-click="page = 'view-office-entity-types'">View Unit Types</a>
     </li>
     <li class="active" data-ng-show="page == 'view-office-entity-types'">
-        View Office Entity Types
+        View Unit Types
     </li>
 </ol>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -49,7 +46,7 @@
         <div class="col-sm-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title">View registered office entities</h3>
+                    <h3 class="panel-title">View registered units</h3>
                 </div>
 
                 <!-- Foo Table - Pagination -->
@@ -158,7 +155,7 @@
         <div class="col-sm-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Update office entity type</h3>
+                    <h3 class="panel-title">Update unit type</h3>
                 </div>
 
                 <!--Block Styled Form -->
@@ -170,7 +167,7 @@
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label class="control-label">Name</label>
-                                        <input type="text" data-ng-model="officeEntityType.name" name="name" class="form-control">
+                                        <input type="text" data-ng-model="officeEntityType.name" name="name" class="form-control" required>
                                     </div>
                                 </div>
                             </div>

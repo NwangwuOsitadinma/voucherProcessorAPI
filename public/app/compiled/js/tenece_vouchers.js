@@ -43581,8 +43581,12 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 url: '/view-claims',
                 templateUrl: '/app/modules/roles-and-claims/view-roles-with-claims.html',
                 controller: 'RolesAndClaimsController'
+            })
+            .state('voucher-trail', {
+                url: '/vouchers-trail',
+                templateUrl: '/app/modules/voucher-trail/voucher-trail.html',
+                controller: 'VoucherTrailController'
             });
-            
 
     }]);
 
@@ -44105,6 +44109,10 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
                 $scope.new_role.claims.push($('#itemName' + i).val());
             }
         }
+        if($scope.new_role.claims.length < 1) {
+            $scope.addItem();
+            return;
+        }
         RolesAndClaimsService.createRoleWithClaims($scope.new_role, function(response) {
             console.log("role was successfully created");
             $state.go('view-users');
@@ -44281,6 +44289,29 @@ app.service('UserService', ['APIService', function (APIService) {
     this.assignRole = function (details, successHandler, errorHandler) {
         APIService.put('/api/role-with-claims/assign', details, successHandler, errorHandler);
     };
+}]);;app.controller('VoucherTrailController', ['$rootScope', '$scope', '$state', 'VoucherTrailService',
+        function($rootScope, $scope, $state, VoucherTrailService) {
+
+    $scope.voucherTrails = [];
+
+    $scope.getVoucherTrails = function () {
+        if ($rootScope.role == 'ADMIN') {
+            VoucherTrailService.getVoucherTrails(function (response) {
+                $scope.voucherTrails = response.data;
+            }, function (response) {
+                console.error("error occurred while trying to fetch the voucher trails");
+            });
+        } else {
+            return;
+        }
+    };
+}]);
+
+app.service('VoucherTrailService', ['APIService', function (APIService) {
+
+    this.getVoucherTrails = function (successHandler, errorHandler) {
+        APIService.get('/api/voucher-trails', successHandler, errorHandler);
+    };
 }]);;app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherService', function ($rootScope, $scope, $state, VoucherService) {
 
     var j = 0;
@@ -44322,6 +44353,10 @@ app.service('UserService', ['APIService', function (APIService) {
                 // console.log(item);
                 $scope.voucher.items.push(item);
             }
+        }
+        if($scope.voucher.items.length < 1) {
+            $scope.addItem();
+            return;
         }
         VoucherService.createVoucher($scope.voucher, function (response) {
             console.log("voucher was successfully created");
