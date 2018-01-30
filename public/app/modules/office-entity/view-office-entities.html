@@ -1,7 +1,7 @@
 <!--Page Title-->
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <div id="page-title" data-ng-init="getOfficeEntities()">
-    <h1 class="page-header text-overflow">View Office Entities</h1>
+    <h1 class="page-header text-overflow">View Units</h1>
 
     <!--Searchbox-->
     <div class="searchbox">
@@ -25,14 +25,11 @@
     <li>
         <a href="#">Home</a>
     </li>
-    <li>
-        <a href="#">Forms</a>
-    </li>
     <li class="active" data-ng-show="page == 'office-entity-details' || page == 'update-office-entity'">
-        <a href="javascript:void(0)" data-ng-click="page = 'view-office-entities'">View Office Entities</a>
+        <a href="javascript:void(0)" data-ng-click="page = 'view-office-entities'">View Units</a>
     </li>
     <li class="active" data-ng-show="page == 'view-office-entities'">
-        View Office Entities
+        View Units
     </li>
 </ol>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -49,7 +46,7 @@
         <div class="col-sm-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title">View registered office entities</h3>
+                    <h3 class="panel-title">View registered units</h3>
                 </div>
 
                 <!-- Foo Table - Pagination -->
@@ -184,7 +181,7 @@
         <div class="col-sm-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Update new office entity</h3>
+                    <h3 class="panel-title">Update the unit</h3>
                 </div>
 
                 <!--Block Styled Form -->
@@ -195,14 +192,14 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Name</label>
-                                    <input type="text" data-ng-model="officeEntity.name" name="name" class="form-control">
+                                    <input type="text" data-ng-model="officeEntity.name" name="name" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="control-label">Office Entity Lead</label>
-                                    <select name="lead_id" data-ng-model="officeEntity.lead_id" id="demo-nav-offcanvas" class="form-control">
-                                        <option value="none" selected disabled="disabled">-- Select Mode --</option>
+                                    <label class="control-label">Unit Lead</label>
+                                    <select name="lead_id" data-ng-model="officeEntity.lead_id" id="demo-nav-offcanvas" class="form-control" required>
+                                        <option value="" selected disabled="disabled">-- Select the unit's lead --</option>
                                         <option value="<% user.id %>" data-ng-repeat="user in users" data-ng-selected="user.id == officeEntity.lead_id">
                                             <% user.full_name %>
                                         </option>
@@ -214,8 +211,8 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Select Branch</label>
-                                    <select name="branch_id" data-ng-model="officeEntity.branch_id" id="demo-nav-offcanvas" class="form-control">
-                                        <option value="none" selected disabled="disabled">-- Select Mode --</option>
+                                    <select name="branch_id" data-ng-model="officeEntity.branch_id" id="demo-nav-offcanvas" class="form-control" required>
+                                        <option value="" selected disabled="disabled">-- Select the branch --</option>
                                         <option value="<% branch.id%>" data-ng-repeat="branch in branches" data-ng-selected="branch.id == officeEntity.branch_id">
                                             <% branch.name %>
                                         </option>
@@ -224,9 +221,9 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label class="control-label">Select the type of office entity</label>
-                                    <select name="office_entity_type_id" data-ng-model="officeEntity.office_entity_type_id" id="demo-nav-offcanvas" class="form-control">
-                                        <option value="none" selected disabled="disabled">-- Select Mode --</option>
+                                    <label class="control-label">Select the type of unit</label>
+                                    <select name="office_entity_type_id" data-ng-model="officeEntity.office_entity_type_id" id="demo-nav-offcanvas" class="form-control" required>
+                                        <option value="" selected disabled="disabled">-- Select the unit type --</option>
                                         <option value="<% officeEntityType.id %>" data-ng-repeat="officeEntityType in officeEntityTypes" data-ng-selected="officeEntityType.id == officeEntity.office_entity_type_id">
                                             <% officeEntityType.name %>
                                         </option>

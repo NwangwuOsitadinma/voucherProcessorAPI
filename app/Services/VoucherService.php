@@ -19,11 +19,13 @@ class VoucherService
     protected $repository;
     protected $departmentService;
 
-    public function __construct(VoucherRepository $voucherRepository, DepartmentService $departmentService, ItemService $itemService)
+    public function __construct(VoucherRepository $voucherRepository, DepartmentService $departmentService, 
+                ItemService $itemService, VoucherTrailService $voucherTrailService)
     {
         $this->repository = $voucherRepository;
         $this->departmentService = $departmentService;
         $this->itemService = $itemService;
+        $this->voucherTrailService = $voucherTrailService;
     }
 
     public function getAll(int $n = null, array $fields = null)
@@ -73,14 +75,21 @@ class VoucherService
     }
 
 
-    public function approveVoucher($voucherId, $voucherStatus = 'Waiting')
+    public function approveVoucher($voucherId, $userId, $voucherStatus = 'Waiting')
     {
         $voucher = [
             'status' => $voucherStatus
         ];
-        if (!$this->repository->update($voucherId, $voucher)) {
+        $voucher = $this->repository->update($voucherId, $voucher);
+        // return response()->json($voucher);
+        if (!$voucher) {
             return response()->json(['message' => 'the resource was not updated', 'data' => $voucher], 500);
         }
+        $voucherTrail = [
+            'voucher_id' => $voucher,
+            'response_by_id' => $userId
+        ];
+        $this->voucherTrailService->create($voucherTrail);
         return response()->json(['message' => 'the resource was successfully updated', 'data' => $voucher], 200);
     }
 
@@ -118,8 +127,4 @@ class VoucherService
             ? $officeEntityVouchers
             : response()->json(['message' => 'the resource you requested was not found']);
     }
-
-
-
-
 }

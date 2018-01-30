@@ -25,9 +25,6 @@
     <li>
         <a href="#">Home</a>
     </li>
-    <li>
-        <a href="#">Forms</a>
-    </li>
     <li class="active" data-ng-show="page == 'item-details' || page == 'update-item'">
         <a href="javascript:void(0)" data-ng-click="page = 'view-items'">View Items</a>
     </li>
@@ -175,13 +172,13 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Name</label>
-                                    <input type="text" data-ng-model="item.name" name="name" class="form-control">
+                                    <input type="text" data-ng-model="item.name" name="name" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Price</label>
-                                    <input type="text" data-ng-model="item.price" name="price" class="form-control">
+                                    <input type="text" data-ng-model="item.price" name="price" class="form-control" required>
                                 </div>
                             </div>
                         </div>
@@ -189,8 +186,8 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Select Voucher</label>
-                                    <select name="voucher_id" data-ng-model="item.voucher_id" id="demo-nav-offcanvas" class="form-control">
-                                        <option value="-1" selected disabled="disabled">-- Select Mode --</option>
+                                    <select name="voucher_id" data-ng-model="item.voucher_id" id="demo-nav-offcanvas" class="form-control" required>
+                                        <option value="" selected disabled="disabled">-- Select the voucher --</option>
                                         <option value="<% voucher.id %>" data-ng-repeat="voucher in vouchers" data-ng-selected="voucher.id == item.voucher_id">
                                             <% voucher.voucher_number %>
                                         </option>

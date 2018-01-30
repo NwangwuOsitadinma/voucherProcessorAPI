@@ -98,8 +98,12 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 url: '/view-claims',
                 templateUrl: '/app/modules/roles-and-claims/view-roles-with-claims.html',
                 controller: 'RolesAndClaimsController'
+            })
+            .state('voucher-trail', {
+                url: '/vouchers-trail',
+                templateUrl: '/app/modules/voucher-trail/voucher-trail.html',
+                controller: 'VoucherTrailController'
             });
-            
 
     }]);
 

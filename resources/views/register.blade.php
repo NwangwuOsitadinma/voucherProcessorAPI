@@ -125,6 +125,7 @@
             <div class="cls-content-lg panel">
                 <div class="panel-body">
                     <div class="mar-ver pad-btm">
+                        <img src="http://tenece.com/ten/img/logo.png"><br><br>
                         <h3 class="h4 mar-no">Create a New Account</h3>
                         <p class="text-muted">Tenece Voucher proccessing! Let's set up your account.</p>
                     </div>
@@ -136,7 +137,7 @@
                                     <input type="text" class="form-control" placeholder="Full Name" name="full_name" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Employee Id" name="employee_id" required>
+                                    <input type="text" class="form-control" placeholder="Employee Id" minlength="10" maxlength="10" name="employee_id" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -150,7 +151,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <select name="sex" id="demo-nav-offcanvas" class="form-control" required>
-                                        <option value="none" selected disabled="disabled">-- Select Gender --</option>
+                                        <option value="" selected disabled="disabled">-- Select Gender --</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
@@ -159,7 +160,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <select id="demo-nav-offcanvas1" name="office_entity" class="form-control" required>
-                                        <option value="none" selected disabled="disabled">-- Select Office Entity --</option>
+                                        <option value="" selected disabled="disabled">-- Select Office Entity --</option>
                                         @foreach($officeEntities as $officeEntity)
                                         <option value="{{ $officeEntity->id }}">
                                             {{ $officeEntity->name }}
@@ -169,12 +170,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="checkbox pad-btm text-left">
+                        <!-- <div class="checkbox pad-btm text-left">
                             <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox">
                             <label for="demo-form-checkbox">I agree with the
                                 <a href="#" class="btn-link">Terms and Conditions</a>
                             </label>
-                        </div>
+                        </div> -->
                         <button class="btn btn-primary btn-block" type="submit">Register</button>
                     </form>
                 </div>
@@ -182,7 +183,7 @@
                     Already have an account ?
                     <a href="/login" class="btn-link mar-rgt">Sign In</a>
 
-                    <div class="media pad-top bord-top">
+                    <!-- <div class="media pad-top bord-top">
                         <div class="pull-right">
                             <a href="#" class="pad-rgt">
                                 <i class="demo-psi-facebook icon-lg text-primary"></i>
@@ -194,7 +195,7 @@
                                 <i class="demo-psi-google-plus icon-lg text-danger"></i>
                             </a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

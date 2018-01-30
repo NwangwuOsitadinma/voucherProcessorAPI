@@ -144,7 +144,7 @@
                 <!--================================-->
                 <div class="navbar-header">
                     <a href="index.html" class="navbar-brand">
-                        <img src="img/logo.png" alt="Nifty Logo" class="brand-icon">
+                        <img src="http://tenece.com/ten/img/logo.png" alt="Tenece Logo" class="brand-icon">
                         <div class="brand-title">
                             <span class="brand-text">Tenece</span>
                         </div>
@@ -182,14 +182,14 @@
                             <!--Notification dropdown menu-->
                             <div class="dropdown-menu dropdown-menu-md">
                                 <div class="pad-all bord-btm">
-                                    <p class="text-semibold text-main mar-no">You have 9 notifications.</p>
+                                    <p class="text-semibold text-main mar-no">You have no new notifications.</p>
                                 </div>
                                 <div class="nano scrollable">
                                     <div class="nano-content">
-                                        <ul class="head-list">
+                                        <!-- <ul class="head-list"> -->
 
                                             <!-- Dropdown list-->
-                                            <li>
+                                            <!-- <li>
                                                 <a href="#">
                                                     <div class="clearfix">
                                                         <p class="pull-left">Database Repair</p>
@@ -201,10 +201,10 @@
                                                         </div>
                                                     </div>
                                                 </a>
-                                            </li>
+                                            </li> -->
 
                                             <!-- Dropdown list-->
-                                            <li>
+                                            <!-- <li>
                                                 <a href="#">
                                                     <div class="clearfix">
                                                         <p class="pull-left">Upgrade Progress</p>
@@ -216,10 +216,10 @@
                                                         </div>
                                                     </div>
                                                 </a>
-                                            </li>
+                                            </li> -->
 
                                             <!-- Dropdown list-->
-                                            <li>
+                                            <!-- <li>
                                                 <a class="media" href="#">
                                                     <span class="badge badge-success pull-right">90%</span>
                                                     <div class="media-left">
@@ -230,10 +230,10 @@
                                                         <small class="text-muted">50 minutes ago</small>
                                                     </div>
                                                 </a>
-                                            </li>
+                                            </li> -->
 
                                             <!-- Dropdown list-->
-                                            <li>
+                                            <!-- <li>
                                                 <a class="media" href="#">
                                                     <div class="media-left">
                                                         <i class="demo-pli-file-edit icon-2x"></i>
@@ -243,10 +243,10 @@
                                                         <small class="text-muted">Last Update 8 hours ago</small>
                                                     </div>
                                                 </a>
-                                            </li>
+                                            </li> -->
 
                                             <!-- Dropdown list-->
-                                            <li>
+                                            <!-- <li>
                                                 <a class="media" href="#">
                                                     <span class="label label-danger pull-right">New</span>
                                                     <div class="media-left">
@@ -257,10 +257,10 @@
                                                         <small class="text-muted">Last Update 8 hours ago</small>
                                                     </div>
                                                 </a>
-                                            </li>
+                                            </li> -->
 
                                             <!-- Dropdown list-->
-                                            <li>
+                                            <!-- <li>
                                                 <a class="media" href="#">
                                                     <div class="media-left">
                                                         <i class="demo-pli-add-user-plus-star icon-2x"></i>
@@ -270,10 +270,10 @@
                                                         <small class="text-muted">4 minutes ago</small>
                                                     </div>
                                                 </a>
-                                            </li>
+                                            </li> -->
 
                                             <!-- Dropdown list-->
-                                            <li class="bg-gray">
+                                            <!-- <li class="bg-gray">
                                                 <a class="media" href="#">
                                                     <div class="media-left">
                                                         <img class="img-circle img-sm" alt="Profile Picture" src="img/profile-photos/9.png">
@@ -283,10 +283,10 @@
                                                         <small class="text-muted">30 minutes ago</small>
                                                     </div>
                                                 </a>
-                                            </li>
+                                            </li> -->
 
                                             <!-- Dropdown list-->
-                                            <li class="bg-gray">
+                                            <!-- <li class="bg-gray">
                                                 <a class="media" href="#">
                                                     <div class="media-left">
                                                         <img class="img-circle img-sm" alt="Profile Picture" src="img/profile-photos/3.png">
@@ -296,8 +296,8 @@
                                                         <small class="text-muted">40 minutes ago</small>
                                                     </div>
                                                 </a>
-                                            </li>
-                                        </ul>
+                                            </li> -->
+                                        <!-- </ul> -->
                                     </div>
                                 </div>
 
@@ -524,7 +524,7 @@
                             <div class="dropdown-menu dropdown-menu-md dropdown-menu-right panel-default">
 
                                 <!-- Dropdown heading  -->
-                                <div class="pad-all bord-btm">
+                                <!-- <div class="pad-all bord-btm">
                                     <p class="text-main mar-btm">
                                         <span class="text-bold">750GB</span> of 1,000GB Used</p>
                                     <div class="progress progress-sm">
@@ -532,7 +532,7 @@
                                             <span class="sr-only">70%</span>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 
 
                                 <!-- User dropdown menu -->
@@ -542,7 +542,7 @@
                                             <i class="demo-pli-male icon-lg icon-fw"></i> Profile
                                         </a>
                                     </li>
-                                    <li>
+                                    <!-- <li>
                                         <a href="#">
                                             <span class="badge badge-danger pull-right">9</span>
                                             <i class="demo-pli-mail icon-lg icon-fw"></i> Messages
@@ -563,7 +563,7 @@
                                         <a href="#">
                                             <i class="demo-pli-computer-secure icon-lg icon-fw"></i> Lock screen
                                         </a>
-                                    </li>
+                                    </li> -->
                                 </ul>
 
                                 <!-- Dropdown footer -->
@@ -936,12 +936,12 @@
                                         <a href="#" class="list-group-item">
                                             <i class="demo-pli-male icon-lg icon-fw"></i> View Profile
                                         </a>
-                                        <a href="#" class="list-group-item">
+                                        <!-- <a href="#" class="list-group-item">
                                             <i class="demo-pli-gear icon-lg icon-fw"></i> Settings
                                         </a>
                                         <a href="#" class="list-group-item">
                                             <i class="demo-pli-information icon-lg icon-fw"></i> Help
-                                        </a>
+                                        </a> -->
                                         <form action="/logout" method="post">
                                             {{ csrf_field() }}
                                             <button type="submit" class="list-group-item">
@@ -1015,7 +1015,10 @@
                                             </li>
                                             @if($user && $user->can('approve-voucher'))
                                             <li>
-                                                <a href="javascript:;" ui-sref="view-vouchers">View Vouchers</a>
+                                                <a href="javascript:;" ui-sref="view-user-vouchers">My Vouchers</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;" ui-sref="view-vouchers">View All Vouchers</a>
                                             </li>
                                             @else
                                             <li>
@@ -1029,6 +1032,20 @@
                                     <!--Menu list item-->
                                     @if($user && ($user->isAn('ADMIN') || $user->isA('MODERATOR')))
                                     <li>
+                                        <a href="javascript:;" ui-sref="voucher-trail">
+                                            <i class="demo-psi-computer-secure"></i>
+                                            <span class="menu-title">
+                                                <strong>Voucher Trail</strong>
+                                            </span>
+                                            <!-- <i class="arrow"></i> -->
+                                        </a>
+
+                                    </li>
+                                    @endif
+
+                                    <!--Menu list item-->
+                                    @if($user && ($user->isAn('ADMIN') || $user->isA('MODERATOR')))
+                                    <li>
                                         <a href="#">
                                             <i class="demo-psi-gear-2"></i>
                                             <span class="menu-title">
@@ -1038,18 +1055,18 @@
                                         </a>
                                         <!--Submenu-->
                                         <ul class="collapse">
-                                            <li>
+                                            <!-- <li>
                                                 <a href="javascript:;">Roles <i class="arrow"></i></a>
-                                                <ul class="collapse">
+                                                <ul class="collapse"> -->
                                                     <li>
                                                         <a href="javascript:;" ui-sref="new-role">New Role</a>
                                                     </li>
-                                                    <li>
+                                                    <!-- <li>
                                                         <a href="javascript:;" ui-sref="view-roles">View Role</a>
                                                     </li>
                                                 </ul>
-                                            </li>
-                                            <li>
+                                            </li> -->
+                                            <!-- <li>
                                                 <a href="javascript:;">Claims <i class="arrow"></i></a>
                                                 <ul class="collapse">
                                                     <li>
@@ -1059,7 +1076,7 @@
                                                         <a href="javascript:;" ui-sref="view-claims">View Claims</a>
                                                     </li>
                                                 </ul>
-                                            </li>
+                                            </li> -->
 
                                         </ul>
                                     </li>
@@ -1136,6 +1153,7 @@
                                     @endif
 
                                     <!--Menu list item-->
+                                    @if($user && ($user->isAn('ADMIN')))
                                     <li>
                                         <a href="#">
                                             <i class="demo-psi-male"></i>
@@ -1152,6 +1170,7 @@
 
                                         </ul>
                                     </li>
+                                    @endif
 
                                     <li class="list-divider"></li>
 

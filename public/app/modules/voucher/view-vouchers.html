@@ -25,9 +25,6 @@
     <li>
         <a href="#">Home</a>
     </li>
-    <li>
-        <a href="#">Forms</a>
-    </li>
     <li class="active" data-ng-show="page == 'voucher-details' || page == 'update-voucher'">
         <a href="javascript:void(0)" data-ng-click="page = 'view-vouchers'">View Vouchers</a>
     </li>
@@ -63,7 +60,8 @@
                                 <th data-hide="all">Status</th>
                                 <th data-hide="all">Reason</th>
                                 <th data-hide="all">Paid</th>
-                                <th data-hide="all">Actions</th>
+                                <th data-hide="all">Time stamp</th>
+                                <!-- <th data-hide="all">Actions</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -96,16 +94,21 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <select name="status" data-ng-model="voucherUpdate.status" data-ng-change="approveVoucher(voucher.id)">
+                                    <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
+                                        <span data-ng-bind="voucher.updated_at"></span>
+                                    </a>
+                                </td>
+                                <!-- <td> -->
+                                    <!-- <select name="status" data-ng-model="voucherUpdate.status" data-ng-change="approveVoucher(voucher.id)">
                                         <option value="Accepted" ng-selected="voucher.status == 'Accepted'">Accepted</option>
                                         <option value="Declined" ng-selected="voucher.status == 'Declined'">Declined</option>
                                         <option value="Waiting" ng-selected="voucher.status == 'Waiting'">Waiting</option>
-                                    </select>
+                                    </select> -->
                                     <!-- <a href="javascript:void(0)" data-ng-click="deleteVoucher(voucher.id)">
                                         <span class="label label-table label-danger">
                                             <i class="fa fa-trash"></i> Delete</span>
                                     </a> -->
-                                </td>
+                                <!-- </td> -->
                             </tr>
                         </tbody>
                         <tfoot>
@@ -229,8 +232,8 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Office Entity</label>
-                                    <select id="demo-nav-offcanvas" data-ng-model="voucher.office_entity_id" name="office_entity_id" class="form-control">
-                                        <option value="none" selected disabled="disabled">-- Select Mode --</option>
+                                    <select id="demo-nav-offcanvas" data-ng-model="voucher.office_entity_id" name="office_entity_id" class="form-control" required>
+                                        <option value="" selected disabled="disabled">-- Select Mode --</option>
                                         <option value="<% officeEntity.id %>" data-ng-repeat="officeEntity in officeEntities" data-ng-selected="officeEntity.id == voucher.office_entity_id">
                                             <% officeEntity.name %>
                                         </option>
@@ -243,13 +246,14 @@
                                 <div class="form-group">
                                     <label class="control-label" for="description-textarea-input">Description</label>
                                     <textarea id="description-textarea-input" data-ng-model="voucher.description" rows="9" class="form-control" name="description"
-                                        placeholder="Your description here.."></textarea>
+                                        placeholder="Your description for the voucher here.." required></textarea>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label" for="reason-textarea-input">Reason</label>
-                                    <textarea id="reason-textarea-input" data-ng-model="voucher.reason" rows="9" class="form-control" name="reason" placeholder="Your reason here.."></textarea>
+                                    <textarea id="reason-textarea-input" data-ng-model="voucher.reason" rows="9" class="form-control" name="reason" placeholder="Your reason for the voucher here.."
+                                        required></textarea>
                                 </div>
                             </div>
                         </div>

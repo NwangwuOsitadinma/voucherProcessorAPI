@@ -25,9 +25,6 @@
     <li>
         <a href="#">Home</a>
     </li>
-    <li>
-        <a href="#">Forms</a>
-    </li>
     <li class="active" data-ng-show="page == 'branch-details' || page == 'update-branch'">
         <a href="javascript:void(0)" data-ng-click="page = 'view-branches'">View Branches</a>
     </li>
@@ -188,14 +185,14 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Name</label>
-                                    <input type="text" data-ng-model="branch.name" name="name" class="form-control">
+                                    <input type="text" data-ng-model="branch.name" name="name" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Branch Finance Head</label>
-                                    <select name="finance_head" data-ng-model="branch.finance_head_id" id="demo-nav-offcanvas" class="form-control">
-                                        <option value="none" selected disabled="disabled">-- Select Mode --</option>
+                                    <select name="finance_head" data-ng-model="branch.finance_head_id" id="demo-nav-offcanvas" class="form-control" required>
+                                        <option value="" selected disabled="disabled">-- Select the branch finance head --</option>
                                         <option value="<% user.id %>" data-ng-repeat="user in users" data-ng-selected="user.id == branch.finance_head_id">
                                             <% user.full_name %>
                                         </option>
@@ -207,8 +204,8 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Who pays for vouchers in this branch</label>
-                                    <select name="payer" data-ng-model="branch.payer_id" id="demo-nav-offcanvas" class="form-control">
-                                        <option value="none" selected disabled="disabled">-- Select Mode --</option>
+                                    <select name="payer" data-ng-model="branch.payer_id" id="demo-nav-offcanvas" class="form-control" required>
+                                        <option value="" selected disabled="disabled">-- Select the voucher payer in this branch --</option>
                                         <option value="<% user.id %>" data-ng-repeat="user in users" data-ng-selected="user.id == branch.payer_id">
                                             <% user.full_name %>
                                         </option>
@@ -218,7 +215,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Location</label>
-                                    <input type="text" data-ng-model="branch.location" name="name" class="form-control">
+                                    <input type="text" data-ng-model="branch.location" name="name" class="form-control" required>
                                 </div>
                             </div>
                         </div>
@@ -226,7 +223,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Description of this branch</label>
-                                    <textarea name="description" data-ng-model="branch.description" class="form-control"></textarea>
+                                    <textarea name="description" data-ng-model="branch.description" class="form-control" placeholder="Description for the branch" required></textarea>
                                 </div>
                             </div>
                         </div>
