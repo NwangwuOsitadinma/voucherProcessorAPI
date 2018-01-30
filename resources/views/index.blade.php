@@ -1082,6 +1082,28 @@
                                     </li>
                                     @endif
 
+                                    <!--Menu list item-->
+                                    @if($user && $user->isA('MODERATOR'))
+                                    <li>
+                                        <a href="#">
+                                            <i class="demo-psi-consulting"></i>
+                                            <span class="menu-title">
+                                                <strong>Supervisors</strong>
+                                            </span>
+                                            <i class="arrow"></i>
+                                        </a>
+                                        <!--Submenu-->
+                                        <ul class="collapse">
+                                            <li>
+                                                <a href="javascript:;" ui-sref="new-supervisor">New Supervisor</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;" ui-sref="view-supervisors">View Supervisors</a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                    @endif
 
                                     <!--Menu list item-->
                                     @if($user && $user->can('create-branch'))

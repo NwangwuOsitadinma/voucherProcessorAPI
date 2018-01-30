@@ -43582,6 +43582,16 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 templateUrl: '/app/modules/roles-and-claims/view-roles-with-claims.html',
                 controller: 'RolesAndClaimsController'
             })
+            .state('new-supervisor', {
+                url: '/new-supervisor',
+                templateUrl: '/app/modules/supervisor/new-supervisor.html',
+                controller: 'SupervisorController'
+            })
+            .state('view-supervisors', {
+                url: '/view-supervisors',
+                templateUrl: '/app/modules/supervisor/view-supervisors.html',
+                controller: 'SupervisorController'
+            })
             .state('vouchers-trail', {
                 url: '/vouchers-trail',
                 templateUrl: '/app/modules/voucher-trail/voucher-trail.html',
@@ -44172,7 +44182,7 @@ app.service('RolesAndClaimsService', ['APIService', function(APIService)  {
     this.retractRoleClaims = function (roleId, claims, successHandler, errorHandler) {
         APIService.delete('/api/role-with-claims/retract-role-claims?role=' + roleId + '&claims=' + claims, successHandler, errorHandler);
     };
-}]);;app.controller('UserController', ['$rootScope', '$scope', 'UserService', function ($rootScope, $scope, UserService) {
+}]);;;app.controller('UserController', ['$rootScope', '$scope', 'UserService', function ($rootScope, $scope, UserService) {
 
     $scope.user = {};
     $scope.object = {};
@@ -44314,7 +44324,7 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
     };
 }]);;app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherService', function ($rootScope, $scope, $state, VoucherService) {
 
-    var j = 0;
+    var j = 1;
 
     $scope.voucher = {};
     $scope.vouchers = [];
@@ -44346,21 +44356,24 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
         Pace.restart();
         for (var i = 0; i < j; i++) {
             if ($('#itemName' + i).val() && $('#itemPrice' + i).val()) {
+                if (parseInt($('#itemPrice' + i).val()) < 1) {
+                    $scope.voucher.items = [];
+                    return;
+                }
                 var item = {
                     'name': $('#itemName' + i).val(),
                     'price': $('#itemPrice' + i).val()
                 };
-                // console.log(item);
                 $scope.voucher.items.push(item);
             }
         }
         if($scope.voucher.items.length < 1) {
-            $scope.addItem();
+            $scope.errorMessage = 'Please add an item and fill in the item values';
             return;
         }
         VoucherService.createVoucher($scope.voucher, function (response) {
             console.log("voucher was successfully created");
-            if($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') $state.go('view-vouchers');
+            if ($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') $state.go('view-vouchers');
             else $state.go('view-user-vouchers');
         }, function (response) {
             console.log("error occurred while trying to create voucher");
@@ -44438,7 +44451,7 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
             '</div>\n' +
             '<div class="col-sm-5">\n' +
             '<div class="form-group">\n' +
-            '<input class="form-control" id="itemPrice' + j + '" name="price[]" type="number" placeholder="Item Price" required>\n' +
+            '<input class="form-control" id="itemPrice' + j + '" name="price[]" type="number" min="1" placeholder="Item Price" required>\n' +
             '</div>' +
             '</div>' +
             '<div class="col-sm-1">\n' +
@@ -44459,7 +44472,6 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
     };
 
     $scope.removeItem = function (n) {
-        console.log('sup i just got to remove item');
         $('#item_' + n).html('');
     };
 

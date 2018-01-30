@@ -42,7 +42,7 @@ class UserService
     {
         $user = $this->repository->create($request->getAttributesArray());
         if (!$user) {
-            return back()->withInput();
+            return back()->withInput()->withErrors(['registerError' => 'user was not successfully registered']);
         }
         return $this->rolesAndClaimsService->assignRole($user, $role) != null
             ? $this->authenticate($request->email, $request->password) 

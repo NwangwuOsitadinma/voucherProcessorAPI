@@ -30,7 +30,7 @@ class UserController extends Controller
         if ($this->service->authenticate($request->email, $request->password)) {
             return redirect()->intended('/');
         } else {
-            return back()->withInput();
+            return back()->withInput()->withErrors(['loginError' => 'invalid username or password']);
         }
     }
 

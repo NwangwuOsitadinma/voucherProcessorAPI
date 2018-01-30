@@ -99,6 +99,16 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 templateUrl: '/app/modules/roles-and-claims/view-roles-with-claims.html',
                 controller: 'RolesAndClaimsController'
             })
+            .state('new-supervisor', {
+                url: '/new-supervisor',
+                templateUrl: '/app/modules/supervisor/new-supervisor.html',
+                controller: 'SupervisorController'
+            })
+            .state('view-supervisors', {
+                url: '/view-supervisors',
+                templateUrl: '/app/modules/supervisor/view-supervisors.html',
+                controller: 'SupervisorController'
+            })
             .state('vouchers-trail', {
                 url: '/vouchers-trail',
                 templateUrl: '/app/modules/voucher-trail/voucher-trail.html',
