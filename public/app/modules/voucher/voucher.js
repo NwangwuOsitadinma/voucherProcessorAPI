@@ -73,7 +73,7 @@ app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherS
         Pace.restart();
         VoucherService.deleteVoucher(voucherId, function (response) {
             console.log("voucher was successfully updated");
-            $scope.getVouchers();
+            $scope.getUserVouchers();
         }, function (response) {
             console.log("error occurred while trying to delete the voucher");
         });
