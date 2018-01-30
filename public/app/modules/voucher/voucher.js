@@ -1,6 +1,6 @@
 app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherService', function ($rootScope, $scope, $state, VoucherService) {
 
-    var j = 0;
+    var j = 1;
 
     $scope.voucher = {};
     $scope.vouchers = [];
@@ -32,22 +32,24 @@ app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherS
         Pace.restart();
         for (var i = 0; i < j; i++) {
             if ($('#itemName' + i).val() && $('#itemPrice' + i).val()) {
+                if (parseInt($('#itemPrice' + i).val()) < 1) {
+                    $scope.voucher.items = [];
+                    return;
+                }
                 var item = {
                     'name': $('#itemName' + i).val(),
                     'price': $('#itemPrice' + i).val()
                 };
-                // console.log(item);
                 $scope.voucher.items.push(item);
             }
         }
         if($scope.voucher.items.length < 1) {
-            $scope.addItem();
+            $scope.errorMessage = 'Please add an item and fill in the item values';
             return;
         }
         VoucherService.createVoucher($scope.voucher, function (response) {
             console.log("voucher was successfully created");
-            if($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') $state.go('view-vouchers');
-            else $state.go('view-user-vouchers');
+            $state.go('my-vouchers');
         }, function (response) {
             console.log("error occurred while trying to create voucher");
         });
@@ -57,6 +59,10 @@ app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherS
         Pace.restart();
         VoucherService.getVoucherById(voucherId, function (response) {
             $scope.voucher = response.data;
+            $scope.voucher.totalPrice = 0;
+            for(var i = 0; i < $scope.voucher.items.length; i++) {
+                $scope.voucher.totalPrice += $scope.voucher.items[i].price;
+            }
             $scope.page = 'voucher-details';
         }, function (response) {
             console.log("error occured while getting voucher details");
@@ -124,7 +130,7 @@ app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherS
             '</div>\n' +
             '<div class="col-sm-5">\n' +
             '<div class="form-group">\n' +
-            '<input class="form-control" id="itemPrice' + j + '" name="price[]" type="number" placeholder="Item Price" required>\n' +
+            '<input class="form-control" id="itemPrice' + j + '" name="price[]" type="number" min="1" placeholder="Item Price" required>\n' +
             '</div>' +
             '</div>' +
             '<div class="col-sm-1">\n' +
@@ -145,7 +151,6 @@ app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherS
     };
 
     $scope.removeItem = function (n) {
-        console.log('sup i just got to remove item');
         $('#item_' + n).html('');
     };
 

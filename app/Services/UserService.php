@@ -42,7 +42,7 @@ class UserService
     {
         $user = $this->repository->create($request->getAttributesArray());
         if (!$user) {
-            return back()->withInput();
+            return back()->withInput()->withErrors(['registerError' => 'user was not successfully registered']);
         }
         return $this->rolesAndClaimsService->assignRole($user, $role) != null
             ? $this->authenticate($request->email, $request->password) 
@@ -82,6 +82,14 @@ class UserService
 
     public function delete($id)
     {
-        return $this->repository->delete($id);
+        if (!$this->repository->delete($id)) {
+            return response()->json(['message' => 'the resource was not deleted']);
+        }
+        return response()->json(['message' => 'the resource was successfully deleted']);
+    }
+
+    public function getCategorizedEmployees($role)
+    {
+        return $this->repository->getCategorizedEmployees($role);
     }
 }

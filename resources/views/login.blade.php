@@ -126,12 +126,15 @@
                         <img src="http://tenece.com/ten/img/logo.png"><br><br>
                         <h3 class="h4 mar-no">Tenece Voucher Processing</h3>
                         <p class="text-muted">Sign In to your account</p>
+                        @if($errors->any())
+                        <span style="color:red;">{{ $errors->first() }}</span>
+                        @endif
                     </div>
                     <form method="post" action="{{ route('login') }}">
 
                     {{ csrf_field() }}
                         <div class="form-group">
-                            <input type="text" name="email" value="{{ old('email')}}" class="form-control" placeholder="Email Address" required autofocus>
+                            <input type="email" name="email" value="{{ old('email')}}" class="form-control" placeholder="Email Address" required autofocus>
                         </div>
                         <div class="form-group">
                             <input type="password" name="password" class="form-control" placeholder="Password" required>

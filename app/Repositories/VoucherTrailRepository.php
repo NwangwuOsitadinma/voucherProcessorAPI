@@ -16,7 +16,7 @@ class VoucherTrailRepository extends BaseRepository
 
     public function getAllVoucherTrails()
     {
-        return $this->model->with(['voucher.office_entity', 'voucher.user', 'response_by'])->get();
+        return $this->model->with(['voucher.office_entity', 'voucher.user', 'response_by'])->orderBy('updated_at', 'desc')->get();
     }
 
     public function getById($id)

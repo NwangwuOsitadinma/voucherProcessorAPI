@@ -128,6 +128,9 @@
                         <img src="http://tenece.com/ten/img/logo.png"><br><br>
                         <h3 class="h4 mar-no">Create a New Account</h3>
                         <p class="text-muted">Tenece Voucher proccessing! Let's set up your account.</p>
+                        @if($errors->any())
+                        <span style="color:red;">{{ $errors-first() }}</span>
+                        @endif
                     </div>
                     <form action="/user/register" method="post">
                     {{ csrf_field() }}
@@ -142,7 +145,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="E-mail Address" name="email" required>
+                                    <input type="email" class="form-control" placeholder="E-mail Address" name="email" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="password" class="form-control" placeholder="Password" name="password" required>
