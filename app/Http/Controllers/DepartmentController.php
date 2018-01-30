@@ -10,7 +10,8 @@ namespace App\Http\Controllers;
 
 
 use App\Services\DepartmentService;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
+use App\Http\Requests\DepartmentRequest;
 
 class DepartmentController extends Controller
 {
@@ -22,9 +23,11 @@ class DepartmentController extends Controller
         $this->service = $departmentService;
     }
 
-    public function getAll()
+    public function getAll(Request $request)
     {
-        return $this->service->getAll(5);
+        $n = $request->input('n') ?: null;
+        $fields = $request->input('fields') ? explode(',', $request->input('fields')) : null;
+        return $this->service->getAll($n, $fields);
     }
 
     public function getById($id)
@@ -32,23 +35,13 @@ class DepartmentController extends Controller
         return $this->service->getById($id);
     }
 
-    public function create(Request $request)
+    public function create(DepartmentRequest $request)
     {
-        $required = [
-            'name' => 'required',
-            'office_entity_type' => 'required'
-        ];
-        $this->validate($request, $required);
         return $this->service->create($request);
     }
 
-    public function update($id, Request $request)
+    public function update($id, DepartmentRequest $request)
     {
-        $required = [
-            'name' => 'required',
-            'office_entity_type' => 'required'
-        ];
-        $this->validate($request, $required);
         return $this->service->update($id, $request);
     }
 

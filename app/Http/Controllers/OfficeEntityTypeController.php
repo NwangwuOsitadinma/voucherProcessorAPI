@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\Services\OfficeEntityTypeService;
 use Illuminate\Http\Request;
+use App\Http\Requests\OfficeEntityTypeRequest;
 
 class OfficeEntityTypeController extends Controller
 {
@@ -21,9 +22,11 @@ class OfficeEntityTypeController extends Controller
         $this->service = $service;
     }
 
-    public function index()
+    public function getAllOfficeEntityTypes(Request $request)
     {
-        return $this->service->getEntityTypes(5);
+        $n = $request->input('n') ?: null;
+        $fields = $request->input('fields') ? explode(',', $request->input('fields')) : null;
+        return $this->service->getEntityTypes($n, $fields);
     }
 
     public function show($id)
@@ -31,17 +34,13 @@ class OfficeEntityTypeController extends Controller
         return $this->service->getEntityType($id);
     }
 
-    public function create(Request $request)
+    public function create(OfficeEntityTypeRequest $request)
     {
-        $data = ['name' => 'required'];
-        $this->validate($request, $data);
         return $this->service->createEntityType($request);
     }
 
-    public function update($id, Request $request)
+    public function update($id, OfficeEntityTypeRequest $request)
     {
-        $data = ['name' => 'required'];
-        $this->validate($request, $data);
         return $this->service->updateEntityType($id, $request);
     }
 

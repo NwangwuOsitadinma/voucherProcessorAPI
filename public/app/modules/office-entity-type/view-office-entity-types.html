@@ -1,0 +1,193 @@
+<!--Page Title-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<div id="page-title" data-ng-init="getOfficeEntityTypes()">
+    <h1 class="page-header text-overflow">View Unit Types</h1>
+
+    <!--Searchbox-->
+    <div class="searchbox">
+        <div class="input-group custom-search-form">
+            <input type="text" class="form-control" placeholder="Search..">
+            <span class="input-group-btn">
+                <button class="text-muted" type="button">
+                    <i class="demo-pli-magnifi-glass"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--End page title-->
+
+
+<!--Breadcrumb-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li>
+        <a href="#">Home</a>
+    </li>
+    <li class="active" data-ng-show="page == 'office-entity-type-details' || page == 'update-office-entity-type'">
+        <a href="javascript:void(0)" data-ng-click="page = 'view-office-entity-types'">View Unit Types</a>
+    </li>
+    <li class="active" data-ng-show="page == 'view-office-entity-types'">
+        View Unit Types
+    </li>
+</ol>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--End breadcrumb-->
+
+
+
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content" data-ng-show="page == 'view-office-entity-types'">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">View registered units</h3>
+                </div>
+
+                <!-- Foo Table - Pagination -->
+                <!--===================================================-->
+                <div class="panel-body">
+                    <table id="demo-foo-pagination" class="table table-hover toggle-arrow-tiny" data-page-size="5">
+                        <thead>
+                            <tr>
+                                <th data-toggle="true">Name</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="officeEntityType in officeEntityTypes">
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getOfficeEntityTypeDetails(officeEntityType.id)">
+                                        <span data-ng-bind="officeEntityType.name"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="deleteOfficeEntityType(officeEntityType.id)">
+                                        <span class="label label-table label-danger">
+                                            <i class="fa fa-trash"></i> Delete</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="text-right">
+                                        <ul class="pagination"></ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!--===================================================-->
+                <!-- End Foo Table - Pagination -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--===================================================-->
+<!--End page content-->
+
+<div id="page-content" data-ng-show="page == 'office-entity-type-details'">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title" data-ng-bind="officeEntityType.name"></h3>
+                </div>
+
+                <!-- Foo Table - Pagination -->
+                <!--===================================================-->
+                <div class="panel-body">
+                    <div class="col-sm-12 col-md-12">
+
+                        <!--Profile Widget-->
+                        <!--===================================================-->
+                        <div class="panel">
+                            <div class="panel-body text-center">
+                                <!-- <img alt="Profile Picture" class="img-md img-circle mar-btm" src="img/profile-photos/1.png"> -->
+                                <p class="text-lg text-semibold mar-no text-main" data-ng-bind="officeEntityType.name"></p>
+                                <p class="text-sm" data-ng-bind="officeEntityType.description"> </p>
+                                <button class="btn btn-primary mar-ver" data-ng-click="getUpdatePage()">
+                                    <i class="demo-pli-check icon-fw"></i>Update</button>
+                                <!-- <ul class="list-unstyled text-center bord-top pad-top mar-no row">
+                                    <li class="col-xs-4">
+                                        <span class="text-lg text-semibold text-main">1,345</span>
+                                        <p class="text-muted mar-no">Following</p>
+                                    </li>
+                                    <li class="col-xs-4">
+                                        <span class="text-lg text-semibold text-main">23K</span>
+                                        <p class="text-muted mar-no">Followers</p>
+                                    </li>
+                                    <li class="col-xs-4">
+                                        <span class="text-lg text-semibold text-main">278</span>
+                                        <p class="text-muted mar-no">Post</p>
+                                    </li>
+                                </ul> -->
+                            </div>
+                        </div>
+                        <!--===================================================-->
+
+
+                    </div>
+                </div>
+                <!--===================================================-->
+                <!-- End Foo Table - Pagination -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content" data-ng-show="page == 'update-office-entity-type'">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Update unit type</h3>
+                </div>
+
+                <!--Block Styled Form -->
+                <!--===================================================-->
+                <div style="margin-right:20%;margin-left:20%">
+                    <form>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label class="control-label">Name</label>
+                                        <input type="text" data-ng-model="officeEntityType.name" name="name" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="panel-footer text-right">
+                            <div class="col-sm-3">
+                                <button class="btn btn-warning pull-left" data-ng-click="page = 'office-entity-type-details'">
+                                    <i class="fa fa-times"></i> Cancel</button>
+                            </div>
+                            <button class="btn btn-success" data-ng-click="updateOfficeEntityType()" type="submit">Update</button>
+                        </div>
+                    </form>
+                </div>
+                <!--===================================================-->
+                <!--End Block Styled Form -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--===================================================-->
+<!--End page content-->

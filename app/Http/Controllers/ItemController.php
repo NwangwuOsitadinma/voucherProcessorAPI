@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\Services\ItemService;
 use Illuminate\Http\Request;
+use App\Http\Requests\ItemRequest;
 
 class ItemController extends Controller
 {
@@ -22,9 +23,11 @@ class ItemController extends Controller
         $this->service = $itemService;
     }
 
-    public function getAllItems()
+    public function getAllItems(Request $request)
     {
-        return $this->service->getAll(5);
+        $n = $request->input('n') ?: null;
+        $fields = $request->input('fields') ? explode(',', $request->input('fields')) : null;
+        return $this->service->getAll($n, $fields);
     }
 
     public function getById($id)
@@ -36,14 +39,8 @@ class ItemController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function create(Request $request)
+    public function create(ItemRequest $request)
     {
-        $required = [
-            'name' => 'required',
-            'price' => 'required',
-            'voucher' => 'required'
-        ];
-        $this->validate($request, $required);
         return $this->service->create($request);
     }
 
@@ -52,14 +49,8 @@ class ItemController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function update($id, Request $request)
+    public function update($id, ItemRequest $request)
     {
-        $required = [
-            'name' => 'required',
-            'price' => 'required',
-            'voucher' => 'required'
-        ];
-        $this->validate($request, $required);
         return $this->service->update($id, $request);
     }
 

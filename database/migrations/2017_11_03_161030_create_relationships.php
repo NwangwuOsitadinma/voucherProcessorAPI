@@ -19,21 +19,11 @@ class CreateRelationships extends Migration
                 ->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            /*$table->foreign('office_entity_type_id')
-                ->references('id')
-                ->on('office_entity_types')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');*/
             $table->foreign('office_entity_id')
                 ->references('id')
                 ->on('office_entities')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            /*$table->foreign('department_id')
-                ->references('id')
-                ->on('departments')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');*/
         });
 
         Schema::table('items', function (Blueprint $table) {
@@ -62,26 +52,14 @@ class CreateRelationships extends Migration
                 ->onDelete('cascade');
         });
 
-        Schema::table('users', function (Blueprint $table) {
-            /*$table->foreign('department_id')
-                ->references('id')
-                ->on('departments')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');*/
-            $table->foreign('office_entity_id')
-                ->references('id')
-                ->on('office_entities')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-        });
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->foreign('office_entities')
+        //         ->references('id')
+        //         ->on('office_entities')
+        //         ->onUpdate('cascade')
+        //         ->onDelete('cascade');
+        // });
 
-        /*Schema::table('departments', function (Blueprint $table) {
-            $table->foreign('office_entity_type_id')
-                ->references('id')
-                ->on('office_entity_types')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-        });*/
     }
 
     /**

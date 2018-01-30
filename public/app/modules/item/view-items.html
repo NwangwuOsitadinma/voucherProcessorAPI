@@ -1,0 +1,216 @@
+<!--Page Title-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<div id="page-title" data-ng-init="getItems()">
+    <h1 class="page-header text-overflow">View Items</h1>
+
+    <!--Searchbox-->
+    <div class="searchbox">
+        <div class="input-group custom-search-form">
+            <input type="text" class="form-control" placeholder="Search..">
+            <span class="input-group-btn">
+                <button class="text-muted" type="button">
+                    <i class="demo-pli-magnifi-glass"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--End page title-->
+
+
+<!--Breadcrumb-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li>
+        <a href="#">Home</a>
+    </li>
+    <li class="active" data-ng-show="page == 'item-details' || page == 'update-item'">
+        <a href="javascript:void(0)" data-ng-click="page = 'view-items'">View Items</a>
+    </li>
+    <li class="active" data-ng-show="page == 'view-items'">
+        View Items
+    </li>
+</ol>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--End breadcrumb-->
+
+
+
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content" data-ng-show="page == 'view-items'">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">View items that have been created</h3>
+                </div>
+
+                <!-- Foo Table - Pagination -->
+                <!--===================================================-->
+                <div class="panel-body">
+                    <table id="demo-foo-pagination" class="table table-hover toggle-arrow-tiny" data-page-size="5">
+                        <thead>
+                            <tr>
+                                <th data-toggle="true">Name</th>
+                                <th>Price</th>
+                                <th data-ng-hide="all">Actions</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="item in items">
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getItemDetails(item.id)">
+                                        <span data-ng-bind="item.name"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getItemDetails(item.id)">
+                                        <span data-ng-bind="item.price"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="deleteItem(item.id)">
+                                        <span class="label label-table label-danger">
+                                            <i class="fa fa-trash"></i> Delete</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="text-right">
+                                        <ul class="pagination"></ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!--===================================================-->
+                <!-- End Foo Table - Pagination -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--===================================================-->
+<!--End page content-->
+
+<div id="page-content" data-ng-show="page == 'item-details'">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title" data-ng-bind="item.name"></h3>
+                </div>
+
+                <!-- Foo Table - Pagination -->
+                <!--===================================================-->
+                <div class="panel-body">
+                    <div class="col-sm-12 col-md-12">
+
+                        <!--Profile Widget-->
+                        <!--===================================================-->
+                        <div class="panel">
+                            <div class="panel-body text-center">
+                                <!-- <img alt="Profile Picture" class="img-md img-circle mar-btm" src="img/profile-photos/1.png"> -->
+                                <p class="text-lg text-semibold mar-no text-main" data-ng-bind="item.name"></p>
+                                <p class="text-muted" data-ng-bind="item.price"></p>
+                                <p class="text-sm" data-ng-bind="item.voucher.voucher_number"> </p>
+                                <button class="btn btn-primary mar-ver" data-ng-click="getUpdatePage()">
+                                    <i class="demo-pli-check icon-fw"></i>Update</button>
+                                <!-- <ul class="list-unstyled text-center bord-top pad-top mar-no row">
+                                    <li class="col-xs-4">
+                                        <span class="text-lg text-semibold text-main">1,345</span>
+                                        <p class="text-muted mar-no">Following</p>
+                                    </li>
+                                    <li class="col-xs-4">
+                                        <span class="text-lg text-semibold text-main">23K</span>
+                                        <p class="text-muted mar-no">Followers</p>
+                                    </li>
+                                    <li class="col-xs-4">
+                                        <span class="text-lg text-semibold text-main">278</span>
+                                        <p class="text-muted mar-no">Post</p>
+                                    </li>
+                                </ul> -->
+                            </div>
+                        </div>
+                        <!--===================================================-->
+
+
+                    </div>
+                </div>
+                <!--===================================================-->
+                <!-- End Foo Table - Pagination -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="page-content" data-ng-show="page == 'update-item'" data-ng-init="getVouchers()">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Update Item</h3>
+                </div>
+
+                <!--Block Styled Form -->
+                <!--===================================================-->
+                <form>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Name</label>
+                                    <input type="text" data-ng-model="item.name" name="name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Price</label>
+                                    <input type="text" data-ng-model="item.price" name="price" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Select Voucher</label>
+                                    <select name="voucher_id" data-ng-model="item.voucher_id" id="demo-nav-offcanvas" class="form-control" required>
+                                        <option value="" selected disabled="disabled">-- Select the voucher --</option>
+                                        <option value="<% voucher.id %>" data-ng-repeat="voucher in vouchers" data-ng-selected="voucher.id == item.voucher_id">
+                                            <% voucher.voucher_number %>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer text-right">
+                        <div class="col-sm-3">
+                            <button class="btn btn-warning pull-left" data-ng-click="page = 'item-details'">
+                                <i class="fa fa-times"></i> Cancel</button>
+                        </div>
+                        <button class="btn btn-success" data-ng-click="updateItem()" type="submit">Update</button>
+                    </div>
+                </form>
+                <!--===================================================-->
+                <!--End Block Styled Form -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--===================================================-->
+<!--End page content-->

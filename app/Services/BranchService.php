@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Repositories\BranchRepository;
 use Illuminate\Http\Request;
+use App\Http\Requests\BranchRequest;
 
 
 class BranchService
@@ -22,9 +23,9 @@ class BranchService
         $this->repository = $branchRepository;
     }
 
-    public function getAll($n)
+    public function getAll(int $n = null, array $fields = null)
     {
-        $branches = $this->repository->getAll($n);
+        $branches = $this->repository->getAll($n, $fields);
         return $branches
             ? $branches
             : response()->json(['message' => 'the resource you requested was not found']);
@@ -38,28 +39,20 @@ class BranchService
             : response()->json(['message' => 'the resource you requested was not found']);
     }
 
-    public function create(Request $request)
+    public function create(BranchRequest $request)
     {
-        $branch = ['name' => $request->name,
-            'finance_head_id' => $request->finance_head,
-            'payer_id' => $request->payer
-        ];
-        if (!$this->repository->create($branch)) {
-            return response()->json(['message' => 'the resource was not created', 'data' => $branch], 500);
+        if (!$this->repository->create($request->getAttributesArray())) {
+            return response()->json(['message' => 'the resource was not created', 'data' => $request->getAttributesArray()], 500);
         }
-        return response()->json(['message' => 'the resource was successfully created', 'data' => $branch], 200);
+        return response()->json(['message' => 'the resource was successfully created', 'data' => $request->getAttributesArray()], 200);
     }
 
-    public function update($id, Request $request)
+    public function update($id, BranchRequest $request)
     {
-        $branch = ['name' => $request->name,
-            'finance_head_id' => $request->finance_head,
-            'payer_id' => $request->payer
-        ];
-        if (!$this->repository->update($id, $branch)) {
-            return response()->json(['message' => 'the resource was not updated', 'data' => $branch], 500);
+        if (!$this->repository->update($id, $request->getAttributesArray())) {
+            return response()->json(['message' => 'the resource was not updated', 'data' => $request->getAttributesArray()], 500);
         }
-        return response()->json(['message' => 'the resource was successfully updated', 'data' => $branch], 200);
+        return response()->json(['message' => 'the resource was successfully updated', 'data' => $request->getAttributesArray()], 200);
     }
 
     public function delete($id)

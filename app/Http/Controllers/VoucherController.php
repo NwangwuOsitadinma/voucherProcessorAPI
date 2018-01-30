@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\Services\VoucherService;
 use Illuminate\Http\Request;
+use App\Http\Requests\VoucherRequest;
 
 class VoucherController extends Controller
 {
@@ -22,9 +23,11 @@ class VoucherController extends Controller
         $this->service = $voucherService;
     }
 
-    public function getAllVouchers()
+    public function getAllVouchers(Request $request)
     {
-        return $this->service->getAll(5);
+        $n = $request->input('n') ?: null;
+        $fields = $request->input('fields') ? explode(',', $request->input('fields')) : null;
+        return $this->service->getAll($n, $fields);
     }
 
     public function getById($id)
@@ -32,27 +35,13 @@ class VoucherController extends Controller
         return $this->service->getById($id);
     }
 
-    public function create(Request $request)
+    public function create(VoucherRequest $request)
     {
-        $required = [
-            'voucher_number' => 'required',
-            'description' => 'required',
-            'office_entity_type' => 'required',
-            'office_entity' => 'required'
-        ];
-        $this->validate($request, $required);
         return $this->service->create($request);
     }
 
-    public function update($id, Request $request)
+    public function update($id, VoucherRequest $request)
     {
-        $required = [
-            'voucher_number' => 'required',
-            'description' => 'required',
-            'office_entity_type' => 'required',
-            'office_entity' => 'required'
-        ];
-        $this->validate($request, $required);
         return $this->service->update($id, $request);
     }
 
@@ -78,9 +67,9 @@ class VoucherController extends Controller
         return $this->service->getPayableVouchers();
     }
 
-    public function approveVoucher($voucherId)
+    public function approveVoucher($voucherId, Request $request)
     {
-        return $this->service->approveVoucher($voucherId);
+        return $this->service->approveVoucher($voucherId, $request->user()->id, $request->status);
     }
 
     public function hasPaidVoucher($voucherId)

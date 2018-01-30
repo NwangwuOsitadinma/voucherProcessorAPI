@@ -1,0 +1,157 @@
+<!--Page Title-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<div id="page-title" data-ng-init="getAllUsers()">
+    <h1 class="page-header text-overflow">View All Users</h1>
+
+    <!--Searchbox-->
+    <div class="searchbox">
+        <div class="input-group custom-search-form">
+            <input type="text" class="form-control" placeholder="Search..">
+            <span class="input-group-btn">
+                <button class="text-muted" type="button">
+                    <i class="demo-pli-magnifi-glass"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--End page title-->
+
+
+<!--Breadcrumb-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li>
+        <a href="#">Home</a>
+    </li>
+    <li class="active" data-ng-show="page == 'user-details'">
+        <a href="javascript:void(0)" data-ng-click="page = 'view-users'">View All Users</a>
+    </li>
+    <li class="active" data-ng-show="page == 'view-users'">
+        View All Users
+    </li>
+</ol>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--End breadcrumb-->
+
+
+
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content" data-ng-show="page == 'view-users'">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">View registered users</h3>
+                </div>
+
+                <!-- Foo Table - Pagination -->
+                <!--===================================================-->
+                <div class="panel-body">
+                    <table id="demo-foo-pagination" class="table table-hover toggle-arrow-tiny" data-page-size="5">
+                        <thead>
+                            <tr>
+                                <th data-toggle="true">Full Name</th>
+                                <th>Email</th>
+                                <th>Employee Id</th>
+                                <th>Gender</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="user in users">
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getUserDetails(user.id)">
+                                        <span data-ng-bind="user.full_name"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getUserDetails(user.id)">
+                                        <span data-ng-bind="user.email"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getUserDetails(user.id)">
+                                        <span data-ng-bind="user.employee_id"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getUserDetails(user.id)">
+                                        <span data-ng-bind="user.sex"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="deleteUser(user.id)">
+                                        <span class="label label-table label-danger">
+                                            <i class="fa fa-trash"></i> Delete</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="text-right">
+                                        <ul class="pagination"></ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!--===================================================-->
+                <!-- End Foo Table - Pagination -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--===================================================-->
+<!--End page content-->
+
+<div id="page-content" data-ng-show="page == 'user-details'" data-ng-init="getAllRoles()">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title" data-ng-bind="user.full_name"></h3>
+                </div>
+
+                <!-- Foo Table - Pagination -->
+                <!--===================================================-->
+                <div class="panel-body">
+                    <div class="col-sm-12 col-md-12">
+
+                        <!--Profile Widget-->
+                        <!--===================================================-->
+                        <div class="panel">
+                            <div class="panel-body text-center">
+                                <!-- <img alt="Profile Picture" class="img-md img-circle mar-btm" src="img/profile-photos/1.png"> -->
+                                <p class="text-lg text-semibold mar-no text-main" data-ng-bind="object.user.full_name"></p>
+                                <p class="text-sm" data-ng-bind="object.user.email"> </p>
+                                <p class="text-sm" data-ng-bind="object.user.employee_id"> </p>
+                                <p class="text-sm" data-ng-bind="object.user.sex"> </p>
+                                <select name="role" data-ng-model="object.role" id="demo-nav-offcanvas" data-ng-change="assignRoleToUser();" class="form-control" data-ng-repeat="role in object.user.roles" required>
+                                    <option value="<% role.name%>" data-ng-repeat="role in roles" data-ng-selected="role.name === object.role">
+                                        <% role.name %>
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--===================================================-->
+
+
+                    </div>
+                </div>
+                <!--===================================================-->
+                <!-- End Foo Table - Pagination -->
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -16,9 +16,10 @@ class CreateOfficeEntitiesTable extends Migration
         Schema::create('office_entities', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('lead_id')->unsigned();
+            $table->integer('lead_id')->unsigned()->nullable();
             $table->integer('branch_id')->unsigned();
             $table->integer('office_entity_type_id')->unsigned();
+            $table->string('description');
             $table->timestamps();
         });
     }

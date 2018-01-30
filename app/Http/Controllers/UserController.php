@@ -10,7 +10,9 @@ namespace App\Http\Controllers;
 
 
 use App\Services\UserService;
+use App\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
@@ -22,9 +24,21 @@ class UserController extends Controller
         $this->service = $userService;
     }
 
-    public function getAllUsers()
+    public function login(Request $request)
     {
-        return $this->service->getAll(5);
+        return response()->json($request);
+        if ($this->service->authenticate($request->email, $request->password)) {
+            return redirect()->intended('/');
+        } else {
+            return back()->withInput();
+        }
+    }
+
+    public function getAllUsers(Request $request)
+    {
+        $n = $request->input('n') ?: null;
+        $fields = $request->input('fields') ? explode(',', $request->input('fields')) : null;
+        return $this->service->getAll($n, $fields);
     }
 
     public function getById($id)
@@ -32,22 +46,24 @@ class UserController extends Controller
         return $this->service->getById($id);
     }
 
-    public function update($id, Request $request)
+    public function create(UserRequest $request)
     {
-        $required = [
-            'firstName' => 'required',
-            'lastName' => 'required',
-            'emailAddress' => 'required',
-            'password' => 'required',
-            'sex' => 'required',
-            'officeEntity' => 'required'
-        ];
-        $this->validate($request, $required);
+        return $this->service->create($request, 'USER');
+    }
+
+    public function update($id, UserRequest $request)
+    {
         return $this->service->update($id, $request);
     }
 
     public function delete($id)
     {
         return $this->service->delete($id);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return redirect('/login');
     }
 }

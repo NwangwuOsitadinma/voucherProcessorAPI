@@ -1,0 +1,89 @@
+<!--Page Title-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<div id="page-title">
+        <h1 class="page-header text-overflow">New Role With Claims</h1>
+    
+        <!--Searchbox-->
+        <!-- <div class="searchbox">
+            <div class="input-group custom-search-form">
+                <input type="text" class="form-control" placeholder="Search..">
+                <span class="input-group-btn">
+                    <button class="text-muted" type="button">
+                        <i class="demo-pli-magnifi-glass"></i>
+                    </button>
+                </span>
+            </div>
+        </div> -->
+    </div>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <!--End page title-->
+    
+    
+    <!--Breadcrumb-->
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <ol class="breadcrumb">
+        <li>
+            <a href="#">Home</a>
+        </li>
+        <li class="active">New Role With Claims</li>
+    </ol>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <!--End breadcrumb-->
+    
+    
+    
+    
+    <!--Page content-->
+    <!--===================================================-->
+    <div id="page-content">
+    
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Create a new Role</h3>
+                    </div>
+    
+                    <!--Block Styled Form -->
+                    <!--===================================================-->
+                    <form>
+                        <div class="panel-body" id="items">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="control-label">Role Name</label>
+                                        <input type="text" data-ng-model="new_role.role" name="role" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="item_0">
+                            </div>
+                        </div>
+    
+                        <div class="panel-footer text-right">
+                            <div class="col-sm-4">
+                                <button class="btn btn-info pull-left" data-ng-click="addItem()" id="add_item">
+                                    <i class="demo-pli-add"></i> Add Claim</button>
+                                <button class="btn btn-danger pull-right" data-ng-click="deleteLastItem()" type="button" id="delete_item">
+                                    <i class="demo-pli-remove"></i> Remove Last Claim</button>
+                            </div>
+    
+                            <button class="btn btn-success" data-ng-click="createRoleWithClaims()" type="submit">Submit</button>
+                        </div>
+                    </form>
+                    <!--===================================================-->
+                    <!--End Block Styled Form -->
+    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--===================================================-->
+    <!--End page content-->
+    
+    <script type="text/javascript">
+        
+        function removeItem(n) {
+            $('#item_' + n).html('');
+        }
+    </script>

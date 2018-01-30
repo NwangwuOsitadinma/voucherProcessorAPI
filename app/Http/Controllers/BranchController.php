@@ -12,6 +12,7 @@ namespace App\Http\Controllers;
 
 use App\Services\BranchService;
 use Illuminate\Http\Request;
+use App\Http\Requests\BranchRequest;
 
 class BranchController extends Controller
 {
@@ -23,9 +24,11 @@ class BranchController extends Controller
         $this->service = $branchService;
     }
 
-    public function getAllBranches()
+    public function getAllBranches(Request $request)
     {
-        return $this->service->getAll(5);
+        $n = $request->input('n') ?: null;
+        $fields = $request->input('fields') ? explode(',', $request->input('fields')) : null;
+        return $this->service->getAll($n, $fields);
     }
 
     public function getById($id)
@@ -33,25 +36,13 @@ class BranchController extends Controller
         return $this->service->getById($id);
     }
 
-    public function create(Request $request)
+    public function create(BranchRequest $request)
     {
-        $required = [
-            'name' => 'required',
-            'finance_head' => 'required',
-            'payer' => 'required'
-        ];
-        $this->validate($request, $required);
         return $this->service->create($request);
     }
 
-    public function update($id, Request $request)
+    public function update($id, BranchRequest $request)
     {
-        $required = [
-            'name' => 'required',
-            'finance_head' => 'required',
-            'payer' => 'required'
-        ];
-        $this->validate($request, $required);
         return $this->service->update($id, $request);
     }
 

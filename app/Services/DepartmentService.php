@@ -10,7 +10,7 @@ namespace App\Services;
 
 
 use App\Repositories\DepartmentRepository;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class DepartmentService
 {
@@ -22,9 +22,9 @@ class DepartmentService
         $this->repository = $repository;
     }
 
-    public function getAll($n)
+    public function getAll(int $n = null, array $fields = null)
     {
-        return $this->repository->getAll($n);
+        return $this->repository->getAll($n, $fields);
     }
 
     public function getById($id)

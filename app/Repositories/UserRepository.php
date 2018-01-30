@@ -18,4 +18,9 @@ class UserRepository extends BaseRepository{
     public function __construct(User $user){
         $this->model = $user;
     }
+
+    public function getById($id)
+    {
+        return $this->model->with(['roles'])->find($id);
+    }
 }

@@ -9,20 +9,23 @@
 namespace App\Services;
 
 
+use App\Models\OfficeEntityUser;
 use App\Repositories\OfficeEntityRepository;
+use App\Repositories\OfficeEntityUserRepository;
 use Illuminate\Http\Request;
-use function MongoDB\BSON\toJSON;
+use App\Http\Requests\OfficeEntityRequest;
 
 class OfficeEntityService
 {
     protected $repository;
 
-    public function __construct(OfficeEntityRepository $repository)
+    public function __construct(OfficeEntityRepository $repository, OfficeEntityUserRepository $officeEntityUserRepository)
     {
         $this->repository = $repository;
+        $this->officeEntityUserRepository = $officeEntityUserRepository;
     }
 
-    public function getEntities($n)
+    public function getEntities($n = null)
     {
         if (!$this->repository->getAll($n)) {
             return response()->json(['message' => 'the resource you requested was not found']);
@@ -38,42 +41,29 @@ class OfficeEntityService
         return $this->repository->getById($id);
     }
 
-    public function createEntity(Request $request)
+    public function createEntity(OfficeEntityRequest $request)
     {
-        $c = ['name' => $request->name,
-            'lead_id' => $request->lead,
-            'branch_id' => $request->branch,
-            'office_entity_type_id' => $request->office_entity_type,
-        ];
-        if (!$this->repository->create($c)) {
-            return response()->json(['message' => 'the resource was not created', 'data' => $c], 500);
+        $createdOfficeEntity = $this->repository->create($request->getAttributesArray());
+        if (!$createdOfficeEntity) {
+            return response()->json(['message' => 'the resource was not created', 'data' => $request->getAttributesArray()], 500);
         }
-        return response()->json(['message' => 'the resource was successfully created', 'data' => $c], 200);
+        $employees = $request->employees;
+        foreach($employees as $userId){
+            $officeEntityUser = new OfficeEntityUser();
+            $officeEntityUser->userId = $userId;
+            $officeEntityUser->officeEntityId = $createdOfficeEntity->id;
+            $this->officeEntityUserRepository->create($officeEntityUser->getAttributesArray());
+        }
+        
+        return response()->json(['message' => 'the resource was successfully created', 'data' => $request->getAttributesArray()], 200);
     }
-    public  function updateEntity($id, Request $request){
-        $data = ['name' => $request->name,
-            'lead_id' => $request->lead,
-            'branch_id' => $request->branch,
-            'office_entity_type_id' => $request->office_entity_type,
-        ];
+    public  function updateEntity($id, OfficeEntityRequest $request)
+    {
         if(!$this->repository->getById($id)){
             return response()->json(['message' => 'The resource you requested was not found']);
         }
-        $this->repository->update($id, $data);
-        return response()->json(['message' => 'The update was successful', $data]);
-    }
-
-    public function update($id, Request $request)
-    {
-        $officeEntityType = ['name' => $request->name,
-            'lead_id' => $request->lead,
-            'branch_id' => $request->branch,
-            'office_entity_type' => $request->office_entity_type
-        ];
-        if (!$this->repository->update($id, $officeEntityType)) {
-            return response()->json(['message' => 'the resource was not updated', 'data' => $officeEntityType], 500);
-        }
-        return response()->json(['message' => 'the resource was successfully updated', 'data' => $officeEntityType], 200);
+        $this->repository->update($id, $request->getAttributesArray());
+        return response()->json(['message' => 'The update was successful', $request->getAttributesArray()]);
     }
 
     public function delete($id)
@@ -83,6 +73,4 @@ class OfficeEntityService
         }
         return response()->json(['message' => 'the resource was successfully deleted'], 200);
     }
-
-
 }

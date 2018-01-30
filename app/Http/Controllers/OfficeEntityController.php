@@ -11,6 +11,7 @@ namespace App\Http\Controllers;
 
 use App\Services\OfficeEntityService;
 use Illuminate\Http\Request;
+use App\Http\Requests\OfficeEntityRequest;
 
 class OfficeEntityController extends Controller
 {
@@ -21,9 +22,11 @@ class OfficeEntityController extends Controller
         $this->service = $entityService;
     }
 
-    public function index()
+    public function getAllEntities(Request $request)
     {
-        return $this->service->getEntities(5);
+        $n = $request->input('n') ?: null;
+        $fields = $request->input('fields') ? explode(',', $request->input('fields')) : null;
+        return $this->service->getEntities($n, $fields);
     }
 
     public function show($id)
@@ -31,38 +34,13 @@ class OfficeEntityController extends Controller
         return $this->service->getEntity($id);
     }
 
-    public function create(Request $request)
+    public function create(OfficeEntityRequest $request)
     {
-        $r = [
-            'name' => 'required',
-            'lead' => 'required',
-            'branch' => 'required',
-            'office_entity_type' => 'required'
-        ];
-        $this->validate($request, $r);
         return $this->service->createEntity($request);
     }
-    public function update($id, Request $request){
-        $r = [
-            'name' => 'required',
-            'lead' => 'required',
-            'branch' => 'required',
-            'office_entity_type' => 'required'
-        ];
-        $this->validate($request, $r);
-        return $this->service->updateEntity($id, $request);
-    }
-
-    public function update($id, Request $request)
+    public function update($id, OfficeEntityRequest $request)
     {
-        $required = [
-            'name' => 'required',
-            'lead' => 'required',
-            'branch' => 'required',
-            'office_entity_type' => 'required'
-        ];
-        $this->validate($request, $required);
-        return $this->service->update($id, $request);
+        return $this->service->updateEntity($id, $request);
     }
 
     public function delete($id)

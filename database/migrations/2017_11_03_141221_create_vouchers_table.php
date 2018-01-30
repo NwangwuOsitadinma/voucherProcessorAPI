@@ -18,9 +18,7 @@ class CreateVouchersTable extends Migration
             $table->string('voucher_number');
             $table->string('description')->nullable(true);
             $table->integer('user_id')->unsigned();
-//            $table->integer('office_entity_type_id')->unsigned();
             $table->integer('office_entity_id')->unsigned();
-//            $table->integer('department_id')->unsigned();
             $table->enum('status', ['Accepted', 'Declined', 'Waiting'])->default('Waiting');
             $table->string('reason');
             $table->boolean('paid')->default(false);

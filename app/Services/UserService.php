@@ -9,22 +9,51 @@
 namespace App\Services;
 
 
+use App\Http\Requests\UserRequest;
 use App\Repositories\UserRepository;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
+use Auth;
 
 class UserService
 {
 
     private $repository;
+    private $rolesAndClaimsService;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, RolesAndClaimsService $rolesAndClaimsService)
     {
         $this->repository = $userRepository;
+        $this->rolesAndClaimsService = $rolesAndClaimsService;
     }
 
-    public function getAll($n)
+    public function authenticate($email, $password, $rememberMe = false)
     {
-        return $this->repository->getAll($n);
+        return Auth::attempt(['email' => $email, 'password' => $password], $rememberMe);
+    }
+    
+    public function confirmUserDetails($email, $password)
+    {
+        $user = $this->repository->getOneByParam('email_address', $email);
+        return $user && Hash::check($password, $user->password) ? $user : null;
+    }
+
+    public function create(UserRequest $request, $role)
+    {
+        $user = $this->repository->create($request->getAttributesArray());
+        if (!$user) {
+            return back()->withInput();
+        }
+        return $this->rolesAndClaimsService->assignRole($user, $role) != null
+            ? $this->authenticate($request->email, $request->password) 
+                ? redirect()->intended('/')
+                : redirect('/login')
+            : redirect('/login');
+    }
+    
+    public function getAll(int $n = null, array $fields = null)
+    {
+        return $this->repository->getAll($n, $fields);
     }
 
     public function getById($id)
@@ -37,31 +66,15 @@ class UserService
         return $this->repository->getByParam($param, $value);
     }
 
-    public function create(Request $request)
+    public function updateUserRole($user, $newRole, $previousRole)
     {
-        $user = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password
-        ];
-        if (!$this->repository->create($user)) {
-            return response()->json(['message' => 'the resource was not created', 'data' => $user], 500);
-        }
-        return response()->json(['message' => 'the resource was successfully created', 'data' => $user], 200);
+        return $this->rolesAndClaimsService->retractUserRole($user, $previousRole)
+        && $this->rolesAndClaimsService->assignRole($user, $newRole) != null;
     }
 
-    public function update($id, Request $request)
+    public function update($id, UserRequest $request)
     {
-        $user = [
-            'first_name' => $request->firstName,
-            'last_name' => $request->lastName,
-            'email_address' => $request->emailAddress,
-            'password' => $request->password,
-            'sex' => $request->sex,
-//            'department_id' => $request->department,
-            'office_entity_id' => $request->officeEntity
-        ];
-        if (!$this->repository->update($id, $user)) {
+        if (!$this->repository->update($id, $request->getAttributesArray())) {
             return response()->json(['message' => 'the resource was not updated', 'data' => $user], 500);
         }
         return response()->json(['message' => 'the resource was successfully updated', 'data' => $user], 200);

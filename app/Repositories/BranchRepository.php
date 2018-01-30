@@ -21,4 +21,9 @@ class BranchRepository extends BaseRepository
         $this->model = $branch;
     }
 
+    public function getById($id)
+    {
+        return $this->model->with(['finance_head', 'payer'])->find($id);
+    }
+
 }

@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+
+class User
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        $user = $request->user();
+        if($user && ($user->isA('USER') || $user->isA('MODERATOR') || $user->isAn('ADMIN'))){
+            return $next($request);
+        }
+        return redirect()->back()->intended('/');
+    }
+}

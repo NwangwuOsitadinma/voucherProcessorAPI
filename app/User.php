@@ -2,16 +2,15 @@
 
 namespace App;
 
-use App\Models\OfficeEntity;
-use Illuminate\Auth\Authenticatable;
-use Laravel\Lumen\Auth\Authorizable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Silber\Bouncer\Database\HasRolesAndAbilities;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract
+use App\Models\OfficeEntity;
+
+class User extends Authenticatable
 {
-    use Authenticatable, Authorizable;
+    use Notifiable, HasRolesAndAbilities;
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +18,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'full_name', 'email', 'employee_id', 'password', 'sex',
     ];
 
     /**
@@ -31,14 +30,22 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'password',
     ];
 
-    public function office_entity()
+    public function setValues($fullName, $email, $employee_id, $sex, $id = null)
     {
-        return $this->belongsTo(OfficeEntity::class);
+        $this->id = $id;
+        $this->full_name = $fullName;
+        $this->email = $email;
+        $this->employee_id = $employee_id;
+        $this->sex = $sex;
+    }
+
+    public function office_entities()
+    {
+        return $this->hasMany(OfficeEntity::class);
     }
 
     public function voucher()
     {
         return $this->belongsTo(User::class);
     }
-
 }

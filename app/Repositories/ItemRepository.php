@@ -17,5 +17,10 @@ class ItemRepository extends BaseRepository
     {
         $this->model = $item;
     }
+
+    public function getById($id)
+    {
+        return $this->model->with(['voucher'])->find($id);
+    }
 }
 

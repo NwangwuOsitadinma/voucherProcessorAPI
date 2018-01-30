@@ -1,0 +1,248 @@
+<!--Page Title-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<div id="page-title" data-ng-init="getBranches()">
+    <h1 class="page-header text-overflow">View Branches</h1>
+
+    <!--Searchbox-->
+    <div class="searchbox">
+        <div class="input-group custom-search-form">
+            <input type="text" class="form-control" placeholder="Search..">
+            <span class="input-group-btn">
+                <button class="text-muted" type="button">
+                    <i class="demo-pli-magnifi-glass"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--End page title-->
+
+
+<!--Breadcrumb-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li>
+        <a href="#">Home</a>
+    </li>
+    <li class="active" data-ng-show="page == 'branch-details' || page == 'update-branch'">
+        <a href="javascript:void(0)" data-ng-click="page = 'view-branches'">View Branches</a>
+    </li>
+    <li class="active" data-ng-show="page == 'view-branches'">
+        View Branches
+    </li>
+</ol>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--End breadcrumb-->
+
+
+
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content" data-ng-show="page == 'view-branches'">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">View registered Tenece branches</h3>
+                </div>
+
+                <!-- Foo Table - Pagination -->
+                <!--===================================================-->
+                <div class="panel-body">
+                    <table id="demo-foo-pagination" class="table table-hover toggle-arrow-tiny">
+                        <thead>
+                            <tr>
+                                <th data-toggle="true">Name</th>
+                                <th>Location</th>
+                                <th>Description</th>
+                                <th data-hide="all">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="branch in branches">
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getBranchDetails(branch.id)">
+                                        <span data-ng-bind="branch.name"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getBranchDetails(branch.id)">
+                                        <span data-ng-bind="branch.location"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="getBranchDetails(branch.id)">
+                                        <span data-ng-bind="branch.description"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="deleteBranch(branch.id)">
+                                        <span class="label label-table label-danger">
+                                            <i class="fa fa-trash"></i> Delete</span>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="text-right">
+                                        <ul class="pagination"></ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!--===================================================-->
+                <!-- End Foo Table - Pagination -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--===================================================-->
+<!--End page content-->
+
+<div id="page-content" data-ng-show="page == 'branch-details'" data-ng-init="getAllUsers()">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title" data-ng-bind="branch.name"></h3>
+                </div>
+
+                <!-- Foo Table - Pagination -->
+                <!--===================================================-->
+                <div class="panel-body">
+                    <div class="col-sm-12 col-md-12">
+
+                        <!--Profile Widget-->
+                        <!--===================================================-->
+                        <div class="panel">
+                            <div class="panel-body text-center">
+                                <!-- <img alt="Profile Picture" class="img-md img-circle mar-btm" src="img/profile-photos/1.png"> -->
+                                <p class="text-lg text-semibold mar-no text-main" data-ng-bind="branch.name"></p>
+                                <p class="text-muted" data-ng-bind="branch.location"></p>
+                                <p class="text-sm" data-ng-bind="branch.description"> </p>
+                                <button class="btn btn-primary mar-ver" data-ng-click="getUpdatePage()">
+                                    <i class="demo-pli-check icon-fw"></i>Update</button>
+                                <hr>
+                                <table id="demo-foo-pagination1" class="table table-hover toggle-arrow-tiny text-left" data-page-size="5">
+                                    <thead>
+                                        <tr>
+                                            <th data-toggle="true">Branch Finance Head</th>
+                                            <th>Branch Payer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <span data-ng-bind="branch.finance_head.full_name"></span>
+                                            </td>
+                                            <td>
+                                                <span data-ng-bind="branch.payer.full_name"></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--===================================================-->
+
+
+                    </div>
+                </div>
+                <!--===================================================-->
+                <!-- End Foo Table - Pagination -->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content" data-ng-show="page == 'update-branch'">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Update Tenece branch</h3>
+                </div>
+
+                <!--Block Styled Form -->
+                <!--===================================================-->
+                <form>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Name</label>
+                                    <input type="text" data-ng-model="branch.name" name="name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Branch Finance Head</label>
+                                    <select name="finance_head" data-ng-model="branch.finance_head_id" id="demo-nav-offcanvas" class="form-control" required>
+                                        <option value="" selected disabled="disabled">-- Select the branch finance head --</option>
+                                        <option value="<% user.id %>" data-ng-repeat="user in users" data-ng-selected="user.id == branch.finance_head_id">
+                                            <% user.full_name %>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Who pays for vouchers in this branch</label>
+                                    <select name="payer" data-ng-model="branch.payer_id" id="demo-nav-offcanvas" class="form-control" required>
+                                        <option value="" selected disabled="disabled">-- Select the voucher payer in this branch --</option>
+                                        <option value="<% user.id %>" data-ng-repeat="user in users" data-ng-selected="user.id == branch.payer_id">
+                                            <% user.full_name %>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Location</label>
+                                    <input type="text" data-ng-model="branch.location" name="name" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">Description of this branch</label>
+                                    <textarea name="description" data-ng-model="branch.description" class="form-control" placeholder="Description for the branch" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-footer text-right">
+                        <div class="col-sm-3">
+                            <button class="btn btn-warning pull-left" data-ng-click="page = 'branch-details'">
+                                <i class="fa fa-times"></i> Cancel</button>
+                        </div>
+                        <button class="btn btn-success" data-ng-click="updateBranch()" type="submit">Update</button>
+                    </div>
+                </form>
+                <!--===================================================-->
+                <!--End Block Styled Form -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--===================================================-->
+<!--End page content-->

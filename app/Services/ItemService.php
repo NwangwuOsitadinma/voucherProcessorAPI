@@ -9,6 +9,7 @@ namespace App\Services;
 
 use App\Repositories\ItemRepository;
 use Illuminate\Http\Request;
+use App\Http\Requests\ItemRequest;
 
 
 class ItemService {
@@ -19,9 +20,9 @@ class ItemService {
         $this->repository = $itemRepository;
     }
 
-    public function getAll($n)
+    public function getAll(int $n = null, array $fields = null)
     {
-        $branches = $this->repository->getAll($n);
+        $branches = $this->repository->getAll($n, $fields);
         return $branches
             ? $branches
             : response()->json(['message' => 'the resource you requested was not found']);
@@ -35,28 +36,20 @@ class ItemService {
             : response()->json(['message' => 'the resource you requested was not found']);
     }
 
-    public function create(Request $request)
+    public function create(array $item)
     {
-        $item = ['name' => $request->name,
-            'price' => $request->price,
-            'voucher_id' => $request->voucher
-        ];
         if (!$this->repository->create($item)) {
             return response()->json(['message' => 'the resource was not created', 'data' => $item], 500);
         }
         return response()->json(['message' => 'the resource was successfully created', 'data' => $item], 200);
     }
 
-    public function update($id, Request $request)
+    public function update($id, ItemRequest $request)
     {
-        $item = ['name' => $request->name,
-            'price' => $request->price,
-            'voucher_id' => $request->voucher
-        ];
-        if (!$this->repository->update($id, $item)) {
-            return response()->json(['message' => 'the resource was not updated', 'data' => $item], 500);
+        if (!$this->repository->update($id, $request->getAttributesArray())) {
+            return response()->json(['message' => 'the resource was not updated', 'data' => $request->getAttributesArray()], 500);
         }
-        return response()->json(['message' => 'the resource was successfully updated', 'data' => $item], 200);
+        return response()->json(['message' => 'the resource was successfully updated', 'data' => $request->getAttributesArray()], 200);
     }
 
     public function delete($id)

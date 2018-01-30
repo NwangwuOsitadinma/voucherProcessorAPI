@@ -12,21 +12,25 @@ namespace App\Services;
 
 use App\Repositories\VoucherRepository;
 use Illuminate\Http\Request;
+use App\Http\Requests\VoucherRequest;
 
 class VoucherService
 {
     protected $repository;
     protected $departmentService;
 
-    public function __construct(VoucherRepository $voucherRepository, DepartmentService $departmentService)
+    public function __construct(VoucherRepository $voucherRepository, DepartmentService $departmentService, 
+                ItemService $itemService, VoucherTrailService $voucherTrailService)
     {
         $this->repository = $voucherRepository;
         $this->departmentService = $departmentService;
+        $this->itemService = $itemService;
+        $this->voucherTrailService = $voucherTrailService;
     }
 
-    public function getAll($n)
+    public function getAll(int $n = null, array $fields = null)
     {
-        $vouchers = $this->repository->getAll($n);
+        $vouchers = $this->repository->getAll($n, $fields);
         return $vouchers
             ? $vouchers
             : response()->json(['message' => 'the resource you requested was not found']);
@@ -41,30 +45,25 @@ class VoucherService
     }
 
 
-    public function create(Request $request)
+    public function create(VoucherRequest $request)
     {
-        $voucher = ['voucher_number' => $request->voucher_number,
-            'description' => $request->description,
-            'office_entity_type_id' => $request->office_entity_type,
-            'office_entity_id' => $request->office_entity
-        ];
-        if (!$this->repository->create($voucher)) {
-            return response()->json(['message' => 'the resource was not created', 'data' => $voucher], 500);
+        $voucher = $this->repository->create($request->getAttributesArray());
+        if (!$voucher) {
+            return response()->json(['message' => 'the resource was not created', 'data' => $request->getAttributesArray()], 500);
         }
-        return response()->json(['message' => 'the resource was successfully created', 'data' => $voucher], 200);
+        foreach($request->items as $item) {
+            $item['voucher_id'] = $voucher->id;
+            $this->itemService->create($item);
+        }
+        return response()->json(['message' => 'the resource was successfully created', 'data' => $request->getAttributesArray()], 200);
     }
 
-    public function update($id, Request $request)
+    public function update($id, VoucherRequest $request)
     {
-        $voucher = ['voucher_number' => $request->voucher_number,
-            'description' => $request->description,
-            'office_entity_type_id' => $request->office_entity_type,
-            'office_entity_id' => $request->office_entity
-        ];
-        if (!$this->repository->update($id, $voucher)) {
-            return response()->json(['message' => 'the resource was not updated', 'data' => $voucher], 500);
+        if (!$this->repository->update($id, $request->getAttributesArray())) {
+            return response()->json(['message' => 'the resource was not updated', 'data' => $request->getAttributesArray()], 500);
         }
-        return response()->json(['message' => 'the resource was successfully updated', 'data' => $voucher], 200);
+        return response()->json(['message' => 'the resource was successfully updated', 'data' => $request->getAttributesArray()], 200);
     }
 
     public function delete($id)
@@ -76,14 +75,21 @@ class VoucherService
     }
 
 
-    public function approveVoucher($voucherId)
+    public function approveVoucher($voucherId, $userId, $voucherStatus = 'Waiting')
     {
         $voucher = [
-            'status' => 'Accepted'
+            'status' => $voucherStatus
         ];
-        if (!$this->repository->update($voucherId, $voucher)) {
+        $voucher = $this->repository->update($voucherId, $voucher);
+        // return response()->json($voucher);
+        if (!$voucher) {
             return response()->json(['message' => 'the resource was not updated', 'data' => $voucher], 500);
         }
+        $voucherTrail = [
+            'voucher_id' => $voucher,
+            'response_by_id' => $userId
+        ];
+        $this->voucherTrailService->create($voucherTrail);
         return response()->json(['message' => 'the resource was successfully updated', 'data' => $voucher], 200);
     }
 
@@ -121,8 +127,4 @@ class VoucherService
             ? $officeEntityVouchers
             : response()->json(['message' => 'the resource you requested was not found']);
     }
-
-
-
-
 }

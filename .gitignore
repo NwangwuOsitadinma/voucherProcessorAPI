@@ -3,6 +3,7 @@
 Homestead.json
 Homestead.yaml
 node_modules/
+public/app/node_modules
 npm-debug.log
 
 # Laravel 4 specific
@@ -15,7 +16,6 @@ public/hot
 storage/*.key
 .env.*.php
 .env.php
-.env
 Homestead.yaml
 Homestead.json
 
