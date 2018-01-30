@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Supervisor;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
@@ -37,6 +38,11 @@ class User extends Authenticatable
         $this->email = $email;
         $this->employee_id = $employee_id;
         $this->sex = $sex;
+    }
+
+    public function supervisor()
+    {
+        return $this->belongsTo(Supervisor::class);
     }
 
     public function office_entities()

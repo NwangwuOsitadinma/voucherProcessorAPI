@@ -34,7 +34,7 @@ class VoucherRequest extends FormRequest
     public function getAttributesArray()
     {
         return [
-            'voucher_number' => mt_rand(),
+            'voucher_number' => $this->voucher_number ?: mt_rand(),
             'description' => $this->description,
             'reason' => $this->reason,
             'office_entity_id' => $this->office_entity_id,

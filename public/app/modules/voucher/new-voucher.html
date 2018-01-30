@@ -41,8 +41,11 @@
         <div class="col-sm-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Create a new Voucher</h3>
+                    <h3 class="panel-title pull-left">Create a new Voucher</h3>
+                    <div class="alert alert-warning pull-right" data-ng-show="errorMessage" data-ng-bind="errorMessage">
+                    </div>
                 </div>
+                <hr>
 
                 <!--Block Styled Form -->
                 <!--===================================================-->
@@ -78,12 +81,32 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label" for="reason-textarea-input">Reason</label>
-                                    <textarea id="reason-textarea-input" data-ng-model="voucher.reason" rows="9" class="form-control" name="reason" placeholder="Your reason behind this voucher.." required></textarea>
+                                    <textarea id="reason-textarea-input" data-ng-model="voucher.reason" rows="9" class="form-control" name="reason" placeholder="Your reason behind this voucher.."
+                                        required></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="row" id="item_0">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <input class="form-control" id="itemName0" name="name[]" type="text" placeholder="Item Name" required="">
+                                </div>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-group">
+                                    <input class="form-control" id="itemPrice0" name="price[]" type="number" min="1" placeholder="Item Price" required="">
+                                </div>
+                            </div>
+                            <div class="col-sm-1">
+                                <a href="javascript:void(0)" class="btn btn-danger pull-right" onclick="removeItem(0)">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
                         </div>
+                        <div class="row" id="item_1">
+
+                        </div>
+
                     </div>
 
                     <div class="panel-footer text-right">
@@ -108,7 +131,7 @@
 <!--End page content-->
 
 <script type="text/javascript">
-    
+
     function removeItem(n) {
         $('#item_' + n).html('');
     }
