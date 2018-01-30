@@ -61,7 +61,7 @@
                                 <th data-hide="all">Reason</th>
                                 <th data-hide="all">Paid</th>
                                 <th data-hide="all">Time stamp</th>
-                                <th data-hide="all">Actions</th>
+                                <!-- <th data-hide="all">Actions</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -98,17 +98,17 @@
                                         <span data-ng-bind="voucher.updated_at"></span>
                                     </a>
                                 </td>
-                                <td>
-                                    <select name="status" data-ng-model="voucherUpdate.status" data-ng-change="approveVoucher(voucher.id)">
+                                <!-- <td> -->
+                                    <!-- <select name="status" data-ng-model="voucherUpdate.status" data-ng-change="approveVoucher(voucher.id)">
                                         <option value="Accepted" ng-selected="voucher.status == 'Accepted'">Accepted</option>
                                         <option value="Declined" ng-selected="voucher.status == 'Declined'">Declined</option>
                                         <option value="Waiting" ng-selected="voucher.status == 'Waiting'">Waiting</option>
-                                    </select>
+                                    </select> -->
                                     <!-- <a href="javascript:void(0)" data-ng-click="deleteVoucher(voucher.id)">
                                         <span class="label label-table label-danger">
                                             <i class="fa fa-trash"></i> Delete</span>
                                     </a> -->
-                                </td>
+                                <!-- </td> -->
                             </tr>
                         </tbody>
                         <tfoot>

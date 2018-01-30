@@ -1,0 +1,107 @@
+<!--Page Title-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<div id="page-title" data-ng-init="getVoucherTrails()">
+    <h1 class="page-header text-overflow">View Voucher Trails</h1>
+
+    <!--Searchbox-->
+    <div class="searchbox">
+        <div class="input-group custom-search-form">
+            <input type="text" class="form-control" placeholder="Search..">
+            <span class="input-group-btn">
+                <button class="text-muted" type="button">
+                    <i class="demo-pli-magnifi-glass"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--End page title-->
+
+
+<!--Breadcrumb-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li>
+        <a href="#">Home</a>
+    </li>
+    <!-- <li class="active" data-ng-show="page == 'user-details'">
+        <a href="javascript:void(0)" data-ng-click="page = 'view-users'">View Voucher Trails</a>
+    </li> -->
+    <li class="active">
+        View Voucher Trails
+    </li>
+</ol>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--End breadcrumb-->
+
+
+
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">View voucher trails</h3>
+                </div>
+
+                <!-- Foo Table - Pagination -->
+                <!--===================================================-->
+                <div class="panel-body">
+                    <table id="demo-foo-pagination" class="table table-hover toggle-arrow-tiny" data-page-size="5">
+                        <thead>
+                            <tr>
+                                <th data-toggle="true">Voucher Number</th>
+                                <th>Voucher Description</th>
+                                <th>Created by</th>
+                                <th>Response by</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="voucherTrail in voucherTrails">
+                                <td>
+                                    <a href="javascript:void(0)">
+                                        <span data-ng-bind="voucherTrail.voucher.voucher_number"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)">
+                                        <span data-ng-bind="voucherTrail.voucher.description"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)">
+                                        <span data-ng-bind="voucherTrail.voucher.user.full_name"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)">
+                                        <span data-ng-bind="voucherTrail.response_by.full_name"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="text-right">
+                                        <ul class="pagination"></ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!--===================================================-->
+                <!-- End Foo Table - Pagination -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--===================================================-->
+<!--End page content-->

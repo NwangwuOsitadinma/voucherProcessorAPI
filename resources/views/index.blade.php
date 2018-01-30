@@ -1032,6 +1032,20 @@
                                     <!--Menu list item-->
                                     @if($user && ($user->isAn('ADMIN') || $user->isA('MODERATOR')))
                                     <li>
+                                        <a href="javascript:;" ui-sref="voucher-trail">
+                                            <i class="demo-psi-computer-secure"></i>
+                                            <span class="menu-title">
+                                                <strong>Voucher Trail</strong>
+                                            </span>
+                                            <!-- <i class="arrow"></i> -->
+                                        </a>
+
+                                    </li>
+                                    @endif
+
+                                    <!--Menu list item-->
+                                    @if($user && ($user->isAn('ADMIN') || $user->isA('MODERATOR')))
+                                    <li>
                                         <a href="#">
                                             <i class="demo-psi-gear-2"></i>
                                             <span class="menu-title">
