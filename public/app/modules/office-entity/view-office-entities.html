@@ -121,7 +121,7 @@
                                 <p class="text-sm" data-ng-bind="officeEntity.office_entity_type.name"> </p>
                                 <p class="text-muted" data-ng-bind="officeEntity.description"></p>
                                 <button class="btn btn-primary mar-ver" data-ng-click="getUpdatePage()">
-                                    <i class="demo-pli-check icon-fw"></i>Update</button>
+                                    <i class="demo-pli-check icon-fw"></i>Edit</button>
                                 <hr>
                                 <table id="demo-foo-pagination1" class="table table-hover toggle-arrow-tiny text-left" data-page-size="5">
                                     <thead>
@@ -200,7 +200,7 @@
                                     <label class="control-label">Unit Lead</label>
                                     <select name="lead_id" data-ng-model="officeEntity.lead_id" id="demo-nav-offcanvas" class="form-control" required>
                                         <option value="" selected disabled="disabled">-- Select the unit's lead --</option>
-                                        <option value="<% user.id %>" data-ng-repeat="user in users" data-ng-selected="user.id == officeEntity.lead_id">
+                                        <option value="<% user.id %>" data-ng-repeat="user in supervisors" data-ng-selected="user.id == officeEntity.lead_id">
                                             <% user.full_name %>
                                         </option>
                                     </select>
@@ -222,12 +222,22 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="control-label">Select the type of unit</label>
-                                    <select name="office_entity_type_id" data-ng-model="officeEntity.office_entity_type_id" id="demo-nav-offcanvas" class="form-control" required>
+                                    <select name="office_entity_type_id" data-ng-model="officeEntity.office_entity_type_id" id="demo-nav-offcanvas" class="form-control"
+                                        required>
                                         <option value="" selected disabled="disabled">-- Select the unit type --</option>
                                         <option value="<% officeEntityType.id %>" data-ng-repeat="officeEntityType in officeEntityTypes" data-ng-selected="officeEntityType.id == officeEntity.office_entity_type_id">
                                             <% officeEntityType.name %>
                                         </option>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="description-textarea-input">Description</label>
+                                    <textarea id="description-textarea-input" data-ng-model="officeEntity.description" rows="4" class="form-control" name="description"
+                                        placeholder="Your description for this unit.." required></textarea>
                                 </div>
                             </div>
                         </div>

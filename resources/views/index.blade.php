@@ -1015,14 +1015,14 @@
                                             </li>
                                             @if($user && $user->can('approve-voucher'))
                                             <li>
-                                                <a href="javascript:;" ui-sref="view-user-vouchers">My Vouchers</a>
+                                                <a href="javascript:;" ui-sref="my-vouchers">My Vouchers</a>
                                             </li>
                                             <li>
                                                 <a href="javascript:;" ui-sref="view-vouchers">View All Vouchers</a>
                                             </li>
                                             @else
                                             <li>
-                                                <a href="javascript:;" ui-sref="view-user-vouchers">My Vouchers</a>
+                                                <a href="javascript:;" ui-sref="my-vouchers">My Vouchers</a>
                                             </li>
                                             @endif
 
@@ -1032,7 +1032,7 @@
                                     <!--Menu list item-->
                                     @if($user && ($user->isAn('ADMIN') || $user->isA('MODERATOR')))
                                     <li>
-                                        <a href="javascript:;" ui-sref="voucher-trail">
+                                        <a href="javascript:;" ui-sref="vouchers-trail">
                                             <i class="demo-psi-computer-secure"></i>
                                             <span class="menu-title">
                                                 <strong>Voucher Trail</strong>
@@ -1082,7 +1082,6 @@
                                     </li>
                                     @endif
 
-
                                     <!--Menu list item-->
                                     @if($user && $user->can('create-branch'))
                                     <li>
@@ -1112,17 +1111,17 @@
                                         <a href="#">
                                             <i class="demo-psi-medal-2"></i>
                                             <span class="menu-title">
-                                                <strong>Office Entities</strong>
+                                                <strong>Units</strong>
                                             </span>
                                             <i class="arrow"></i>
                                         </a>
                                         <!--Submenu-->
                                         <ul class="collapse">
                                             <li>
-                                                <a href="javascript:;" ui-sref="new-office-entity">New Office Entity</a>
+                                                <a href="javascript:;" ui-sref="new-office-entity">New Unit</a>
                                             </li>
                                             <li>
-                                                <a href="javascript:;" ui-sref="view-office-entities">View Office Entities</a>
+                                                <a href="javascript:;" ui-sref="view-office-entities">View Units</a>
                                             </li>
 
                                         </ul>
@@ -1135,17 +1134,17 @@
                                         <a href="#">
                                             <i class="demo-psi-inbox-full"></i>
                                             <span class="menu-title">
-                                                <strong>Office Entity Types</strong>
+                                                <strong>Unit Types</strong>
                                             </span>
                                             <i class="arrow"></i>
                                         </a>
                                         <!--Submenu-->
                                         <ul class="collapse">
                                             <li>
-                                                <a href="javascript:;" ui-sref="new-office-entity-type">New Office Entity Type</a>
+                                                <a href="javascript:;" ui-sref="new-office-entity-type">New Unit Type</a>
                                             </li>
                                             <li>
-                                                <a href="javascript:;" ui-sref="view-office-entity-types">View Office Entity Types</a>
+                                                <a href="javascript:;" ui-sref="view-office-entity-types">View Unit Types</a>
                                             </li>
 
                                         </ul>

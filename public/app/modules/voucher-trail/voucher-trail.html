@@ -58,6 +58,7 @@
                                 <th data-toggle="true">Voucher Number</th>
                                 <th>Voucher Description</th>
                                 <th>Created by</th>
+                                <th>Response</th>
                                 <th>Response by</th>
                             </tr>
                         </thead>
@@ -76,6 +77,12 @@
                                 <td>
                                     <a href="javascript:void(0)">
                                         <span data-ng-bind="voucherTrail.voucher.user.full_name"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)">
+                                        <div class="label label-table" data-ng-class="{'label-warning' : voucherTrail.voucher.status == 'Waiting', 'label-success' : voucherTrail.voucher.status == 'Accepted', 'label-danger' : voucherTrail.voucher.status == 'Declined'}"
+                                         data-ng-bind="voucherTrail.voucher.status"></div>
                                     </a>
                                 </td>
                                 <td>

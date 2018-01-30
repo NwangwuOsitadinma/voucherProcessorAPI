@@ -86,7 +86,7 @@ class VoucherService
             return response()->json(['message' => 'the resource was not updated', 'data' => $voucher], 500);
         }
         $voucherTrail = [
-            'voucher_id' => $voucher,
+            'voucher_id' => $voucherId,
             'response_by_id' => $userId
         ];
         $this->voucherTrailService->create($voucherTrail);
