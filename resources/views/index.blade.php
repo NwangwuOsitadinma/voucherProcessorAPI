@@ -1015,14 +1015,14 @@
                                             </li>
                                             @if($user && $user->can('approve-voucher'))
                                             <li>
-                                                <a href="javascript:;" ui-sref="view-user-vouchers">My Vouchers</a>
+                                                <a href="javascript:;" ui-sref="my-vouchers">My Vouchers</a>
                                             </li>
                                             <li>
                                                 <a href="javascript:;" ui-sref="view-vouchers">View All Vouchers</a>
                                             </li>
                                             @else
                                             <li>
-                                                <a href="javascript:;" ui-sref="view-user-vouchers">My Vouchers</a>
+                                                <a href="javascript:;" ui-sref="my-vouchers">My Vouchers</a>
                                             </li>
                                             @endif
 
@@ -1032,7 +1032,7 @@
                                     <!--Menu list item-->
                                     @if($user && ($user->isAn('ADMIN') || $user->isA('MODERATOR')))
                                     <li>
-                                        <a href="javascript:;" ui-sref="voucher-trail">
+                                        <a href="javascript:;" ui-sref="vouchers-trail">
                                             <i class="demo-psi-computer-secure"></i>
                                             <span class="menu-title">
                                                 <strong>Voucher Trail</strong>

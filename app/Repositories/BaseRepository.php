@@ -16,13 +16,13 @@ abstract class BaseRepository
     public function getAll(int $n = null, array $fields = null)
     {
         if ($fields && $n) {
-            return $this->model->all($fields)->paginate($n);
+            return $this->model->orderBy('updated_at', 'desc')->get($fields)->paginate($n);
         } elseif (!$fields && $n) {
-            return $this->model->paginate($n);
+            return $this->model->orderBy('updated_at', 'desc')->paginate($n);
         } elseif($fields && !$n) {
-            return $this->model->all($fields);
+            return $this->model->orderBy('updated_at', 'desc')->get($fields);
         } else {
-            return $this->model->all();
+            return $this->model->orderBy('updated_at', 'desc')->get();
         }
     }
 

@@ -43512,7 +43512,7 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 templateUrl: '/app/modules/voucher/view-vouchers.html',
                 controller: 'VoucherController'
             })
-            .state('view-user-vouchers', {
+            .state('my-vouchers', {
                 url: '/my-vouchers',
                 templateUrl: '/app/modules/voucher/view-user-vouchers.html',
                 controller: 'VoucherController'
@@ -43563,7 +43563,7 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 controller: 'UserController'
             })
             .state('new-role', {
-                url: '/create-role',
+                url: '/new-role',
                 templateUrl: '/app/modules/roles-and-claims/new-role-with-claim.html',
                 controller: 'RolesAndClaimsController'
             })
@@ -43582,7 +43582,7 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 templateUrl: '/app/modules/roles-and-claims/view-roles-with-claims.html',
                 controller: 'RolesAndClaimsController'
             })
-            .state('voucher-trail', {
+            .state('vouchers-trail', {
                 url: '/vouchers-trail',
                 templateUrl: '/app/modules/voucher-trail/voucher-trail.html',
                 controller: 'VoucherTrailController'
