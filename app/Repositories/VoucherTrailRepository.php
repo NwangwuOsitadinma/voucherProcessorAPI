@@ -21,6 +21,16 @@ class VoucherTrailRepository extends BaseRepository
         return $result;
     }
 
+    public function getUserVoucherTrails($userId)
+    {
+        return $this->model->with(['voucher.office_entity', 'voucher.user', 'response_by'])
+            ->whereHas('voucher.user', function ($query) use ($userId) {
+                $query->where('id', '=', $userId);
+            })
+            ->orderBy('updated_at', 'desc')
+            ->get();
+    }
+
     public function search($text, int $n = null, $url = null)
     {
         $result = $this->model->with(['voucher.office_entity', 'voucher.user', 'response_by'])
@@ -39,6 +49,7 @@ class VoucherTrailRepository extends BaseRepository
                     ->orWhere('email', 'like', '%' .$text .'%')
                     ->orWhere('employee_id', 'like', '%' .$text .'%');
             })
+            ->orderBy('updated_at', 'desc')
             ->paginate($n);
         if($url != null) $result->withPath($url);
         return $result;

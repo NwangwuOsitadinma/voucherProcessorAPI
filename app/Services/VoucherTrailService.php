@@ -31,6 +31,14 @@ class VoucherTrailService
             : response()->json(['message' => 'the resource you requested was not found']);
     }
 
+    public function getUserVoucherTrails($userId)
+    {
+        $voucherTrails = $this->repository->getUserVoucherTrails($userId);
+        return $voucherTrails
+            ? $voucherTrails
+            : response()->json(['message' => 'the resource you requested was not found']);
+    }
+
     public function getById($id)
     {
         $voucherTrail = $this->repository->getById($id);

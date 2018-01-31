@@ -19,6 +19,11 @@ class VoucherTrailController extends Controller
         return $this->service->getAll($request->n);
     }
 
+    public function getUserVoucherTrails (Request $request)
+    {
+        return $this->service->getUserVoucherTrails($request->user()->id);
+    }
+
     public function search(Request $request)
     {
         return $this->service->search($request->q, $request->n, $request->user());

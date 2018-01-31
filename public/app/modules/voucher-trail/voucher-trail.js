@@ -21,6 +21,14 @@ app.controller('VoucherTrailController', ['$rootScope', '$scope', '$state', 'Vou
         }
     };
 
+    $scope.getUserVoucherTrails = function () {
+        VoucherTrailService.getUserVoucherTrails(function (response) {
+            $scope.voucherTrails = response.data;
+        }, function (response) {
+            console.log("an error occurred while trying to fetch the voucher trails");
+        });
+    };
+
     $scope.searchText = function () {
         VoucherTrailService.searchText($scope.searchParam, function (response) {
             $scope.voucherTrails = response.data;
@@ -54,6 +62,10 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
 
     this.getVoucherTrails = function (successHandler, errorHandler) {
         APIService.get('/api/voucher-trails?n=10', successHandler, errorHandler);
+    };
+
+    this.getUserVoucherTrails = function (successHandler, errorHandler) {
+        APIService.get('/api/voucher-trails/user', successHandler, errorHandler);
     };
 
     this.searchText = function (text, successHandler, errorHandler) {

@@ -1013,18 +1013,17 @@
                                             <li>
                                                 <a href="javascript:;" ui-sref="new-voucher">New Voucher</a>
                                             </li>
-                                            @if($user && $user->can('approve-voucher'))
                                             <li>
                                                 <a href="javascript:;" ui-sref="my-vouchers">My Vouchers</a>
                                             </li>
+                                            @if($user && $user->can('approve-voucher'))
                                             <li>
                                                 <a href="javascript:;" ui-sref="view-vouchers">View All Vouchers</a>
                                             </li>
-                                            @else
-                                            <li>
-                                                <a href="javascript:;" ui-sref="my-vouchers">My Vouchers</a>
-                                            </li>
                                             @endif
+                                            <li>
+                                                <a href="javascript:;" ui-sref="user-vouchers-trail">My Voucher History</a>
+                                            </li>
 
                                         </ul>
                                     </li>

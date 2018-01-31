@@ -72,6 +72,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::put('/voucher/paid/{voucherId}', 'VoucherController@hasPaidVoucher')->middleware('pay-voucher');
 
     Route::get('/voucher-trails', 'VoucherTrailController@getAllVoucherTrails')->middleware('admin');
+    Route::get('/voucher-trails/user', 'VoucherTrailController@getUserVoucherTrails');
     Route::get('/voucher-trails/find', 'VoucherTrailController@search')->middleware('admin');
 
     Route::get('/users', 'UserController@getAllUsers');
