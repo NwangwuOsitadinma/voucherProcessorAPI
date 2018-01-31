@@ -50,6 +50,11 @@ class VoucherController extends Controller
         return $this->service->delete($id);
     }
 
+    public function searchText(Request $request)
+    {
+        return $this->service->search($request->q, $request->n, $request->user());
+    }
+
     public function getUserVouchers(Request $request)
     {
         $userId = $request->user()->id;

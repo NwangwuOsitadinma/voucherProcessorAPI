@@ -30,7 +30,7 @@ class VoucherService
 
     public function getAll(int $n = null, array $fields = null)
     {
-        $vouchers = $this->repository->getAll($n, $fields);
+        $vouchers = $this->repository->getAll($n, "/api/vouchers?n=" .$n, $fields);
         return $vouchers
             ? $vouchers
             : response()->json(['message' => 'the resource you requested was not found']);
@@ -42,6 +42,18 @@ class VoucherService
         return $voucher
             ? $voucher
             : response()->json(['message' => 'the resource you requested was not found']);
+    }
+
+    public function search($text, $n, $user)
+    {
+        if(!$user->can('view-all-vouchers')){
+            $vouchers = $this->repository->search($text, $n, "/api/vouchers/find?q=". $text ."n=" .$n, $user->id);
+            return $vouchers
+                ?: response()->json(['message' => 'the resource you requested was not found']);
+        }
+        $vouchers = $this->repository->search($text, $n, "/api/vouchers/find?q=". $text ."n=" .$n);
+        return $vouchers
+            ?: response()->json(['message' => 'the resource you requested was not found']);
     }
 
 
@@ -87,7 +99,8 @@ class VoucherService
         }
         $voucherTrail = [
             'voucher_id' => $voucherId,
-            'response_by_id' => $userId
+            'response_by_id' => $userId,
+            'response' => $voucherStatus
         ];
         $this->voucherTrailService->create($voucherTrail);
         return response()->json(['message' => 'the resource was successfully updated', 'data' => $voucher], 200);

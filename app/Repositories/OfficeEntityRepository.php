@@ -24,5 +24,13 @@ class OfficeEntityRepository extends BaseRepository
         return $this->model->with(['lead', 'branch', 'office_entity_type', 'office_entity_users.user'])->find($id);
     }
 
+    public function search($text, int $n = null, $url = null)
+    {
+        $result = $this->model->where('name', 'like', '%' . $text . '%')
+            ->orWhere('description', 'like', '%' . $text . '%')
+            ->paginate($n);
+        if($url != null) $result->withPath($url);
+        return $result;
+    }
 
 }

@@ -6,7 +6,7 @@
     <!--Searchbox-->
     <div class="searchbox">
         <div class="input-group custom-search-form">
-            <input type="text" class="form-control" placeholder="Search..">
+            <input type="text" class="form-control" data-ng-model="searchParam" placeholder="Search..">
             <span class="input-group-btn">
                 <button class="text-muted" type="button">
                     <i class="demo-pli-magnifi-glass"></i>
@@ -59,13 +59,13 @@
                                 <th>Description</th>
                                 <th data-hide="all">Status</th>
                                 <th data-hide="all">Reason</th>
-                                <th data-hide="all">Paid</th>
+                                <!-- <th data-hide="all">Paid</th> -->
                                 <th data-hide="all">Time stamp</th>
                                 <th data-hide="all">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-ng-repeat="voucher in vouchers">
+                            <tr data-ng-repeat="voucher in vouchers | filter : searchParam">
                                 <td>
                                     <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
                                         <span data-ng-bind="voucher.voucher_number">
@@ -79,7 +79,7 @@
                                 </td>
                                 <td>
                                     <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
-                                        <div class="label label-table" data-ng-class="{'label-warning' : voucher.status == 'Waiting', 'label-success' : voucher.status == 'Accepted', 'label-danger' : voucher.status == 'Declined'}"
+                                        <div class="label label-table" data-ng-class="{'label-warning' : voucher.status == 'Waiting', 'label-primary' : voucher.status == 'Paid', 'label-success' : voucher.status == 'Accepted', 'label-danger' : voucher.status == 'Declined'}"
                                             data-ng-bind="voucher.status"></div>
                                     </a>
                                 </td>
@@ -88,11 +88,11 @@
                                         <span data-ng-bind="voucher.reason"></span>
                                     </a>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
                                         <div class="label label-table" data-ng-class="{'label-success' : voucher.paid, 'label-warning' : !voucher.paid}" data-ng-bind="voucher.paid ? 'Yes' : 'No'"></div>
                                     </a>
-                                </td>
+                                </td> -->
                                 <td>
                                     <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
                                         <span data-ng-bind="voucher.updated_at"></span>
@@ -144,7 +144,6 @@
                         <!--===================================================-->
                         <div class="panel">
                             <div class="panel-body text-center">
-                                <img alt="Profile Picture" class="img-md img-circle mar-btm" src="img/profile-photos/1.png">
                                 <p class="text-lg text-semibold mar-no text-main" data-ng-bind="voucher.voucher_number"></p>
                                 <p class="text-muted" data-ng-bind="voucher.user.full_name"></p>
                                 <p class="text-muted" data-ng-bind="voucher.office_entity.name"></p>

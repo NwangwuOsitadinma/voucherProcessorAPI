@@ -41,6 +41,13 @@ class OfficeEntityService
         return $this->repository->getById($id);
     }
 
+    public function search($text, $n)
+    {
+        $officeEntities = $this->repository->search($text, $n, "/api/office_entities/find?q=". $text ."n=" .$n);
+        return $officeEntities
+            ?: response()->json(['message' => 'the resource you requested was not found']);
+    }
+
     public function createEntity(OfficeEntityRequest $request)
     {
         $createdOfficeEntity = $this->repository->create($request->getAttributesArray());

@@ -41,6 +41,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::delete('/office_entity_type/delete/{id}', 'OfficeEntityTypeController@delete')->middleware('admin');
 
     Route::get('/office_entities', 'OfficeEntityController@getAllEntities');
+    Route::get('/office_entities/find', 'OfficeEntityController@search');
     Route::get('/office_entity/{id}', 'OfficeEntityController@show');
     Route::post('/office_entity/create', 'OfficeEntityController@create')->middleware('moderator');
     Route::put('/office_entity/update/{id}', 'OfficeEntityController@update')->middleware('moderator');
@@ -63,6 +64,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::post('/voucher/create', 'VoucherController@create');
     Route::put('/voucher/update/{id}', 'VoucherController@update');
     Route::delete('/voucher/delete/{id}', 'VoucherController@delete');
+    Route::get('/vouchers/find', 'VoucherController@searchText');
     Route::get('/vouchers/user', 'VoucherController@getUserVouchers');
     Route::get('/vouchers/office_entities', 'VoucherController@getOfficeEntityVouchers')->middleware('manage-office-entity-vouchers');
     Route::get('/vouchers/payable', 'VoucherController@getPayableVouchers')->middleware('pay-voucher');
@@ -70,6 +72,7 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::put('/voucher/paid/{voucherId}', 'VoucherController@hasPaidVoucher')->middleware('pay-voucher');
 
     Route::get('/voucher-trails', 'VoucherTrailController@getAllVoucherTrails')->middleware('admin');
+    Route::get('/voucher-trails/find', 'VoucherTrailController@search')->middleware('admin');
 
     Route::get('/users', 'UserController@getAllUsers');
     Route::get('/user/{id}', 'UserController@getById');

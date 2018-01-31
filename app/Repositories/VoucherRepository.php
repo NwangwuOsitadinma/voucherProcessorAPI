@@ -26,4 +26,23 @@ class VoucherRepository extends BaseRepository
         return $this->model->with(['user', 'office_entity', 'items'])->find($id);
     }
 
+    public function search($text, int $n = null, $url = null, $userId = null)
+    {
+        if($userId) {
+            $result = $this->model->where('user_id', $userId)
+            ->where('voucher_number', 'like', '%' . $text . '%')
+            ->orWhere('description', 'like', '%' . $text . '%')
+            ->orWhere('reason', 'like', '%' . $text . '%')
+            ->paginate($n);
+            if($url != null) $result->withPath($url);
+            return $result;
+        }
+        $result = $this->model->where('voucher_number', 'like', '%' . $text . '%')
+            ->orWhere('description', 'like', '%' . $text . '%')
+            ->orWhere('reason', 'like', '%' . $text . '%')
+            ->paginate($n);
+        if($url != null) $result->withPath($url);
+        return $result;
+    }
+
 }
