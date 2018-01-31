@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@tenece.com',
             'password' => Hash::make('password'),
             'employee_id' => 'TC231732X',
-            'sex' => 'MALE'
+            'sex' => 'Male'
         ]);
 
         DB::table('office_entity_types')->insert([

@@ -6,7 +6,7 @@
     <!--Searchbox-->
     <div class="searchbox">
         <div class="input-group custom-search-form">
-            <input type="text" class="form-control" placeholder="Search..">
+            <input type="text" data-ng-model="searchParam" class="form-control" placeholder="Search..">
             <span class="input-group-btn">
                 <button class="text-muted" type="button">
                     <i class="demo-pli-magnifi-glass"></i>
@@ -63,7 +63,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-ng-repeat="user in users">
+                            <tr data-ng-repeat="user in users | filter : searchParam">
                                 <td>
                                     <a href="javascript:void(0)" data-ng-click="getUserDetails(user.id)">
                                         <span data-ng-bind="user.full_name"></span>
