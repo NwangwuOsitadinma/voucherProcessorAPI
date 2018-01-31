@@ -171,12 +171,12 @@
                                     <button type="button" data-ng-click="approveVoucher(voucher.id, 'Paid')" class="btn btn-primary">Paid</button>
                                 </div>
                                 <br>
-                                <select name="status" data-ng-model="voucherUpdate.status" data-ng-change="approveVoucher(voucher.id)">
+                                <!-- <select name="status" data-ng-model="voucherUpdate.status" data-ng-change="approveVoucher(voucher.id)">
                                     <option value="Accepted" ng-selected="voucher.status == 'Accepted'">Accepted</option>
                                     <option value="Declined" ng-selected="voucher.status == 'Declined'">Declined</option>
                                     <option value="Paid" ng-selected="voucher.status == 'Paid'">Paid</option>
                                     <option value="Waiting" ng-selected="voucher.status == 'Waiting'">Waiting</option>
-                                </select>
+                                </select> -->
                                 <p class="text-muted" data-ng-bind="voucher.reason"></p>
                                 <p class="text-muted" data-ng-bind="voucher.paid ? 'Paid' : 'Not yet paid'"></p>
                                 <p class="text-sm" data-ng-bind="voucher.description"> </p>
