@@ -135,7 +135,7 @@ class VoucherService
 
     public function getOfficeEntityVouchers($officeEntityId)
     {
-        $officeEntityVouchers = $this->repository->getByParam('office_entity_id',$officeEntityId);
+        $officeEntityVouchers = $this->repository->getByParam('office_entity_id', $officeEntityId);
         return $officeEntityVouchers
             ? $officeEntityVouchers
             : response()->json(['message' => 'the resource you requested was not found']);
