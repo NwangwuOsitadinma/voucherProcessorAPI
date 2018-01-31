@@ -72,8 +72,14 @@ class VoucherService
 
     public function update($id, VoucherRequest $request)
     {
-        if (!$this->repository->update($id, $request->getAttributesArray())) {
+        $voucherId = $this->repository->update($id, $request->getAttributesArray());
+        if (!$voucherId) {
             return response()->json(['message' => 'the resource was not updated', 'data' => $request->getAttributesArray()], 500);
+        }
+        $this->itemService->deleteByParam('voucher_id', $id);
+        foreach($request->items as $item) {
+            $item['voucher_id'] = $id;
+            $this->itemService->create($item);
         }
         return response()->json(['message' => 'the resource was successfully updated', 'data' => $request->getAttributesArray()], 200);
     }

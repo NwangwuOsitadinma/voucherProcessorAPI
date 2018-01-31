@@ -99,10 +99,11 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="javascript:void(0)" data-ng-click="deleteVoucher(voucher.id)">
+                                    <a href="javascript:void(0)" data-ng-if="'Waiting' === voucher.status" data-ng-click="deleteVoucher(voucher.id)">
                                         <span class="label label-table label-danger">
                                             <i class="fa fa-trash"></i> Delete</span>
                                     </a>
+                                    <span data-ng-if="'Waiting' !== voucher.status">No Actions</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -152,8 +153,8 @@
                                 <p class="text-muted" data-ng-bind="voucher.paid ? 'Paid' : 'Not yet paid'"></p>
                                 <p class="text-sm" data-ng-bind="voucher.description"> </p>
                                 <p class="text-sm" data-ng-bind="voucher.totalPrice"> </p>
-                                <!-- <button class="btn btn-primary mar-ver" data-ng-click="getUpdatePage()">
-                                    <i class="demo-pli-check icon-fw"></i>Edit</button> -->
+                                <button class="btn btn-primary mar-ver" data-ng-if="'Waiting' === voucher.status" data-ng-click="getUpdatePage()">
+                                    <i class="demo-pli-check icon-fw"></i>Edit</button>
                                 <hr>
                                 <table id="demo-foo-pagination1" class="table table-hover toggle-arrow-tiny text-left" data-page-size="5">
                                     <thead>
@@ -213,7 +214,7 @@
                 <form>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label class="control-label">Unit</label>
                                     <select id="demo-nav-offcanvas" data-ng-model="voucher.office_entity_id" name="office_entity_id" class="form-control" required>
@@ -225,6 +226,33 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div id="items">
+
+                            <div class="row" id="item_<%$index%>" data-ng-repeat="item in voucher.items">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input class="form-control" id="itemName<%$index%>" value="<% item.name %>" name="name[]" type="text" placeholder="Item Name"
+                                            required="">
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <input class="form-control" id="itemPrice<%$index%>" name="price[]" value="<% item.price %>" type="number" min="1" placeholder="Item Price"
+                                            required="">
+                                    </div>
+                                </div>
+                                <div class="col-sm-1">
+                                    <a href="javascript:void(0)" class="btn btn-danger pull-right" data-ng-click="removeItem($index)">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row" id="item_<% voucher.items.length %>">
+
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -241,26 +269,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" id="item_0">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <input class="form-control" id="itemName0" name="name[]" type="text" placeholder="Item Name" required="">
-                                </div>
-                            </div>
-                            <div class="col-sm-5">
-                                <div class="form-group">
-                                    <input class="form-control" id="itemPrice0" name="price[]" type="number" min="1" placeholder="Item Price" required="">
-                                </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <a href="javascript:void(0)" class="btn btn-danger pull-right" onclick="removeItem(0)">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="row" id="item_1">
 
-                        </div>
                     </div>
 
                     <div class="panel-footer text-right">
@@ -284,3 +293,10 @@
 </div>
 <!--===================================================-->
 <!--End page content-->
+
+<script type="text/javascript">
+
+    function removeItem(n) {
+        $('#item_' + n).html('');
+    }
+</script>

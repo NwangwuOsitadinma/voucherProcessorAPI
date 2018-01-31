@@ -22,5 +22,10 @@ class ItemRepository extends BaseRepository
     {
         return $this->model->with(['voucher'])->find($id);
     }
+
+    public function deleteByParam($param, $value)
+    {
+        return $this->model->where($param, $value)->delete();
+    }
 }
 

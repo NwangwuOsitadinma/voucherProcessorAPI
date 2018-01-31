@@ -62,8 +62,8 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::get('/vouchers', 'VoucherController@getAllVouchers');
     Route::get('/voucher/{id}', 'VoucherController@getById');
     Route::post('/voucher/create', 'VoucherController@create');
-    Route::put('/voucher/update/{id}', 'VoucherController@update');
-    Route::delete('/voucher/delete/{id}', 'VoucherController@delete');
+    Route::put('/voucher/update/{id}', 'VoucherController@update')->middleware('confirm-voucher-status');
+    Route::delete('/voucher/delete/{id}', 'VoucherController@delete')->middleware('confirm-voucher-status');
     Route::get('/vouchers/find', 'VoucherController@searchText');
     Route::get('/vouchers/user', 'VoucherController@getUserVouchers');
     Route::get('/vouchers/office_entities', 'VoucherController@getOfficeEntityVouchers')->middleware('manage-office-entity-vouchers');

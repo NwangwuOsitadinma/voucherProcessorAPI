@@ -44528,8 +44528,28 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
 
     $scope.updateVoucher = function () {
         Pace.restart();
+        $scope.voucher.items = [];
+        for (var i = 0; i < j; i++) {
+            if ($('#itemName' + i).val() && $('#itemPrice' + i).val()) {
+                if (parseInt($('#itemPrice' + i).val()) < 1) {
+                    $scope.voucher.items = [];
+                    return;
+                }
+                var item = {
+                    'name': $('#itemName' + i).val(),
+                    'price': $('#itemPrice' + i).val()
+                };
+                $scope.voucher.items.push(item);
+            }
+        }
+        console.log($scope.voucher.items);
+        if ($scope.voucher.items.length < 1) {
+            $scope.errorMessage = 'Please add an item and fill in the item values';
+            return;
+        }
         VoucherService.updateVoucher($scope.voucher.id, $scope.voucher, function (response) {
             console.log("voucher was successfully updated");
+            $scope.voucher = {};
             $scope.getUserVouchers();
             $scope.page = 'view-vouchers';
         }, function (response) {
@@ -44589,6 +44609,7 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
     $scope.getUpdatePage = function () {
         Pace.restart();
         $scope.voucher.office_entity = $scope.voucher.office_entity_id;
+        j = $scope.voucher.items.length;
         $scope.page = 'update-voucher';
     };
 
