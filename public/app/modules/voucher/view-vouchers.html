@@ -166,9 +166,9 @@
                                 <p class="text-muted" data-ng-bind="voucher.status"></p>
                                 <p class="text-sm" data-ng-bind="voucher.totalPrice"> </p>
                                 <div class="text-center">
-                                    <button type="button" data-ng-click="approveVoucher(voucher.id, 'Accepted')" class="btn btn-success">Accepted</button>
-                                    <button type="button" data-ng-click="approveVoucher(voucher.id, 'Declined')" class="btn btn-danger">Declined</button>
-                                    <button type="button" data-ng-click="approveVoucher(voucher.id, 'Paid')" class="btn btn-primary">Paid</button>
+                                    <button type="button" data-ng-click="approveVoucher(voucher.id, 'Accepted', 'All Vouchers')" class="btn btn-success">Accepted</button>
+                                    <button type="button" data-ng-click="approveVoucher(voucher.id, 'Declined', 'All Vouchers')" class="btn btn-danger">Declined</button>
+                                    <button type="button" data-ng-click="approveVoucher(voucher.id, 'Paid', 'All Vouchers')" class="btn btn-primary">Paid</button>
                                 </div>
                                 <br>
                                 <!-- <select name="status" data-ng-model="voucherUpdate.status" data-ng-change="approveVoucher(voucher.id)">

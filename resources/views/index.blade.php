@@ -1028,6 +1028,18 @@
                                         </ul>
                                     </li>
 
+                                    @if($user && $user->can('pay-voucher'))
+                                    <li>
+                                        <a href="javascript:;" ui-sref="payable-vouchers">
+                                            <i class="demo-psi-inbox-full"></i>
+                                            <span class="menu-title">
+                                                <strong>Payable Vouchers</strong>
+                                            </span>
+                                            <!-- <i class="arrow"></i> -->
+                                        </a>
+                                    </li>
+                                    @endif
+
                                     <!--Menu list item-->
                                     @if($user && ($user->isAn('ADMIN') || $user->isA('MODERATOR')))
                                     <li>

@@ -26,6 +26,14 @@ app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherS
         }
     };
 
+    $scope.getPayableVouchers = function () {
+        VoucherService.getPayableVouchers(function (response) {
+            $scope.vouchers = response.data;
+        }, function (response) {
+            console.error("an error occurred while trying to fetch payable vouchers");
+        });
+    };
+
     $scope.getUserVouchers = function () {
         VoucherService.getUserVouchers(function (response) {
             $scope.vouchers = response.data;
@@ -96,13 +104,17 @@ app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherS
         });
     };
 
-    $scope.approveVoucher = function (voucherId, status) {
+    $scope.approveVoucher = function (voucherId, status, view) {
         console.log(status);
         if ($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') {
             Pace.restart();
             VoucherService.approveVoucher(voucherId, { 'status': status }, function (response) {
                 console.log(response.data);
-                $scope.getVouchers();
+                if (view === 'Payable Vouchers') {
+                    $scope.getPayableVouchers();
+                } else {
+                    $scope.getVouchers();
+                }
                 $scope.page = 'view-vouchers';
                 console.log("voucher was approved successfully");
             }, function (response) {
@@ -199,6 +211,10 @@ app.service('VoucherService', ['APIService', function (APIService) {
 
     this.getVouchers = function (successHandler, errorHandler) {
         APIService.get('/api/vouchers?n=10', successHandler, errorHandler);
+    };
+
+    this.getPayableVouchers = function (successHandler, errorHandler) {
+        APIService.get('/api/vouchers/payable', successHandler, errorHandler);
     };
 
     this.getVoucherById = function (voucherId, successHandler, errorHandler) {

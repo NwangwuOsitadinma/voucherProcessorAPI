@@ -34,6 +34,11 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 templateUrl: '/app/modules/voucher/view-user-vouchers.html',
                 controller: 'VoucherController'
             })
+            .state('payable-vouchers', {
+                url: '/payable-vouchers',
+                templateUrl: '/app/modules/voucher/payable-vouchers.html',
+                controller: 'VoucherController'
+            })
             .state('new-item', {
                 url: '/new-item',
                 templateUrl: '/app/modules/item/new-item.html',
