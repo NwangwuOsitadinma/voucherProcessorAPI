@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Faker\Factory as Faker;
+// use Faker\Factory as Faker;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call('UsersTableSeeder');
-        $faker = Faker::create();
+        // $faker = Faker::create();
 
         DB::table('branches')->insert([[
             'name' => 'Enugu branch',
