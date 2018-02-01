@@ -60,4 +60,19 @@ class ItemService {
         return response()->json(['message' => 'the resource was successfully deleted']);
     }
 
+    public function getByParam($param, $value)
+    {
+        $item = $this->repository->getByParam($param, $value);
+        return $item
+            ?: response()->json(['message' => 'the resource you requested was not found']);
+    }
+
+    public function deleteByParam($param, $value)
+    {
+        if (!$this->repository->deleteByParam($param, $value)) {
+            return response()->json(['message' => 'the resource was not deleted']);
+        }
+        return response()->json(['message' => 'the resource was successfully deleted']);
+    }
+
 }

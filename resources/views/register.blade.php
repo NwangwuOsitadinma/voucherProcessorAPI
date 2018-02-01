@@ -129,7 +129,7 @@
                         <h3 class="h4 mar-no">Create a New Account</h3>
                         <p class="text-muted">Tenece Voucher proccessing! Let's set up your account.</p>
                         @if($errors->any())
-                        <span style="color:red;">{{ $errors-first() }}</span>
+                        <span style="color:red;">{{ $errors->first() }}</span>
                         @endif
                     </div>
                     <form action="/user/register" method="post">
@@ -163,7 +163,7 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <select id="demo-nav-offcanvas1" name="office_entity" class="form-control" required>
-                                        <option value="" selected disabled="disabled">-- Select Office Entity --</option>
+                                        <option value="" selected disabled="disabled">-- Select Ùnit --</option>
                                         @foreach($officeEntities as $officeEntity)
                                         <option value="{{ $officeEntity->id }}">
                                             {{ $officeEntity->name }}

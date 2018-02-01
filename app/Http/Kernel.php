@@ -62,5 +62,6 @@ class Kernel extends HttpKernel
         'manage-office-entity-vouchers' => \App\Http\Middleware\ManageOfficeEntityVouchers::class,
         'pay-voucher' => \App\Http\Middleware\PayVoucher::class,
         'approve-voucher' => \App\Http\Middleware\ApproveVoucher::class,
+        'confirm-voucher-status' => \App\Http\Middleware\ConfirmVoucherStatus::class,
     ];
 }

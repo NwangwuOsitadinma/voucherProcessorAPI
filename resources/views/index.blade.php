@@ -188,8 +188,8 @@
                                     <div class="nano-content">
                                         <!-- <ul class="head-list"> -->
 
-                                            <!-- Dropdown list-->
-                                            <!-- <li>
+                                        <!-- Dropdown list-->
+                                        <!-- <li>
                                                 <a href="#">
                                                     <div class="clearfix">
                                                         <p class="pull-left">Database Repair</p>
@@ -203,8 +203,8 @@
                                                 </a>
                                             </li> -->
 
-                                            <!-- Dropdown list-->
-                                            <!-- <li>
+                                        <!-- Dropdown list-->
+                                        <!-- <li>
                                                 <a href="#">
                                                     <div class="clearfix">
                                                         <p class="pull-left">Upgrade Progress</p>
@@ -218,8 +218,8 @@
                                                 </a>
                                             </li> -->
 
-                                            <!-- Dropdown list-->
-                                            <!-- <li>
+                                        <!-- Dropdown list-->
+                                        <!-- <li>
                                                 <a class="media" href="#">
                                                     <span class="badge badge-success pull-right">90%</span>
                                                     <div class="media-left">
@@ -232,8 +232,8 @@
                                                 </a>
                                             </li> -->
 
-                                            <!-- Dropdown list-->
-                                            <!-- <li>
+                                        <!-- Dropdown list-->
+                                        <!-- <li>
                                                 <a class="media" href="#">
                                                     <div class="media-left">
                                                         <i class="demo-pli-file-edit icon-2x"></i>
@@ -245,8 +245,8 @@
                                                 </a>
                                             </li> -->
 
-                                            <!-- Dropdown list-->
-                                            <!-- <li>
+                                        <!-- Dropdown list-->
+                                        <!-- <li>
                                                 <a class="media" href="#">
                                                     <span class="label label-danger pull-right">New</span>
                                                     <div class="media-left">
@@ -259,8 +259,8 @@
                                                 </a>
                                             </li> -->
 
-                                            <!-- Dropdown list-->
-                                            <!-- <li>
+                                        <!-- Dropdown list-->
+                                        <!-- <li>
                                                 <a class="media" href="#">
                                                     <div class="media-left">
                                                         <i class="demo-pli-add-user-plus-star icon-2x"></i>
@@ -272,8 +272,8 @@
                                                 </a>
                                             </li> -->
 
-                                            <!-- Dropdown list-->
-                                            <!-- <li class="bg-gray">
+                                        <!-- Dropdown list-->
+                                        <!-- <li class="bg-gray">
                                                 <a class="media" href="#">
                                                     <div class="media-left">
                                                         <img class="img-circle img-sm" alt="Profile Picture" src="img/profile-photos/9.png">
@@ -285,8 +285,8 @@
                                                 </a>
                                             </li> -->
 
-                                            <!-- Dropdown list-->
-                                            <!-- <li class="bg-gray">
+                                        <!-- Dropdown list-->
+                                        <!-- <li class="bg-gray">
                                                 <a class="media" href="#">
                                                     <div class="media-left">
                                                         <img class="img-circle img-sm" alt="Profile Picture" src="img/profile-photos/3.png">
@@ -515,7 +515,11 @@
                             <a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
                                 <span class="pull-right">
                                     <!--<img class="img-circle img-user media-object" src="img/profile-photos/1.png" alt="Profile Picture">-->
+                                    @if($user && $user->sex == 'Male')
                                     <i class="demo-pli-male ic-user"></i>
+                                    @else
+                                    <i class="demo-pli-male-female ic-user"></i>
+                                    @endif
                                 </span>
                                 <div class="username hidden-xs">{{ $user->full_name }}</div>
                             </a>
@@ -539,7 +543,11 @@
                                 <ul class="head-list">
                                     <li>
                                         <a href="#">
-                                            <i class="demo-pli-male icon-lg icon-fw"></i> Profile
+                                            @if($user && $user->sex == 'Male')
+                                            <i class="demo-pli-male icon-lg icon-fw"></i>
+                                            @else
+                                            <i class="demo-pli-male-female icon-lg icon-fw"></i>
+                                            @endif Profile
                                         </a>
                                     </li>
                                     <!-- <li>
@@ -922,7 +930,11 @@
                                     <div class="profile-wrap">
                                         <div class="pad-btm">
                                             <span class="label label-success pull-right">New</span>
+                                            @if($user && $user->sex == 'Male')
                                             <img class="img-circle img-sm img-border" src="img/profile-photos/1.png" alt="Profile Picture">
+                                            @else
+                                            <img class="img-circle img-sm img-border" src="img/profile-photos/8.png" alt="Profile Picture">
+                                            @endif
                                         </div>
                                         <a href="#profile-nav" class="box-block" data-toggle="collapse" aria-expanded="false">
                                             <span class="pull-right dropdown-toggle">
@@ -934,7 +946,11 @@
                                     </div>
                                     <div id="profile-nav" class="collapse list-group bg-trans">
                                         <a href="#" class="list-group-item">
-                                            <i class="demo-pli-male icon-lg icon-fw"></i> View Profile
+                                            @if($user && $user->sex == 'Male')
+                                            <i class="demo-pli-male icon-lg icon-fw"></i>
+                                            @else
+                                            <i class="demo-pli-male-female icon-lg icon-fw"></i>
+                                            @endif View Profile
                                         </a>
                                         <!-- <a href="#" class="list-group-item">
                                             <i class="demo-pli-gear icon-lg icon-fw"></i> Settings
@@ -1013,21 +1029,32 @@
                                             <li>
                                                 <a href="javascript:;" ui-sref="new-voucher">New Voucher</a>
                                             </li>
-                                            @if($user && $user->can('approve-voucher'))
                                             <li>
                                                 <a href="javascript:;" ui-sref="my-vouchers">My Vouchers</a>
                                             </li>
+                                            @if($user && $user->can('approve-voucher'))
                                             <li>
                                                 <a href="javascript:;" ui-sref="view-vouchers">View All Vouchers</a>
                                             </li>
-                                            @else
-                                            <li>
-                                                <a href="javascript:;" ui-sref="my-vouchers">My Vouchers</a>
-                                            </li>
                                             @endif
+                                            <li>
+                                                <a href="javascript:;" ui-sref="user-vouchers-trail">My Voucher History</a>
+                                            </li>
 
                                         </ul>
                                     </li>
+
+                                    @if($user && $user->can('pay-voucher'))
+                                    <li>
+                                        <a href="javascript:;" ui-sref="payable-vouchers">
+                                            <i class="demo-psi-inbox-full"></i>
+                                            <span class="menu-title">
+                                                <strong>Payable Vouchers</strong>
+                                            </span>
+                                            <!-- <i class="arrow"></i> -->
+                                        </a>
+                                    </li>
+                                    @endif
 
                                     <!--Menu list item-->
                                     @if($user && ($user->isAn('ADMIN') || $user->isA('MODERATOR')))
@@ -1058,10 +1085,10 @@
                                             <!-- <li>
                                                 <a href="javascript:;">Roles <i class="arrow"></i></a>
                                                 <ul class="collapse"> -->
-                                                    <li>
-                                                        <a href="javascript:;" ui-sref="new-role">New Role</a>
-                                                    </li>
-                                                    <!-- <li>
+                                            <li>
+                                                <a href="javascript:;" ui-sref="new-role">New Role</a>
+                                            </li>
+                                            <!-- <li>
                                                         <a href="javascript:;" ui-sref="view-roles">View Role</a>
                                                     </li>
                                                 </ul>

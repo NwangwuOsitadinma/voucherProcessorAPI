@@ -6,7 +6,7 @@
     <!--Searchbox-->
     <div class="searchbox">
         <div class="input-group custom-search-form">
-            <input type="text" class="form-control" placeholder="Search..">
+            <input type="text" data-ng-model="searchParam" class="form-control" placeholder="Search..">
             <span class="input-group-btn">
                 <button class="text-muted" type="button">
                     <i class="demo-pli-magnifi-glass"></i>
@@ -62,7 +62,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-ng-repeat="branch in branches">
+                            <tr data-ng-repeat="branch in branches | filter : searchParam">
                                 <td>
                                     <a href="javascript:void(0)" data-ng-click="getBranchDetails(branch.id)">
                                         <span data-ng-bind="branch.name"></span>
@@ -126,7 +126,6 @@
                         <!--===================================================-->
                         <div class="panel">
                             <div class="panel-body text-center">
-                                <!-- <img alt="Profile Picture" class="img-md img-circle mar-btm" src="img/profile-photos/1.png"> -->
                                 <p class="text-lg text-semibold mar-no text-main" data-ng-bind="branch.name"></p>
                                 <p class="text-muted" data-ng-bind="branch.location"></p>
                                 <p class="text-sm" data-ng-bind="branch.description"> </p>

@@ -6,7 +6,7 @@
     <!--Searchbox-->
     <div class="searchbox">
         <div class="input-group custom-search-form">
-            <input type="text" class="form-control" placeholder="Search..">
+            <input type="text" class="form-control" data-ng-model="searchParam" placeholder="Search..">
             <span class="input-group-btn">
                 <button class="text-muted" type="button">
                     <i class="demo-pli-magnifi-glass"></i>
@@ -59,13 +59,13 @@
                                 <th>Description</th>
                                 <th data-hide="all">Status</th>
                                 <th data-hide="all">Reason</th>
-                                <th data-hide="all">Paid</th>
+                                <!-- <th data-hide="all">Paid</th> -->
                                 <th data-hide="all">Time stamp</th>
                                 <th data-hide="all">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-ng-repeat="voucher in vouchers">
+                            <tr data-ng-repeat="voucher in vouchers | filter : searchParam">
                                 <td>
                                     <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
                                         <span data-ng-bind="voucher.voucher_number">
@@ -79,7 +79,7 @@
                                 </td>
                                 <td>
                                     <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
-                                        <div class="label label-table" data-ng-class="{'label-warning' : voucher.status == 'Waiting', 'label-success' : voucher.status == 'Accepted', 'label-danger' : voucher.status == 'Declined'}"
+                                        <div class="label label-table" data-ng-class="{'label-warning' : voucher.status == 'Waiting', 'label-primary' : voucher.status == 'Paid', 'label-success' : voucher.status == 'Accepted', 'label-danger' : voucher.status == 'Declined'}"
                                             data-ng-bind="voucher.status"></div>
                                     </a>
                                 </td>
@@ -88,21 +88,22 @@
                                         <span data-ng-bind="voucher.reason"></span>
                                     </a>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
                                         <div class="label label-table" data-ng-class="{'label-success' : voucher.paid, 'label-warning' : !voucher.paid}" data-ng-bind="voucher.paid ? 'Yes' : 'No'"></div>
                                     </a>
-                                </td>
+                                </td> -->
                                 <td>
                                     <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
-                                        <span data-ng-bind="voucher.updated_at"></span>
+                                        <span data-ng-bind="$parent.formatDate(voucher.updated_at)"></span>
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="javascript:void(0)" data-ng-click="deleteVoucher(voucher.id)">
+                                    <a href="javascript:void(0)" data-ng-if="'Waiting' === voucher.status" data-ng-click="deleteVoucher(voucher.id)">
                                         <span class="label label-table label-danger">
                                             <i class="fa fa-trash"></i> Delete</span>
                                     </a>
+                                    <span data-ng-if="'Waiting' !== voucher.status">No Actions</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -144,17 +145,33 @@
                         <!--===================================================-->
                         <div class="panel">
                             <div class="panel-body text-center">
-                                <img alt="Profile Picture" class="img-md img-circle mar-btm" src="img/profile-photos/1.png">
                                 <p class="text-lg text-semibold mar-no text-main" data-ng-bind="voucher.voucher_number"></p>
-                                <p class="text-muted" data-ng-bind="voucher.user.full_name"></p>
-                                <p class="text-muted" data-ng-bind="voucher.office_entity.name"></p>
-                                <p class="text-muted" data-ng-bind="voucher.status"></p>
-                                <p class="text-muted" data-ng-bind="voucher.reason"></p>
-                                <p class="text-muted" data-ng-bind="voucher.paid ? 'Paid' : 'Not yet paid'"></p>
-                                <p class="text-sm" data-ng-bind="voucher.description"> </p>
-                                <p class="text-sm" data-ng-bind="voucher.totalPrice"> </p>
-                                <!-- <button class="btn btn-primary mar-ver" data-ng-click="getUpdatePage()">
-                                    <i class="demo-pli-check icon-fw"></i>Edit</button> -->
+                                <p>Voucher's Creator:
+                                    <span style="font-size:13px;" class="label label-default" data-ng-bind="voucher.user.full_name"></span>
+                                </p>
+                                <p>Voucher Creator's Unit:
+                                    <span style="font-size:13px;" class="label label-default" class="text-muted"
+                                        data-ng-bind="voucher.office_entity.name"></span>
+                                </p>
+                                <p>Voucher's Status:
+                                    <span style="font-size:13px;" class="label" data-ng-class="{'label-warning' : voucher.status == 'Waiting', 'label-primary' : voucher.status == 'Paid', 'label-success' : voucher.status == 'Accepted', 'label-danger' : voucher.status == 'Declined'}"
+                                        data-ng-bind="voucher.status"></span>
+                                </p>
+                                <p>Voucher's Reason:
+                                    <span style="font-size:13px;" class="label label-default" class="text-muted"
+                                        data-ng-bind="voucher.reason"></span>
+                                </p>
+                                <!-- <p class="text-muted" data-ng-bind="voucher.paid ? 'Paid' : 'Not yet paid'"></p> -->
+                                <p>Voucher's Description:
+                                    <span style="font-size:13px;" class="label label-default" data-ng-bind="voucher.description">
+                                    </span>
+                                </p>
+                                <p>Voucher's Total Price:
+                                    <span style="font-size:13px;" class="label label-default" data-ng-bind="voucher.totalPrice">
+                                    </span>
+                                </p>
+                                <button class="btn btn-primary mar-ver" data-ng-if="'Waiting' === voucher.status" data-ng-click="getUpdatePage()">
+                                    <i class="demo-pli-check icon-fw"></i>Edit</button>
                                 <hr>
                                 <table id="demo-foo-pagination1" class="table table-hover toggle-arrow-tiny text-left" data-page-size="5">
                                     <thead>
@@ -214,7 +231,7 @@
                 <form>
                     <div class="panel-body">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="form-group">
                                     <label class="control-label">Unit</label>
                                     <select id="demo-nav-offcanvas" data-ng-model="voucher.office_entity_id" name="office_entity_id" class="form-control" required>
@@ -226,6 +243,33 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div id="items">
+
+                            <div class="row" id="item_<%$index%>" data-ng-repeat="item in voucher.items">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input class="form-control" id="itemName<%$index%>" value="<% item.name %>" name="name[]" type="text" placeholder="Item Name"
+                                            required="">
+                                    </div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group">
+                                        <input class="form-control" id="itemPrice<%$index%>" name="price[]" value="<% item.price %>" type="number" min="1" placeholder="Item Price"
+                                            required="">
+                                    </div>
+                                </div>
+                                <div class="col-sm-1">
+                                    <a href="javascript:void(0)" class="btn btn-danger pull-right" data-ng-click="removeItem($index)">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row" id="item_<% voucher.items.length %>">
+
+                            </div>
+                        </div>
+
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
@@ -242,36 +286,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" id="item_0">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <input class="form-control" id="itemName0" name="name[]" type="text" placeholder="Item Name" required="">
-                                </div>
-                            </div>
-                            <div class="col-sm-5">
-                                <div class="form-group">
-                                    <input class="form-control" id="itemPrice0" name="price[]" type="number" min="1" placeholder="Item Price" required="">
-                                </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <a href="javascript:void(0)" class="btn btn-danger pull-right" onclick="removeItem(0)">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="row" id="item_1">
 
-                        </div>
                     </div>
 
                     <div class="panel-footer text-right">
                         <div class="col-sm-5">
                             <button class="btn btn-warning pull-left" data-ng-click="getVoucherDetails(voucher.id)">
                                 <i class="fa fa-times"></i> Cancel</button>
-                            <button class="btn btn-info pull-left" data-ng-click="addItem()" id="add_item">
+                            <button class="btn btn-info" data-ng-click="addItem()" id="add_item">
                                 <i class="demo-pli-add"></i> Add Item</button>
-                            <button class="btn btn-danger pull-right" data-ng-click="deleteLastItem()" type="button" id="delete_item">
-                                <i class="demo-pli-remove"></i> Remove Last Item</button>
+                            <!-- <button class="btn btn-danger pull-right" data-ng-click="deleteLastItem()" type="button" id="delete_item">
+                                <i class="demo-pli-remove"></i> Remove Last Item</button> -->
                         </div>
                         <button class="btn btn-success" data-ng-click="updateVoucher()" type="submit">Update</button>
                     </div>
@@ -285,3 +310,10 @@
 </div>
 <!--===================================================-->
 <!--End page content-->
+
+<script type="text/javascript">
+
+    function removeItem(n) {
+        $('#item_' + n).html('');
+    }
+</script>

@@ -34,6 +34,11 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 templateUrl: '/app/modules/voucher/view-user-vouchers.html',
                 controller: 'VoucherController'
             })
+            .state('payable-vouchers', {
+                url: '/payable-vouchers',
+                templateUrl: '/app/modules/voucher/payable-vouchers.html',
+                controller: 'VoucherController'
+            })
             .state('new-item', {
                 url: '/new-item',
                 templateUrl: '/app/modules/item/new-item.html',
@@ -102,6 +107,11 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
             .state('vouchers-trail', {
                 url: '/vouchers-trail',
                 templateUrl: '/app/modules/voucher-trail/voucher-trail.html',
+                controller: 'VoucherTrailController'
+            })
+            .state('user-vouchers-trail', {
+                url: '/user-vouchers-trail',
+                templateUrl: '/app/modules/voucher-trail/user-vouchers-trail.html',
                 controller: 'VoucherTrailController'
             });
 

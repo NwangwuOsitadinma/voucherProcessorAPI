@@ -19,6 +19,6 @@ class Moderator
         if($user && ($user->isA('MODERATOR') || $user->isAn('ADMIN'))){
             return $next($request);
         }
-        return redirect()->back()->intended('/');
+        return redirect()->intended('/');
     }
 }

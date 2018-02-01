@@ -43517,6 +43517,11 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 templateUrl: '/app/modules/voucher/view-user-vouchers.html',
                 controller: 'VoucherController'
             })
+            .state('payable-vouchers', {
+                url: '/payable-vouchers',
+                templateUrl: '/app/modules/voucher/payable-vouchers.html',
+                controller: 'VoucherController'
+            })
             .state('new-item', {
                 url: '/new-item',
                 templateUrl: '/app/modules/item/new-item.html',
@@ -43586,6 +43591,11 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 url: '/vouchers-trail',
                 templateUrl: '/app/modules/voucher-trail/voucher-trail.html',
                 controller: 'VoucherTrailController'
+            })
+            .state('user-vouchers-trail', {
+                url: '/user-vouchers-trail',
+                templateUrl: '/app/modules/voucher-trail/user-vouchers-trail.html',
+                controller: 'VoucherTrailController'
             });
 
     }]);
@@ -43643,13 +43653,43 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
     };
 
 
-}]);;app.controller('MainController', ['$scope', '$cookies', '$state', 'MainService', function ($scope, $cookies, $state, MainService) {
+}]);;app.controller('MainController', ['$rootScope', '$scope', '$cookies', '$state', 'MainService', function ($rootScope, $scope, $cookies, $state, MainService) {
 
     var state = $cookies.get('state');
     if(state) {
         $state.go(state);
         $cookies.remove('state');
     }
+
+    $rootScope.formatDate = function (timeStamp) {
+        var date = new Date(timeStamp);
+        var day = date.getDay();
+        switch(day) {
+            case 0 :
+                day = 'Sunday';
+                break;
+            case 1 :
+                day = 'Monday';
+                break;
+            case 2 :
+                day = 'Tuesday';
+                break;
+            case 3 : 
+                day = 'Wednesday';
+                break;
+            case 4 :
+                day = 'Thursday';
+                break;
+            case 5 :
+                day = 'Friday';
+                break;
+            case 6 : 
+                day = 'Saturday';
+                break;
+        }
+        return day + ', ' + date.toLocaleString();
+    };
+    
 }]);
 
 app.service('MainService', ['APIService', function (APIService) {
@@ -43957,6 +43997,8 @@ app.service('OfficeEntityTypeService', ['APIService', function (APIService) {
     $scope.officeEntity = {};
     $scope.officeEntities = [];
     $scope.page = 'view-office-entities';
+    $scope.pagination = {};
+    $scope.pagination.index = 1;
 
     $scope.initialize = function () {
         $scope.getAllSupervisors();
@@ -43984,6 +44026,10 @@ app.service('OfficeEntityTypeService', ['APIService', function (APIService) {
     $scope.getOfficeEntities = function () {
         OfficeEntityService.getOfficeEntities(function (response) {
             $scope.officeEntities = response.data;
+            $scope.pagination.urls = [];
+            for (var i = 0; i < $scope.officeEntities.last_page; i++) {
+                $scope.pagination.urls.push($scope.officeEntities.path + "&page=" + (i + 1));
+            }
         }, function (response) {
             console.log("an error occured while fetching list of office entities");
         });
@@ -43995,6 +44041,34 @@ app.service('OfficeEntityTypeService', ['APIService', function (APIService) {
             $scope.page = 'office-entity-details';
         }, function (response) {
             console.log("error occurred while fetching the office entity details");
+        });
+    };
+
+    $scope.searchText = function () {
+        OfficeEntityService.searchText($scope.searchParam, function (response) {
+            $scope.officeEntities = response.data;
+            $scope.pagination.urls = [];
+            for (var i = 0; i < $scope.officeEntities.last_page; i++) {
+                $scope.pagination.urls.push($scope.officeEntities.path + "&page=" + (i + 1));
+            }
+        }, function (response) {
+            console.log("error occurred while trying to fetch the searched text");
+        });
+    };
+
+    $scope.getPage = function (url, index) {
+        console.log(index);
+        OfficeEntityService.getPage(url, function (response) {
+            if (index === 0) {
+                $scope.pagination.index++;
+            } else if (index === -1) {
+                $scope.pagination.index--;
+            } else {
+                $scope.pagination.index = index;
+            }
+            $scope.officeEntities = response.data;
+        }, function (response) {
+            console.log("error occurred while trying to get the officeEntities");
         });
     };
 
@@ -44014,6 +44088,7 @@ app.service('OfficeEntityTypeService', ['APIService', function (APIService) {
 
     $scope.updateOfficeEntity = function () {
         Pace.restart();
+        $scope.officeEntity.employees = $('#multiselect').chosen().val();
         if ($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') {
             OfficeEntityService.updateOfficeEntity($scope.officeEntity.id, $scope.officeEntity, function (response) {
                 console.log("office entity was successfully updated");
@@ -44048,6 +44123,7 @@ app.service('OfficeEntityTypeService', ['APIService', function (APIService) {
             $scope.users = response.data;
             setTimeout(function () {
                 $('#multiselect').chosen();
+                console.log('hey i just set the multiselect');
             }, 5);
         }, function (response) {
             console.log("error occurred while trying to get the list of users");
@@ -44078,7 +44154,11 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
     };
 
     this.getOfficeEntities = function (successHandler, errorHandler) {
-        APIService.get('/api/office_entities', successHandler, errorHandler);
+        APIService.get('/api/office_entities?n=10', successHandler, errorHandler);
+    };
+
+    this.searchText = function (text, successHandler, errorHandler) {
+        APIService.get('/api/office_entities/find?q=' + text + '&n=10', successHandler, errorHandler);
     };
 
     this.getOfficeEntityById = function (officeEntityId, successHandler, errorHandler) {
@@ -44107,6 +44187,10 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
 
     this.getAllOfficeEntityTypes = function (successHandler, errorHandler) {
         APIService.get('/api/office_entity_types', successHandler, errorHandler);
+    };
+
+    this.getPage = function (url, successHandler, errorHandler) {
+        APIService.get(url, successHandler, errorHandler);
     };
 }]);;app.controller('RolesAndClaimsController', ['$rootScope', '$scope', '$state', 'RolesAndClaimsService', function ($rootScope, $scope, $state, RolesAndClaimsService) {
 
@@ -44306,11 +44390,17 @@ app.service('UserService', ['APIService', function (APIService) {
         function($rootScope, $scope, $state, VoucherTrailService) {
 
     $scope.voucherTrails = [];
+    $scope.pagination = {};
+    $scope.pagination.index = 1;
 
     $scope.getVoucherTrails = function () {
         if ($rootScope.role == 'ADMIN') {
             VoucherTrailService.getVoucherTrails(function (response) {
                 $scope.voucherTrails = response.data;
+                $scope.pagination.urls = [];
+                for (var i = 0; i < $scope.voucherTrails.last_page; i++) {
+                    $scope.pagination.urls.push($scope.voucherTrails.path + "&page=" + (i + 1));
+                }
             }, function (response) {
                 console.error("error occurred while trying to fetch the voucher trails");
             });
@@ -44318,12 +44408,60 @@ app.service('UserService', ['APIService', function (APIService) {
             return;
         }
     };
+
+    $scope.getUserVoucherTrails = function () {
+        VoucherTrailService.getUserVoucherTrails(function (response) {
+            $scope.voucherTrails = response.data;
+        }, function (response) {
+            console.log("an error occurred while trying to fetch the voucher trails");
+        });
+    };
+
+    $scope.searchText = function () {
+        VoucherTrailService.searchText($scope.searchParam, function (response) {
+            $scope.voucherTrails = response.data;
+            $scope.pagination.urls = [];
+            for (var i = 0; i < $scope.voucherTrails.last_page; i++) {
+                $scope.pagination.urls.push($scope.voucherTrails.path + "&page=" + (i + 1));
+            }
+        }, function (response) {
+            console.log("error occurred while trying to fetch the searched text");
+        });
+    };
+
+    $scope.getPage = function (url, index) {
+        console.log(index);
+        VoucherTrailService.getPage(url, function (response) {
+            if (index === 0) {
+                $scope.pagination.index++;
+            } else if (index === -1) {
+                $scope.pagination.index--;
+            } else {
+                $scope.pagination.index = index;
+            }
+            $scope.voucherTrails = response.data;
+        }, function (response) {
+            console.log("error occurred while trying to get the vouchers");
+        });
+    };
 }]);
 
 app.service('VoucherTrailService', ['APIService', function (APIService) {
 
     this.getVoucherTrails = function (successHandler, errorHandler) {
-        APIService.get('/api/voucher-trails', successHandler, errorHandler);
+        APIService.get('/api/voucher-trails?n=10', successHandler, errorHandler);
+    };
+
+    this.getUserVoucherTrails = function (successHandler, errorHandler) {
+        APIService.get('/api/voucher-trails/user', successHandler, errorHandler);
+    };
+
+    this.searchText = function (text, successHandler, errorHandler) {
+        APIService.get('/api/voucher-trails/find?q=' + text + '&n=10', successHandler, errorHandler);
+    };
+
+    this.getPage = function (url, successHandler, errorHandler) {
+        APIService.get(url, successHandler, errorHandler);
     };
 }]);;app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherService', function ($rootScope, $scope, $state, VoucherService) {
 
@@ -44334,17 +44472,31 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
     $scope.page = 'view-vouchers';
     $scope.voucher.items = [];
     $scope.voucherUpdate = {};
+    $scope.pagination = {};
+    $scope.pagination.index = 1;
 
     $scope.getVouchers = function () {
         if ($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') {
             VoucherService.getVouchers(function (response) {
                 $scope.vouchers = response.data;
+                $scope.pagination.urls = [];
+                for (var i = 0; i < $scope.vouchers.last_page; i++) {
+                    $scope.pagination.urls.push($scope.vouchers.path + "&page=" + (i + 1));
+                }
             }, function (response) {
                 console.log("error occurred while trying to fetch list of vouchers");
             });
         } else {
             $scope.getUserVouchers();
         }
+    };
+
+    $scope.getPayableVouchers = function () {
+        VoucherService.getPayableVouchers(function (response) {
+            $scope.vouchers = response.data;
+        }, function (response) {
+            console.error("an error occurred while trying to fetch payable vouchers");
+        });
     };
 
     $scope.getUserVouchers = function () {
@@ -44370,7 +44522,7 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
                 $scope.voucher.items.push(item);
             }
         }
-        if($scope.voucher.items.length < 1) {
+        if ($scope.voucher.items.length < 1) {
             $scope.errorMessage = 'Please add an item and fill in the item values';
             return;
         }
@@ -44387,7 +44539,7 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
         VoucherService.getVoucherById(voucherId, function (response) {
             $scope.voucher = response.data;
             $scope.voucher.totalPrice = 0;
-            for(var i = 0; i < $scope.voucher.items.length; i++) {
+            for (var i = 0; i < $scope.voucher.items.length; i++) {
                 $scope.voucher.totalPrice += $scope.voucher.items[i].price;
             }
             $scope.page = 'voucher-details';
@@ -44408,21 +44560,46 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
 
     $scope.updateVoucher = function () {
         Pace.restart();
+        $scope.voucher.items = [];
+        for (var i = 0; i < j; i++) {
+            if ($('#itemName' + i).val() && $('#itemPrice' + i).val()) {
+                if (parseInt($('#itemPrice' + i).val()) < 1) {
+                    $scope.voucher.items = [];
+                    return;
+                }
+                var item = {
+                    'name': $('#itemName' + i).val(),
+                    'price': $('#itemPrice' + i).val()
+                };
+                $scope.voucher.items.push(item);
+            }
+        }
+        console.log($scope.voucher.items);
+        if ($scope.voucher.items.length < 1) {
+            $scope.errorMessage = 'Please add an item and fill in the item values';
+            return;
+        }
         VoucherService.updateVoucher($scope.voucher.id, $scope.voucher, function (response) {
             console.log("voucher was successfully updated");
-            $scope.getVouchers();
+            $scope.voucher = {};
+            $scope.getUserVouchers();
             $scope.page = 'view-vouchers';
         }, function (response) {
             console.log("error occurred while trying to update the voucher");
         });
     };
 
-    $scope.approveVoucher = function (voucherId) {
+    $scope.approveVoucher = function (voucherId, status, view) {
+        console.log(status);
         if ($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') {
             Pace.restart();
-            VoucherService.approveVoucher(voucherId, { 'status': $scope.voucherUpdate.status }, function (response) {
+            VoucherService.approveVoucher(voucherId, { 'status': status }, function (response) {
                 console.log(response.data);
-                $scope.getVouchers();
+                if (view === 'Payable Vouchers') {
+                    $scope.getPayableVouchers();
+                } else {
+                    $scope.getVouchers();
+                }
                 $scope.page = 'view-vouchers';
                 console.log("voucher was approved successfully");
             }, function (response) {
@@ -44433,9 +44610,38 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
         }
     };
 
+    $scope.searchText = function () {
+        VoucherService.searchText($scope.searchParam, function (response) {
+            $scope.vouchers = response.data;
+            $scope.pagination.urls = [];
+            for (var i = 0; i < $scope.vouchers.last_page; i++) {
+                $scope.pagination.urls.push($scope.vouchers.path + "&page=" + (i + 1));
+            }
+        }, function (response) {
+            console.log("error occurred while trying to fetch the searched text");
+        });
+    };
+
+    $scope.getPage = function (url, index) {
+        console.log(index);
+        VoucherService.getPage(url, function (response) {
+            if (index === 0) {
+                $scope.pagination.index++;
+            } else if (index === -1) {
+                $scope.pagination.index--;
+            } else {
+                $scope.pagination.index = index;
+            }
+            $scope.vouchers = response.data;
+        }, function (response) {
+            console.log("error occurred while trying to get the vouchers");
+        });
+    };
+
     $scope.getUpdatePage = function () {
         Pace.restart();
         $scope.voucher.office_entity = $scope.voucher.office_entity_id;
+        j = $scope.voucher.items.length;
         $scope.page = 'update-voucher';
     };
 
@@ -44490,11 +44696,19 @@ app.service('VoucherService', ['APIService', function (APIService) {
     };
 
     this.getVouchers = function (successHandler, errorHandler) {
-        APIService.get('/api/vouchers', successHandler, errorHandler);
+        APIService.get('/api/vouchers?n=10', successHandler, errorHandler);
+    };
+
+    this.getPayableVouchers = function (successHandler, errorHandler) {
+        APIService.get('/api/vouchers/payable', successHandler, errorHandler);
     };
 
     this.getVoucherById = function (voucherId, successHandler, errorHandler) {
         APIService.get('/api/voucher/' + voucherId, successHandler, errorHandler);
+    };
+
+    this.searchText = function (text, successHandler, errorHandler) {
+        APIService.get('/api/vouchers/find?q=' + text + '&n=10', successHandler, errorHandler);
     };
 
     this.getUserVouchers = function (successHandler, errorHandler) {
@@ -44515,5 +44729,9 @@ app.service('VoucherService', ['APIService', function (APIService) {
 
     this.getOfficeEntities = function (successHandler, errorHandler) {
         APIService.get('/api/office_entities', successHandler, errorHandler);
+    };
+
+    this.getPage = function (url, successHandler, errorHandler) {
+        APIService.get(url, successHandler, errorHandler);
     };
 }]);

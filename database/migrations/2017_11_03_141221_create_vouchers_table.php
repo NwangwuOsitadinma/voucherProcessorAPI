@@ -19,9 +19,9 @@ class CreateVouchersTable extends Migration
             $table->string('description')->nullable(true);
             $table->integer('user_id')->unsigned();
             $table->integer('office_entity_id')->unsigned();
-            $table->enum('status', ['Accepted', 'Declined', 'Waiting'])->default('Waiting');
+            $table->enum('status', ['Accepted', 'Declined', 'Paid', 'Waiting'])->default('Waiting');
             $table->string('reason');
-            $table->boolean('paid')->default(false);
+            // $table->boolean('paid')->default(false);
             $table->timestamps();
         });
     }
