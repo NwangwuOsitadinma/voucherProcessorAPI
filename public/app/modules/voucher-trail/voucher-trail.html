@@ -60,6 +60,7 @@
                                 <th>Created by</th>
                                 <th>Response</th>
                                 <th>Response by</th>
+                                <th>Time Stamp</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -88,6 +89,11 @@
                                 <td>
                                     <a href="javascript:void(0)">
                                         <span data-ng-bind="voucherTrail.response_by.full_name"></span>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)">
+                                        <span data-ng-bind="$parent.formatDate(voucherTrail.updated_at)"></span>
                                     </a>
                                 </td>
                             </tr>

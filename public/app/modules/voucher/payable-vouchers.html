@@ -88,7 +88,7 @@
                                     </td>
                                     <td>
                                         <a href="javascript:void(0)" data-ng-click="getVoucherDetails(voucher.id)">
-                                            <span data-ng-bind="voucher.updated_at"></span>
+                                            <span data-ng-bind="$parent.formatDate(voucher.updated_at)"></span>
                                         </a>
                                     </td>
                                 </tr>
