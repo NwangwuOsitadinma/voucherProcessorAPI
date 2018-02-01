@@ -34,12 +34,15 @@ class UserService
     
     public function confirmUserDetails($email, $password)
     {
-        $user = $this->repository->getOneByParam('email_address', $email);
+        $user = $this->repository->getOneByParam('email', $email);
         return $user && Hash::check($password, $user->password) ? $user : null;
     }
 
     public function create(UserRequest $request, $role)
     {
+        if($user = $this->repository->getOneByParam('email', $request->email)) {
+            return back()->withInput()->withErrors(['registerError' => 'sorry the user could not be registered']);
+        }
         $user = $this->repository->create($request->getAttributesArray());
         if (!$user) {
             return back()->withInput()->withErrors(['registerError' => 'user was not successfully registered']);

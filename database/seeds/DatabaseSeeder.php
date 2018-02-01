@@ -26,6 +26,15 @@ class DatabaseSeeder extends Seeder
             'description' => 'Lagos state head quarters'
         ] 
         ]);
+        
+        DB::table('users')->insert([
+            'id' => 1,
+            'full_name' => 'Harrison Favour',
+            'email' => 'admin@tenece.com',
+            'password' => Hash::make('password'),
+            'employee_id' => 'TC231732X',
+            'sex' => 'Male'
+        ]);
 
         DB::table('office_entity_types')->insert([
             'name' => 'department',
@@ -35,6 +44,7 @@ class DatabaseSeeder extends Seeder
         DB::table('office_entities')->insert([
             'name' => 'Software',
             'branch_id' => 1,
+            'lead_id' => 1,
             'office_entity_type_id' => 1,
             'description' => 'this deprartment controls the software operations in Tenece'
         ], [
@@ -42,14 +52,6 @@ class DatabaseSeeder extends Seeder
             'branch_id' => 2,
             'office_entity_type_id' => 1,
             'description' => 'this deprartment controls the general operations in Tenece'
-        ]);
-        DB::table('users')->insert([
-            'id' => 1,
-            'full_name' => 'Harrison Favour',
-            'email' => 'admin@tenece.com',
-            'password' => Hash::make('password'),
-            'employee_id' => 'TC231732X',
-            'sex' => 'MALE'
         ]);
     	// foreach (range(1,3) as $index) {
 	    //     DB::table('users')->insert([

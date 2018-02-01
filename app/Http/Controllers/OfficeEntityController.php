@@ -29,6 +29,11 @@ class OfficeEntityController extends Controller
         return $this->service->getEntities($n, $fields);
     }
 
+    public function search(Request $request)
+    {
+        return $this->service->search($request->q, $request->n);
+    }
+
     public function show($id)
     {
         return $this->service->getEntity($id);

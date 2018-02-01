@@ -30,7 +30,7 @@ class VoucherService
 
     public function getAll(int $n = null, array $fields = null)
     {
-        $vouchers = $this->repository->getAll($n, $fields);
+        $vouchers = $this->repository->getAll($n, "/api/vouchers?n=" .$n, $fields);
         return $vouchers
             ? $vouchers
             : response()->json(['message' => 'the resource you requested was not found']);
@@ -42,6 +42,18 @@ class VoucherService
         return $voucher
             ? $voucher
             : response()->json(['message' => 'the resource you requested was not found']);
+    }
+
+    public function search($text, $n, $user)
+    {
+        if(!$user->can('view-all-vouchers')){
+            $vouchers = $this->repository->search($text, $n, "/api/vouchers/find?q=". $text ."n=" .$n, $user->id);
+            return $vouchers
+                ?: response()->json(['message' => 'the resource you requested was not found']);
+        }
+        $vouchers = $this->repository->search($text, $n, "/api/vouchers/find?q=". $text ."n=" .$n);
+        return $vouchers
+            ?: response()->json(['message' => 'the resource you requested was not found']);
     }
 
 
@@ -60,8 +72,14 @@ class VoucherService
 
     public function update($id, VoucherRequest $request)
     {
-        if (!$this->repository->update($id, $request->getAttributesArray())) {
+        $voucherId = $this->repository->update($id, $request->getAttributesArray());
+        if (!$voucherId) {
             return response()->json(['message' => 'the resource was not updated', 'data' => $request->getAttributesArray()], 500);
+        }
+        $this->itemService->deleteByParam('voucher_id', $id);
+        foreach($request->items as $item) {
+            $item['voucher_id'] = $id;
+            $this->itemService->create($item);
         }
         return response()->json(['message' => 'the resource was successfully updated', 'data' => $request->getAttributesArray()], 200);
     }
@@ -87,7 +105,8 @@ class VoucherService
         }
         $voucherTrail = [
             'voucher_id' => $voucherId,
-            'response_by_id' => $userId
+            'response_by_id' => $userId,
+            'response' => $voucherStatus
         ];
         $this->voucherTrailService->create($voucherTrail);
         return response()->json(['message' => 'the resource was successfully updated', 'data' => $voucher], 200);
@@ -122,7 +141,7 @@ class VoucherService
 
     public function getOfficeEntityVouchers($officeEntityId)
     {
-        $officeEntityVouchers = $this->repository->getByParam('office_entity_id',$officeEntityId);
+        $officeEntityVouchers = $this->repository->getByParam('office_entity_id', $officeEntityId);
         return $officeEntityVouchers
             ? $officeEntityVouchers
             : response()->json(['message' => 'the resource you requested was not found']);

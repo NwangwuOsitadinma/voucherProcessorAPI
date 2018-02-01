@@ -23,9 +23,17 @@ class VoucherTrailService
         $this->repository = $repository;
     }
 
-    public function getAll()
+    public function getAll(int $n = null)
     {
-        $voucherTrails = $this->repository->getAllVoucherTrails();
+        $voucherTrails = $this->repository->getAllVoucherTrails($n, '/api/voucher-trails?n=' .$n);
+        return $voucherTrails
+            ? $voucherTrails
+            : response()->json(['message' => 'the resource you requested was not found']);
+    }
+
+    public function getUserVoucherTrails($userId)
+    {
+        $voucherTrails = $this->repository->getUserVoucherTrails($userId);
         return $voucherTrails
             ? $voucherTrails
             : response()->json(['message' => 'the resource you requested was not found']);
@@ -37,6 +45,16 @@ class VoucherTrailService
         return $voucherTrail
             ? $voucherTrail
             : response()->json(['message' => 'the resource you requested was not found']);
+    }
+
+    public function search($text, $n, $user)
+    {
+        if(!$user->isAn('ADMIN')){
+            return;
+        }
+        $voucherTrails = $this->repository->search($text, $n, "/api/voucher-trails/find?q=". $text ."n=" .$n);
+        return $voucherTrails
+            ?: response()->json(['message' => 'the resource you requested was not found']);
     }
 
     public function create(array $voucherTrail)

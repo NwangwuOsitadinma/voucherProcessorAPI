@@ -1,12 +1,12 @@
 <!--Page Title-->
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<div id="page-title" data-ng-init="getVoucherTrails()">
-    <h1 class="page-header text-overflow">View Voucher Trails</h1>
+<div id="page-title" data-ng-init="getUserVoucherTrails()">
+    <h1 class="page-header text-overflow">View Personal Voucher History</h1>
 
     <!--Searchbox-->
     <div class="searchbox">
         <div class="input-group custom-search-form">
-            <input type="text" data-ng-model="searchParam" data-ng-change="searchText()" class="form-control" placeholder="Search..">
+            <input type="text" data-ng-model="searchParam" class="form-control" placeholder="Search..">
             <span class="input-group-btn">
                 <button class="text-muted" type="button">
                     <i class="demo-pli-magnifi-glass"></i>
@@ -29,7 +29,7 @@
         <a href="javascript:void(0)" data-ng-click="page = 'view-users'">View Voucher Trails</a>
     </li> -->
     <li class="active">
-        View Voucher Trails
+        View Personal Voucher History
     </li>
 </ol>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -46,7 +46,7 @@
         <div class="col-sm-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title">View voucher trails</h3>
+                    <h3 class="panel-title">View personal voucher history</h3>
                 </div>
 
                 <!-- Foo Table - Pagination -->
@@ -64,7 +64,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr data-ng-repeat="voucherTrail in voucherTrails.data">
+                            <tr data-ng-repeat="voucherTrail in voucherTrails | filter : searchParam">
                                 <td>
                                     <a href="javascript:void(0)">
                                         <span data-ng-bind="voucherTrail.voucher.voucher_number"></span>
@@ -102,17 +102,7 @@
                             <tr>
                                 <td colspan="5">
                                     <div class="pull-right">
-                                        <ul class="pagination text-nowrap mar-no">
-                                            <li class="page-pre" data-ng-class="{'disabled' : !voucherTrails.prev_page_url}">
-                                                <a href="javascript:;" data-ng-click="getPage(voucherTrails.prev_page_url, -1)">&lt;</a>
-                                            </li>
-                                            <li class="page-number" data-ng-class="{'active' : pagination.index == $index + 1}" data-ng-repeat="url in pagination.urls">
-                                                <a href="javascript:;" data-ng-click="getPage(url, $index + 1)"><span><% $index + 1 %></span></a>
-                                            </li>
-                                            <li class="page-next" data-ng-class="{'disabled' : !voucherTrails.next_page_url}">
-                                                <a href="javascript:;" data-ng-click="getPage(voucherTrails.next_page_url, 0)">&gt;</a>
-                                            </li>
-                                        </ul>
+                                        
                                     </div>
                                 </td>
                             </tr>

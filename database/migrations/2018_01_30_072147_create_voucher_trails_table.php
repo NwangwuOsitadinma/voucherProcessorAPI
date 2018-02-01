@@ -17,6 +17,7 @@ class CreateVoucherTrailsTable extends Migration
             $table->increments('id');
             $table->integer('voucher_id')->unsigned();
             $table->integer('response_by_id')->unsigned();
+            $table->string('response');
             $table->timestamps();
         });
         Schema::table('voucher_trails', function (Blueprint $table) {

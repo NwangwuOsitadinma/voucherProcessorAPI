@@ -3,6 +3,8 @@ app.controller('OfficeEntityController', ['$rootScope', '$scope', '$state', 'Off
     $scope.officeEntity = {};
     $scope.officeEntities = [];
     $scope.page = 'view-office-entities';
+    $scope.pagination = {};
+    $scope.pagination.index = 1;
 
     $scope.initialize = function () {
         $scope.getAllSupervisors();
@@ -30,6 +32,10 @@ app.controller('OfficeEntityController', ['$rootScope', '$scope', '$state', 'Off
     $scope.getOfficeEntities = function () {
         OfficeEntityService.getOfficeEntities(function (response) {
             $scope.officeEntities = response.data;
+            $scope.pagination.urls = [];
+            for (var i = 0; i < $scope.officeEntities.last_page; i++) {
+                $scope.pagination.urls.push($scope.officeEntities.path + "&page=" + (i + 1));
+            }
         }, function (response) {
             console.log("an error occured while fetching list of office entities");
         });
@@ -41,6 +47,34 @@ app.controller('OfficeEntityController', ['$rootScope', '$scope', '$state', 'Off
             $scope.page = 'office-entity-details';
         }, function (response) {
             console.log("error occurred while fetching the office entity details");
+        });
+    };
+
+    $scope.searchText = function () {
+        OfficeEntityService.searchText($scope.searchParam, function (response) {
+            $scope.officeEntities = response.data;
+            $scope.pagination.urls = [];
+            for (var i = 0; i < $scope.officeEntities.last_page; i++) {
+                $scope.pagination.urls.push($scope.officeEntities.path + "&page=" + (i + 1));
+            }
+        }, function (response) {
+            console.log("error occurred while trying to fetch the searched text");
+        });
+    };
+
+    $scope.getPage = function (url, index) {
+        console.log(index);
+        OfficeEntityService.getPage(url, function (response) {
+            if (index === 0) {
+                $scope.pagination.index++;
+            } else if (index === -1) {
+                $scope.pagination.index--;
+            } else {
+                $scope.pagination.index = index;
+            }
+            $scope.officeEntities = response.data;
+        }, function (response) {
+            console.log("error occurred while trying to get the officeEntities");
         });
     };
 
@@ -60,6 +94,7 @@ app.controller('OfficeEntityController', ['$rootScope', '$scope', '$state', 'Off
 
     $scope.updateOfficeEntity = function () {
         Pace.restart();
+        $scope.officeEntity.employees = $('#multiselect').chosen().val();
         if ($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') {
             OfficeEntityService.updateOfficeEntity($scope.officeEntity.id, $scope.officeEntity, function (response) {
                 console.log("office entity was successfully updated");
@@ -94,6 +129,7 @@ app.controller('OfficeEntityController', ['$rootScope', '$scope', '$state', 'Off
             $scope.users = response.data;
             setTimeout(function () {
                 $('#multiselect').chosen();
+                console.log('hey i just set the multiselect');
             }, 5);
         }, function (response) {
             console.log("error occurred while trying to get the list of users");
@@ -124,7 +160,11 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
     };
 
     this.getOfficeEntities = function (successHandler, errorHandler) {
-        APIService.get('/api/office_entities', successHandler, errorHandler);
+        APIService.get('/api/office_entities?n=10', successHandler, errorHandler);
+    };
+
+    this.searchText = function (text, successHandler, errorHandler) {
+        APIService.get('/api/office_entities/find?q=' + text + '&n=10', successHandler, errorHandler);
     };
 
     this.getOfficeEntityById = function (officeEntityId, successHandler, errorHandler) {
@@ -153,5 +193,9 @@ app.service('OfficeEntityService', ['APIService', function (APIService) {
 
     this.getAllOfficeEntityTypes = function (successHandler, errorHandler) {
         APIService.get('/api/office_entity_types', successHandler, errorHandler);
+    };
+
+    this.getPage = function (url, successHandler, errorHandler) {
+        APIService.get(url, successHandler, errorHandler);
     };
 }]);
