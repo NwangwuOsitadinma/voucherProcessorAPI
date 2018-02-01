@@ -70,6 +70,14 @@ class OfficeEntityService
             return response()->json(['message' => 'The resource you requested was not found']);
         }
         $this->repository->update($id, $request->getAttributesArray());
+        $this->officeEntityUserRepository->deleteByParam('office_entity_id', $id);
+        $employees = $request->employees;
+        foreach($employees as $userId){
+            $officeEntityUser = new OfficeEntityUser();
+            $officeEntityUser->userId = $userId;
+            $officeEntityUser->officeEntityId = $id;
+            $this->officeEntityUserRepository->create($officeEntityUser->getAttributesArray());
+        }
         return response()->json(['message' => 'The update was successful', $request->getAttributesArray()]);
     }
 

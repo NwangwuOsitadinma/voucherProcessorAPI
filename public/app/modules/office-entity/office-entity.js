@@ -94,6 +94,7 @@ app.controller('OfficeEntityController', ['$rootScope', '$scope', '$state', 'Off
 
     $scope.updateOfficeEntity = function () {
         Pace.restart();
+        $scope.officeEntity.employees = $('#multiselect').chosen().val();
         if ($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') {
             OfficeEntityService.updateOfficeEntity($scope.officeEntity.id, $scope.officeEntity, function (response) {
                 console.log("office entity was successfully updated");
@@ -128,6 +129,7 @@ app.controller('OfficeEntityController', ['$rootScope', '$scope', '$state', 'Off
             $scope.users = response.data;
             setTimeout(function () {
                 $('#multiselect').chosen();
+                console.log('hey i just set the multiselect');
             }, 5);
         }, function (response) {
             console.log("error occurred while trying to get the list of users");

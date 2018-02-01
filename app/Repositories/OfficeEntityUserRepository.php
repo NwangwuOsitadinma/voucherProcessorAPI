@@ -17,4 +17,9 @@ class OfficeEntityUserRepository extends BaseRepository{
     {
         $this->model = $officeEntityUser;
     }
+
+    public function deleteByParam($param, $value)
+    {
+        return $this->model->where($param, $value)->delete();
+    }
 }

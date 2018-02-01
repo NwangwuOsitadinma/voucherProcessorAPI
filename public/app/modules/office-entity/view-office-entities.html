@@ -1,3 +1,8 @@
+<style>
+    #multiselect_chosen {
+        width: 100%!important;
+    }
+</style>
 <!--Page Title-->
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <div id="page-title" data-ng-init="getOfficeEntities()">
@@ -158,7 +163,7 @@
                                                 <span data-ng-bind="employee.user.full_name"></span>
                                             </td>
                                             <td>
-                                                <span data-ng-bind="employee.user.email_address"></span>
+                                                <span data-ng-bind="employee.user.email"></span>
                                             </td>
                                             <td>
                                                 <span data-ng-bind="employee.user.employee_id"></span>
@@ -258,6 +263,21 @@
                                     <label class="control-label" for="description-textarea-input">Description</label>
                                     <textarea id="description-textarea-input" data-ng-model="officeEntity.description" rows="4" class="form-control" name="description"
                                         placeholder="Your description for this unit.." required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Select the employees in this unit</label>
+                                    <!-- Multiple Select Choosen -->
+                                    <!--===================================================-->
+                                    <select id="multiselect" class="form-control" data-placeholder="Select one or more employees in this unit..." multiple tabindex="4"
+                                        required>
+                                        <option value="<% user.id %>" data-ng-repeat="user in users">
+                                            <% user.full_name %>
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

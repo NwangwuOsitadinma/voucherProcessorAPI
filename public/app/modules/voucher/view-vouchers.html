@@ -120,7 +120,11 @@
                                                 <a href="javascript:;" data-ng-click="getPage(vouchers.prev_page_url, -1)">&lt;</a>
                                             </li>
                                             <li class="page-number" data-ng-class="{'active' : pagination.index == $index + 1}" data-ng-repeat="url in pagination.urls">
-                                                <a href="javascript:;" data-ng-click="getPage(url, $index + 1)"><span><% $index + 1 %></span></a>
+                                                <a href="javascript:;" data-ng-click="getPage(url, $index + 1)">
+                                                    <span>
+                                                        <% $index + 1 %>
+                                                    </span>
+                                                </a>
                                             </li>
                                             <li class="page-next" data-ng-class="{'disabled' : !vouchers.next_page_url}">
                                                 <a href="javascript:;" data-ng-click="getPage(vouchers.next_page_url, 0)">&gt;</a>
@@ -160,14 +164,36 @@
                         <div class="panel">
                             <div class="panel-body text-center">
                                 <p class="text-lg text-semibold mar-no text-main" data-ng-bind="voucher.voucher_number"></p>
-                                <p class="text-muted" data-ng-bind="voucher.user.full_name"></p>
-                                <p class="text-muted" data-ng-bind="voucher.office_entity.name"></p>
-                                <p class="text-muted" data-ng-bind="voucher.status"></p>
-                                <p class="text-sm" data-ng-bind="voucher.totalPrice"> </p>
+                                <p>Voucher's Creator:
+                                    <span style="font-size:13px;" class="label label-default" data-ng-bind="voucher.user.full_name"></span>
+                                </p>
+                                <p>Voucher Creator's Unit:
+                                    <span style="font-size:13px;" class="label label-default" class="text-muted"
+                                        data-ng-bind="voucher.office_entity.name"></span>
+                                </p>
+                                <p>Voucher's Status:
+                                    <span style="font-size:13px;" class="label" data-ng-class="{'label-warning' : voucher.status == 'Waiting', 'label-primary' : voucher.status == 'Paid', 'label-success' : voucher.status == 'Accepted', 'label-danger' : voucher.status == 'Declined'}"
+                                        data-ng-bind="voucher.status"></span>
+                                </p>
+                                <p>Voucher's Reason:
+                                    <span style="font-size:13px;" class="label label-default" class="text-muted"
+                                        data-ng-bind="voucher.reason"></span>
+                                </p>
+                                <!-- <p class="text-muted" data-ng-bind="voucher.paid ? 'Paid' : 'Not yet paid'"></p> -->
+                                <p>Voucher's Description:
+                                    <span style="font-size:13px;" class="label label-default" data-ng-bind="voucher.description">
+                                    </span>
+                                </p>
+                                <p>Voucher's Total Price:
+                                    <span style="font-size:13px;" class="label label-default" data-ng-bind="voucher.totalPrice">
+                                    </span>
+                                </p>
                                 <div class="text-center">
-                                    <button type="button" data-ng-click="approveVoucher(voucher.id, 'Accepted', 'All Vouchers')" class="btn btn-success">Accepted</button>
-                                    <button type="button" data-ng-click="approveVoucher(voucher.id, 'Declined', 'All Vouchers')" class="btn btn-danger">Declined</button>
-                                    <button type="button" data-ng-click="approveVoucher(voucher.id, 'Paid', 'All Vouchers')" class="btn btn-primary">Paid</button>
+                                    <button type="button" data-ng-if="voucher.status != 'Accepted'" data-ng-click="approveVoucher(voucher.id, 'Accepted', 'All Vouchers')"
+                                        class="btn btn-success">Accept</button>
+                                    <button type="button" data-ng-click="approveVoucher(voucher.id, 'Declined', 'All Vouchers')" class="btn btn-danger">Decline</button>
+                                    <button type="button" data-ng-if="voucher.status == 'Accepted'" data-ng-click="approveVoucher(voucher.id, 'Paid', 'All Vouchers')"
+                                        class="btn btn-primary">Paid</button>
                                 </div>
                                 <br>
                                 <!-- <select name="status" data-ng-model="voucherUpdate.status" data-ng-change="approveVoucher(voucher.id)">
@@ -176,9 +202,6 @@
                                     <option value="Paid" ng-selected="voucher.status == 'Paid'">Paid</option>
                                     <option value="Waiting" ng-selected="voucher.status == 'Waiting'">Waiting</option>
                                 </select> -->
-                                <p class="text-muted" data-ng-bind="voucher.reason"></p>
-                                <p class="text-muted" data-ng-bind="voucher.paid ? 'Paid' : 'Not yet paid'"></p>
-                                <p class="text-sm" data-ng-bind="voucher.description"> </p>
                                 <hr>
                                 <table id="demo-foo-pagination1" class="table table-hover toggle-arrow-tiny text-left" data-page-size="5">
                                     <thead>

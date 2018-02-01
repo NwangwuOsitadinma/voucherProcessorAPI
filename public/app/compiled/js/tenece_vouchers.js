@@ -43662,7 +43662,6 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
     }
 
     $rootScope.formatDate = function (timeStamp) {
-        // return timeStamp;
         var date = new Date(timeStamp);
         var day = date.getDay();
         switch(day) {
@@ -44089,6 +44088,7 @@ app.service('OfficeEntityTypeService', ['APIService', function (APIService) {
 
     $scope.updateOfficeEntity = function () {
         Pace.restart();
+        $scope.officeEntity.employees = $('#multiselect').chosen().val();
         if ($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') {
             OfficeEntityService.updateOfficeEntity($scope.officeEntity.id, $scope.officeEntity, function (response) {
                 console.log("office entity was successfully updated");
@@ -44123,6 +44123,7 @@ app.service('OfficeEntityTypeService', ['APIService', function (APIService) {
             $scope.users = response.data;
             setTimeout(function () {
                 $('#multiselect').chosen();
+                console.log('hey i just set the multiselect');
             }, 5);
         }, function (response) {
             console.log("error occurred while trying to get the list of users");
