@@ -17,7 +17,7 @@ class UserCheckMiddleware
     public function handle($request, Closure $next)
     {
         if(!UserCheck::where('email',$request->email)->first()){
-            return response()->json(['message' => 'You do not have the authority to carry out this action. Contact the Admin']);
+            return back()->withInput()->withErrors(['message' => 'You do not have the authority to carry out this action. Contact the Admin']);
         }
         return $next($request);
     }
