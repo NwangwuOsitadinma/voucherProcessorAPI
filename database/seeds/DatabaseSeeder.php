@@ -64,5 +64,6 @@ class DatabaseSeeder extends Seeder
 	    //     ]);
         // }
         $this->call(RolesAndClaimsSeeder::class);
+        $this->call(UserEmailSeeder::class);
     }
 }
