@@ -64,7 +64,7 @@
                                     <select id="demo-nav-offcanvas" data-ng-model="voucher.office_entity_id" name="office_entity_id" class="form-control" required>
                                         <option value="" selected disabled="disabled">-- Select the unit --</option>
                                         <option value="<% officeEntity.id %>" data-ng-repeat="officeEntity in officeEntities">
-                                            <% officeEntity.name %>
+                                            <% officeEntity.name +' - ' +officeEntity.branch.name %>
                                         </option>
                                     </select>
                                 </div>
