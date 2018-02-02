@@ -44,6 +44,12 @@
                     <h3 class="panel-title pull-left">Create a new Voucher</h3>
                     <div class="alert alert-warning pull-right" data-ng-show="errorMessage" data-ng-bind="errorMessage">
                     </div>
+                    <div id="alert" class="pull-right" data-ng-show="message">
+                        <span id="message" class="alert" data-ng-bind="message"></span>
+                        <button class="close" data-dismiss="alert">
+                            <i class="pci-cross pci-circle"></i>
+                        </button>
+                    </div>
                 </div>
                 <hr>
 
@@ -119,8 +125,8 @@
                         <div class="col-sm-3">
                             <button class="btn btn-info pull-left" data-ng-click="addItem()" id="add_item">
                                 <i class="demo-pli-add"></i> Add Item</button>
-                            <button class="btn btn-danger pull-right" data-ng-click="deleteLastItem()" type="button" id="delete_item">
-                                <i class="demo-pli-remove"></i> Remove Last Item</button>
+                            <!-- <button class="btn btn-danger pull-right" data-ng-click="deleteLastItem()" type="button" id="delete_item">
+                                <i class="demo-pli-remove"></i> Remove Last Item</button> -->
                         </div>
 
                         <button class="btn btn-success" data-ng-click="createVoucher()" type="submit">Submit</button>

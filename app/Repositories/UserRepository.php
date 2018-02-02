@@ -21,7 +21,7 @@ class UserRepository extends BaseRepository{
 
     public function getById($id)
     {
-        return $this->model->with(['roles'])->find($id);
+        return $this->model->with(['roles', 'vouchers', 'office_entities'])->find($id);
     }
 
     public function getCategorizedEmployees($role)

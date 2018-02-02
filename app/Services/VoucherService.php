@@ -67,7 +67,7 @@ class VoucherService
     {
         $voucher = $this->repository->create($request->getAttributesArray());
         if (!$voucher) {
-            return response()->json(['message' => 'the resource was not created', 'data' => $request->getAttributesArray()], 500);
+            return response()->json(['message' => 'the voucher could not be created', 'type' => 'error', 'data' => $request->getAttributesArray()], 500);
         }
         foreach($request->items as $item) {
             $item['voucher_id'] = $voucher->id;
@@ -76,24 +76,28 @@ class VoucherService
         $officeEntity = $this->officeEntityService->getEntity($request->office_entity_id);
         $supervisors = $this->userService->getCategorizedEmployees('supervisor');
         foreach ($supervisors as $supervisor) {
+            try{
             Mail::to($supervisor->email)->queue(new CreateVoucherMail($request->getAttributesArray()['voucher_number'], $request->user()->email, $request->user()->full_name, $officeEntity->name .' - ' .$officeEntity->branch->name));
+            } catch (\Exception $ex) {
+                return response()->json(['message' => 'an error occurred while sending the emails for creating the voucher', 'type' => 'error']);
+            }
         }
 
-        return response()->json(['message' => 'the resource was successfully created', 'data' => $request->getAttributesArray()], 200);
+        return response()->json(['message' => 'the voucher was successfully created', 'type' => 'success', 'data' => $request->getAttributesArray()], 200);
     }
 
     public function update($id, VoucherRequest $request)
     {
         $voucherId = $this->repository->update($id, $request->getAttributesArray());
         if (!$voucherId) {
-            return response()->json(['message' => 'the resource was not updated', 'data' => $request->getAttributesArray()], 500);
+            return response()->json(['message' => 'the voucher was not updated', 'data' => $request->getAttributesArray()], 500);
         }
         $this->itemService->deleteByParam('voucher_id', $id);
         foreach($request->items as $item) {
             $item['voucher_id'] = $id;
             $this->itemService->create($item);
         }
-        return response()->json(['message' => 'the resource was successfully updated', 'data' => $request->getAttributesArray()], 200);
+        return response()->json(['message' => 'the voucher was successfully updated', 'data' => $request->getAttributesArray()], 200);
     }
 
     public function delete($id)
@@ -121,7 +125,7 @@ class VoucherService
         ];
         $this->voucherTrailService->create($voucherTrail);
         $voucher = $this->getById($voucherId);
-        Mail::to($voucher->user->email)->queue(new ApproveVoucherMail($voucher->voucher_number, $voucher->user->full_name, $user->full_name));
+        Mail::to($voucher->user->email)->queue(new ApproveVoucherMail($voucher->voucher_number, $voucher->user->full_name, $voucherStatus, $user->full_name));
         return response()->json(['message' => 'the resource was successfully updated', 'data' => $voucher], 200);
     }
 

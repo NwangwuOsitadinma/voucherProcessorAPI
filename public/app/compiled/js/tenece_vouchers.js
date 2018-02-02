@@ -43602,7 +43602,28 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
 
     app.run(function($http, $rootScope, $cookies) {
         $rootScope.role = atob($cookies.get('r'));
-        // $http.defaults.headers.common['Authorization'] = window.sessionStorage.getItem('Authorization');
+
+        // $rootScope.alert = function (message) {
+        //     var alert_content = [{
+        //         type: message
+        //     }],
+        //     select_style = $("#demo-alert-style");
+            
+        //     $.niftyNoty({
+        //         type: alert_style,
+        //         container: alert_type,
+        //         html: alert_content[alert_layout].type,
+        //         closeBtn: closebtn_alert,
+        //         floating: {
+        //             position: "top-right",
+        //             animationIn: select_animin.val(),
+        //             animationOut: select_animout.val()
+        //         },
+        //         focus: true,
+        //         timer: input_sticky.prop("checked") ? 2500 : 0
+        //     });
+
+        // };
     });;app.service('APIService', ['$http', function ($http) {
 
     this.get = function (url, successHandler, errorHandler) {
@@ -44308,7 +44329,8 @@ app.service('RolesAndClaimsService', ['APIService', function(APIService)  {
         UserService.getUserById(id, function (response) {
             $scope.object.user = response.data;
             $scope.object.role = $scope.object.previousRole = response.data.roles[0].name;
-            $scope.page = 'user-details';
+            // $scope.page = 'user-details';
+            $('#usersModal').modal('show');
             console.log($scope.object);
         }, function (response) {
             console.log("error occurred while trying to fetch the user details");
@@ -44528,7 +44550,14 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
         }
         VoucherService.createVoucher($scope.voucher, function (response) {
             console.log("voucher was successfully created");
-            $state.go('my-vouchers');
+            $scope.voucher = {};
+            if(response.data.type === 'success') {
+                $('#message').toggleClass('alert-success');
+            } else {
+                $('#message').toggleClass('alert-danger');
+            }
+            $scope.message = response.data.message;
+            // $state.go('my-vouchers');
         }, function (response) {
             console.log("error occurred while trying to create voucher");
         });

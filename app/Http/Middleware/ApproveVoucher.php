@@ -19,7 +19,7 @@ class ApproveVoucher
         if($user && $user->can('approve-voucher')) {
             return $next($request);
         } else {
-            return redirect()->back()->intended('/');
+            return response()->json(['message' => 'You do not have the authority to carry out this action. Contact the Admin']);
         }
     }
 }

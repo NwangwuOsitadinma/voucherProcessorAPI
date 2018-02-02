@@ -4,7 +4,7 @@
     <h1 class="page-header text-overflow">View All Users</h1>
 
     <!--Searchbox-->
-    <div class="searchbox">
+    <div class="searchbox" data-ng-show="page == 'view-users'">
         <div class="input-group custom-search-form">
             <input type="text" data-ng-model="searchParam" class="form-control" placeholder="Search..">
             <span class="input-group-btn">
@@ -119,7 +119,7 @@
         <div class="col-sm-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <h3 class="panel-title" data-ng-bind="user.full_name"></h3>
+                    <h3 class="panel-title" data-ng-bind="object.user.full_name"></h3>
                 </div>
 
                 <!-- Foo Table - Pagination -->
@@ -136,7 +136,8 @@
                                 <p class="text-sm" data-ng-bind="object.user.email"> </p>
                                 <p class="text-sm" data-ng-bind="object.user.employee_id"> </p>
                                 <p class="text-sm" data-ng-bind="object.user.sex"> </p>
-                                <select name="role" data-ng-model="object.role" id="demo-nav-offcanvas" data-ng-change="assignRoleToUser();" class="form-control" data-ng-repeat="role in object.user.roles" required>
+                                <select name="role" data-ng-model="object.role" id="demo-nav-offcanvas" data-ng-change="assignRoleToUser();" class="form-control"
+                                    data-ng-repeat="role in object.user.roles" required>
                                     <option value="<% role.name%>" data-ng-repeat="role in roles" data-ng-selected="role.name === object.role">
                                         <% role.name %>
                                     </option>
@@ -151,6 +152,50 @@
                 <!--===================================================-->
                 <!-- End Foo Table - Pagination -->
 
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="usersModal" tabindex="-1" role="dialog" aria-labelledby="usersModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn pull-right btn-danger btn-xs " data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">close</span>
+                </button>
+                <div class="panel">
+                    <div class="panel-body text-center bg-trans-light">
+                        <img id="user-image" alt="Avatar" class="img-lg img-circle img-border mar-btm" src="img/profile-photos/2.png">
+
+                        <h4 class="mar-n" id="user-name" data-ng-bind="object.user.full_name"></h4>
+                        <p class="text-sm" id="user-email" data-ng-bind="object.user.email"></p>
+                    </div>
+                    <div class="list-group bg-trans pad-btm">
+                        <a class="list-group-item" href="#">
+                            <i class="demo-pli-gear icon-lg icon-fw"></i>
+                            <span id="user-employee_id" data-ng-bind="object.user.employee_id"></span>
+                        </a>
+                        <a class="list-group-item" href="#" data-ng-repeat="data in object.user.office_entities">
+                            <i class="demo-pli-office icon-lg icon-fw"></i>
+                            <span id="user-department" data-ng-bind="data.office_entity.name"></span>
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <i class="demo-pli-male icon-lg icon-fw"></i>
+                            <span id="user-sex" data-ng-bind="object.user.sex"></span>
+                        </a>
+                        <hr>
+                        <span>Select the user's role</span>
+                        <select name="role" data-ng-model="object.role" id="demo-nav-offcanvas" data-ng-change="assignRoleToUser();" class="form-control"
+                            data-ng-repeat="role in object.user.roles" required>
+                            <option value="<% role.name%>" data-ng-repeat="role in roles" data-ng-selected="role.name === object.role">
+                                <% role.name %>
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <span id="user-url"></span>
             </div>
         </div>
     </div>
