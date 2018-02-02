@@ -11,8 +11,8 @@
 
 <body>
     <div>
-        <p>Goodday {{ $voucherCreatorName }}, </p>
-        <p>Your voucher with number {{ $voucherNumber }} was just responded to by {{ $responderName }}.</p>
+        <p>Good day {{ $voucherCreatorName }}, </p>
+        <p>Your voucher with number {{ $voucherNumber }} was just {{ $response }} by {{ $responderName }}.</p>
         <p>Go to your dashboard to view this transaction</p>
         <br>
         <span>Thank you and best regards.</span>

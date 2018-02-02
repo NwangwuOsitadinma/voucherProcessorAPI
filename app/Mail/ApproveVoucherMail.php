@@ -13,6 +13,7 @@ class ApproveVoucherMail extends Mailable
 
     public $voucherNumber;
     public $voucherCreatorName;
+    public $response;
     public $responderName;
     public $subject = 'RESPONSE TO YOUR VOUCHER';
     /**
@@ -20,10 +21,11 @@ class ApproveVoucherMail extends Mailable
      *
      * @return void
      */
-    public function __construct($voucherNumber, $voucherCreatorName, $responderName)
+    public function __construct($voucherNumber, $voucherCreatorName, $response, $responderName)
     {
         $this->voucherNumber = $voucherNumber;
         $this->voucherCreatorName = $voucherCreatorName;
+        $this->response = $response;
         $this->responderName = $responderName;
     }
 

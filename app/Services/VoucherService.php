@@ -121,7 +121,7 @@ class VoucherService
         ];
         $this->voucherTrailService->create($voucherTrail);
         $voucher = $this->getById($voucherId);
-        Mail::to($voucher->user->email)->queue(new ApproveVoucherMail($voucher->voucher_number, $voucher->user->full_name, $user->full_name));
+        Mail::to($voucher->user->email)->queue(new ApproveVoucherMail($voucher->voucher_number, $voucher->user->full_name, $voucherStatus, $user->full_name));
         return response()->json(['message' => 'the resource was successfully updated', 'data' => $voucher], 200);
     }
 
