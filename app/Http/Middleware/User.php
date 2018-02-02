@@ -19,6 +19,6 @@ class User
         if($user && ($user->isA('USER') || $user->isA('MODERATOR') || $user->isAn('ADMIN'))){
             return $next($request);
         }
-        return redirect()->back()->intended('/');
+        return response()->json(['message' => 'You do not have the authority to carry out this action. Contact the Admin']);;
     }
 }

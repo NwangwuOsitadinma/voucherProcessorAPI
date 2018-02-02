@@ -119,5 +119,26 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
 
     app.run(function($http, $rootScope, $cookies) {
         $rootScope.role = atob($cookies.get('r'));
-        // $http.defaults.headers.common['Authorization'] = window.sessionStorage.getItem('Authorization');
+
+        // $rootScope.alert = function (message) {
+        //     var alert_content = [{
+        //         type: message
+        //     }],
+        //     select_style = $("#demo-alert-style");
+            
+        //     $.niftyNoty({
+        //         type: alert_style,
+        //         container: alert_type,
+        //         html: alert_content[alert_layout].type,
+        //         closeBtn: closebtn_alert,
+        //         floating: {
+        //             position: "top-right",
+        //             animationIn: select_animin.val(),
+        //             animationOut: select_animout.val()
+        //         },
+        //         focus: true,
+        //         timer: input_sticky.prop("checked") ? 2500 : 0
+        //     });
+
+        // };
     });

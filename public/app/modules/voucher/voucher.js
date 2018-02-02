@@ -63,7 +63,14 @@ app.controller('VoucherController', ['$rootScope', '$scope', '$state', 'VoucherS
         }
         VoucherService.createVoucher($scope.voucher, function (response) {
             console.log("voucher was successfully created");
-            $state.go('my-vouchers');
+            $scope.voucher = {};
+            if(response.data.type === 'success') {
+                $('#message').toggleClass('alert-success');
+            } else {
+                $('#message').toggleClass('alert-danger');
+            }
+            $scope.message = response.data.message;
+            // $state.go('my-vouchers');
         }, function (response) {
             console.log("error occurred while trying to create voucher");
         });

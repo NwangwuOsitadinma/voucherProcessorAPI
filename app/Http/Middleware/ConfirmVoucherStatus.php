@@ -25,7 +25,7 @@ class ConfirmVoucherStatus
     {
         $voucher = $this->repository->getById($request->voucherId ?: $request->id);
         if($voucher->status !== 'Waiting'){
-            return response()->json(['message' => 'unable to perform this transaction']);
+            return response()->json(['message' => 'You do not have the authority to carry out this action. Contact the Admin']);
         }
         return $next($request);
     }

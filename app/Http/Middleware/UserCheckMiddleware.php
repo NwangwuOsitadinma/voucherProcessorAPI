@@ -2,9 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\UserCheck;
 use Closure;
 
-class ApproveVoucher
+class UserCheckMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,11 +16,9 @@ class ApproveVoucher
      */
     public function handle($request, Closure $next)
     {
-        $user = $request->user();
-        if($user && $user->can('approve-voucher')) {
-            return $next($request);
-        } else {
+        if(!UserCheck::where('email',$request->email)->first()){
             return response()->json(['message' => 'You do not have the authority to carry out this action. Contact the Admin']);
         }
+        return $next($request);
     }
 }
