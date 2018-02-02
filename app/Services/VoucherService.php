@@ -76,11 +76,11 @@ class VoucherService
         $officeEntity = $this->officeEntityService->getEntity($request->office_entity_id);
         $supervisors = $this->userService->getCategorizedEmployees('supervisor');
         foreach ($supervisors as $supervisor) {
-            try{
+            // try{
             Mail::to($supervisor->email)->queue(new CreateVoucherMail($request->getAttributesArray()['voucher_number'], $request->user()->email, $request->user()->full_name, $officeEntity->name .' - ' .$officeEntity->branch->name));
-            } catch (\Exception $ex) {
-                return response()->json(['message' => 'an error occurred while sending the emails for creating the voucher', 'type' => 'error']);
-            }
+            // } catch (\Exception $ex) {
+                // return response()->json(['message' => 'an error occurred while sending the emails for creating the voucher', 'type' => 'error']);
+            // }
         }
 
         return response()->json(['message' => 'the voucher was successfully created', 'type' => 'success', 'data' => $request->getAttributesArray()], 200);
