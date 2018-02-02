@@ -166,7 +166,7 @@
                                         <option value="" selected disabled="disabled">-- Select Ùnit --</option>
                                         @foreach($officeEntities as $officeEntity)
                                         <option value="{{ $officeEntity->id }}">
-                                            {{ $officeEntity->name }}
+                                            {{ $officeEntity->name .' - ' .$officeEntity->branch->name }}
                                         </option>
                                         @endforeach
                                     </select>

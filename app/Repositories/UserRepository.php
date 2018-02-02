@@ -30,11 +30,11 @@ class UserRepository extends BaseRepository{
             return $this->model->whereHas('roles', function ($query) {
                 $query->where('name', 'like', '%ADMIN%')
                     ->orWhere('name', 'like', '%MODERATOR%');
-            })->get(['full_name', 'id']);
+            })->get(['full_name', 'email', 'id']);
         } else {
             return $this->model->whereHas('roles', function ($query) {
                 $query->where('name', 'like', '%USER%');
-            })->get(['full_name', 'id']);
+            })->get(['full_name', 'email', 'id']);
         }
     }
 }
