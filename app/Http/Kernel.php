@@ -63,5 +63,6 @@ class Kernel extends HttpKernel
         'pay-voucher' => \App\Http\Middleware\PayVoucher::class,
         'approve-voucher' => \App\Http\Middleware\ApproveVoucher::class,
         'confirm-voucher-status' => \App\Http\Middleware\ConfirmVoucherStatus::class,
+        'user-exists' => \App\Http\Middleware\UserCheckMiddleware::class,
     ];
 }
