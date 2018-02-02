@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CheckUserRequest;
 use App\Services\UserCheckService;
 use Illuminate\Http\Request;
 
@@ -23,17 +24,17 @@ class UserCheckController extends Controller
         return $this->service->getById($id);
     }
 
-    public function store(Request $request)
+    public function store(CheckUserRequest $request)
     {
-        return $this->service->create();
+        return $this->service->store($request);
     }
 
-    public function update(Request $request, $id)
+    public function update(CheckUserRequest $request, $id)
     {
-        return $this->service->update();
+        return $this->service->update($request,$id);
     }
-    public function delete()
+    public function delete($id)
     {
-        return $this->service->delete();
+        return $this->service->delete($id);
     }
 }
