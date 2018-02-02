@@ -10,9 +10,13 @@
 namespace App\Services;
 
 
+use App\Mail\ApproveVoucherMail;
+use App\Mail\CreateVoucherMail;
 use App\Repositories\VoucherRepository;
 use Illuminate\Http\Request;
 use App\Http\Requests\VoucherRequest;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Mail;
 
 class VoucherService
 {
@@ -20,12 +24,14 @@ class VoucherService
     protected $departmentService;
 
     public function __construct(VoucherRepository $voucherRepository, DepartmentService $departmentService, 
-                ItemService $itemService, VoucherTrailService $voucherTrailService)
+                ItemService $itemService, VoucherTrailService $voucherTrailService, UserService $userService, OfficeEntityService $officeEntityService)
     {
         $this->repository = $voucherRepository;
         $this->departmentService = $departmentService;
         $this->itemService = $itemService;
         $this->voucherTrailService = $voucherTrailService;
+        $this->userService = $userService;
+        $this->officeEntityService = $officeEntityService;
     }
 
     public function getAll(int $n = null, array $fields = null)
@@ -67,6 +73,12 @@ class VoucherService
             $item['voucher_id'] = $voucher->id;
             $this->itemService->create($item);
         }
+        $officeEntity = $this->officeEntityService->getEntity($request->office_entity_id);
+        $supervisors = $this->userService->getCategorizedEmployees('supervisor');
+        foreach ($supervisors as $supervisor) {
+            Mail::to($supervisor->email)->queue(new CreateVoucherMail($request->getAttributesArray()['voucher_number'], $request->user()->email, $request->user()->full_name, $officeEntity->name .' - ' .$officeEntity->branch->name));
+        }
+
         return response()->json(['message' => 'the resource was successfully created', 'data' => $request->getAttributesArray()], 200);
     }
 
@@ -93,22 +105,23 @@ class VoucherService
     }
 
 
-    public function approveVoucher($voucherId, $userId, $voucherStatus = 'Waiting')
+    public function approveVoucher($voucherId, $user, $voucherStatus = 'Waiting')
     {
         $voucher = [
             'status' => $voucherStatus
         ];
         $voucher = $this->repository->update($voucherId, $voucher);
-        // return response()->json($voucher);
         if (!$voucher) {
             return response()->json(['message' => 'the resource was not updated', 'data' => $voucher], 500);
         }
         $voucherTrail = [
             'voucher_id' => $voucherId,
-            'response_by_id' => $userId,
+            'response_by_id' => $user->id,
             'response' => $voucherStatus
         ];
         $this->voucherTrailService->create($voucherTrail);
+        $voucher = $this->repository->getById($voucherId);
+        Mail::to($voucher->user->email)->queue(new ApproveVoucherMail($voucher->voucher_number, $voucher->user->full_name, $user->full_name));
         return response()->json(['message' => 'the resource was successfully updated', 'data' => $voucher], 200);
     }
 
