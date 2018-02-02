@@ -11,7 +11,7 @@
 
 <body>
     <div>
-        <p>Goodday, </p>
+        <p>Good day, </p>
         <p>A voucher with number {{ $voucherNumber }} has just been created by {{ $creatorName }} from {{ $officeEntity }} unit.</p>
         <p>Go to your dashboard to respond to this transaction</p>
         <br>

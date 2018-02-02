@@ -37,7 +37,8 @@ app.controller('UserController', ['$rootScope', '$scope', 'UserService', functio
         UserService.getUserById(id, function (response) {
             $scope.object.user = response.data;
             $scope.object.role = $scope.object.previousRole = response.data.roles[0].name;
-            $scope.page = 'user-details';
+            // $scope.page = 'user-details';
+            $('#usersModal').modal('show');
             console.log($scope.object);
         }, function (response) {
             console.log("error occurred while trying to fetch the user details");

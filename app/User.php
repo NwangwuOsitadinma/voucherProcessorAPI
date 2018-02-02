@@ -2,12 +2,13 @@
 
 namespace App;
 
+use App\Models\OfficeEntity;
 use App\Models\Supervisor;
+use App\Models\Voucher;
+use App\Models\OfficeEntityUser;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Silber\Bouncer\Database\HasRolesAndAbilities;
-
-use App\Models\OfficeEntity;
 
 class User extends Authenticatable
 {
@@ -47,11 +48,11 @@ class User extends Authenticatable
 
     public function office_entities()
     {
-        return $this->hasMany(OfficeEntity::class);
+        return $this->hasMany(OfficeEntityUser::class)->with(['office_entity']);
     }
 
-    public function voucher()
+    public function vouchers()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Voucher::class);
     }
 }

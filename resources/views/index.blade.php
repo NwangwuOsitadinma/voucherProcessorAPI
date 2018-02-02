@@ -931,10 +931,8 @@
                                         <div class="pad-btm">
                                             <span class="label label-success pull-right">New</span>
                                             @if($user && $user->sex == 'Male')
-                                            <img class="img-circle img-sm img-border" src="img/profile-photos/1.png" alt="Profile Picture">
-                                            @else
-                                            <img class="img-circle img-sm img-border" src="img/profile-photos/8.png" alt="Profile Picture">
-                                            @endif
+                                            <img class="img-circle img-sm img-border" src="img/profile-photos/1.png" alt="Profile Picture"> @else
+                                            <img class="img-circle img-sm img-border" src="img/profile-photos/8.png" alt="Profile Picture"> @endif
                                         </div>
                                         <a href="#profile-nav" class="box-block" data-toggle="collapse" aria-expanded="false">
                                             <span class="pull-right dropdown-toggle">
@@ -1036,6 +1034,15 @@
                                             <li>
                                                 <a href="javascript:;" ui-sref="view-vouchers">View All Vouchers</a>
                                             </li>
+                                            @endif @if($user && $user->can('pay-voucher'))
+                                            <li>
+                                                <a href="javascript:;" ui-sref="payable-vouchers">
+                                                    <span class="menu-title">
+                                                        <strong>Payable Vouchers</strong>
+                                                    </span>
+                                                    <!-- <i class="arrow"></i> -->
+                                                </a>
+                                            </li>
                                             @endif
                                             <li>
                                                 <a href="javascript:;" ui-sref="user-vouchers-trail">My Voucher History</a>
@@ -1044,17 +1051,7 @@
                                         </ul>
                                     </li>
 
-                                    @if($user && $user->can('pay-voucher'))
-                                    <li>
-                                        <a href="javascript:;" ui-sref="payable-vouchers">
-                                            <i class="demo-psi-inbox-full"></i>
-                                            <span class="menu-title">
-                                                <strong>Payable Vouchers</strong>
-                                            </span>
-                                            <!-- <i class="arrow"></i> -->
-                                        </a>
-                                    </li>
-                                    @endif
+
 
                                     <!--Menu list item-->
                                     @if($user && ($user->isAn('ADMIN') || $user->isA('MODERATOR')))

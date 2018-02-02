@@ -1,0 +1,102 @@
+<div id="page-content">
+
+    <div class="panel">
+        <div class="panel-body">
+            <div class="media-block">
+                <div class="media-left" style="white-space:nowrap">
+                    <div class="invoice-logo">
+                        <div class="media-body">
+                            <button class="btn btn-info mar-ver" data-ng-if="'Waiting' === voucher.status" data-ng-click="getUpdatePage()">
+                                <i class="demo-pli-check icon-fw"></i>Edit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="media-body text-right">
+                    Voucher Number :
+                    <h3 class="h1 text-uppercase text-normal mar-no">
+                        <% voucher.voucher_number %>
+                    </h3>
+                </div>
+            </div>
+            <hr class="new-section-sm bord-no">
+            <div class="row">
+                <div class="col-xs-6">
+                    <address>
+                        <strong class="text-main">Voucher Owner: </strong>
+                        <span data-ng-bind="voucher.user.full_name"></span>
+                        <br>
+                        <strong class="text-main">Voucher Creator's Unit: </strong>
+                        <span data-ng-bind="voucher.office_entity.name"></span>
+                        <br>
+                        <strong class="text-main">Voucher's Status: </strong>
+                        <span data-ng-bind="voucher.status"></span>
+                        <br>
+                    </address>
+                </div>
+                <div class="col-xs-6">
+                    <!-- <table class="pull-right invoice-details">
+                        <tbody>
+                            <tr>
+                                <td class="text-main text-bold">
+                                    <button type="button" data-ng-if="voucher.status != 'Accepted'" data-ng-click="approveVoucher(voucher.id, 'Accepted', 'All Vouchers')"
+                                        class="btn btn-sm btn-success">Accept</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table> -->
+                </div>
+            </div>
+            <hr class="new-section-sm bord-no">
+            <div class="table-responsive">
+                <table class="table table-striped invoice-summary">
+                    <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>
+                                <strong>Name</strong>
+                            </th>
+                            <th class="text-right">
+                                <strong>Item Price</strong>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="item in voucher.items">
+                            <td>
+                                <span data-ng-bind="$index + 1"></span>
+                            </td>
+                            <td>
+                                <span data-ng-bind="item.name"></span>
+                            </td>
+                            <td class="text-right">
+                                <span data-ng-bind="item.price"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table invoice-total">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>TOTAL :</strong>
+                            </td>
+                            <td class="text-bold h4">₦
+                                <% voucher.totalPrice %>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr class="new-section-sm bord-no">
+            <div class="well well-sm">
+                <p class="text-bold text-main mar-no">Description</p>
+                <p data-ng-bind="voucher.description"></p>
+            </div>
+            <div class="well well-sm">
+                <p class="text-bold text-main mar-no">Reason for the voucher</p>
+                <p data-ng-bind="voucher.reason"></p>
+            </div>
+        </div>
+    </div>
+
+</div>
