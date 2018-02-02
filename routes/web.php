@@ -31,7 +31,7 @@ Route::get('/{state}', function ($state) {
 
 Route::post('/user/authenticate', 'UserController@login');
 
-Route::post('/user/register', 'UserController@create');
+Route::post('/user/register', 'UserController@create')->middleware('user-exists');
 
 Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::get('/office_entity_types', 'OfficeEntityTypeController@getAllOfficeEntityTypes');
