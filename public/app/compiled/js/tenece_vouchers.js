@@ -44530,7 +44530,6 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
     };
 
     $scope.createVoucher = function () {
-        Pace.restart();
         for (var i = 0; i < j; i++) {
             if ($('#itemName' + i).val() && $('#itemPrice' + i).val()) {
                 if (parseInt($('#itemPrice' + i).val()) < 1) {
@@ -44548,6 +44547,7 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
             $scope.errorMessage = 'Please add an item and fill in the item values';
             return;
         }
+        // Pace.restart();
         VoucherService.createVoucher($scope.voucher, function (response) {
             console.log("voucher was successfully created");
             $scope.voucher = {};
@@ -44564,7 +44564,7 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
     };
 
     $scope.getVoucherDetails = function (voucherId) {
-        Pace.restart();
+        // Pace.restart();
         VoucherService.getVoucherById(voucherId, function (response) {
             $scope.voucher = response.data;
             $scope.voucher.totalPrice = 0;
@@ -44578,7 +44578,7 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
     };
 
     $scope.deleteVoucher = function (voucherId) {
-        Pace.restart();
+        // Pace.restart();
         VoucherService.deleteVoucher(voucherId, function (response) {
             console.log("voucher was successfully updated");
             $scope.getUserVouchers();
@@ -44588,7 +44588,7 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
     };
 
     $scope.updateVoucher = function () {
-        Pace.restart();
+        // Pace.restart();
         $scope.voucher.items = [];
         for (var i = 0; i < j; i++) {
             if ($('#itemName' + i).val() && $('#itemPrice' + i).val()) {
@@ -44621,7 +44621,7 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
     $scope.approveVoucher = function (voucherId, status, view) {
         console.log(status);
         if ($rootScope.role == 'ADMIN' || $rootScope.role == 'MODERATOR') {
-            Pace.restart();
+            // Pace.restart();
             VoucherService.approveVoucher(voucherId, { 'status': status }, function (response) {
                 console.log(response.data);
                 if (view === 'Payable Vouchers') {
@@ -44668,7 +44668,7 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
     };
 
     $scope.getUpdatePage = function () {
-        Pace.restart();
+        // Pace.restart();
         $scope.voucher.office_entity = $scope.voucher.office_entity_id;
         j = $scope.voucher.items.length;
         $scope.page = 'update-voucher';
@@ -44721,46 +44721,57 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
 app.service('VoucherService', ['APIService', function (APIService) {
 
     this.createVoucher = function (voucherDetails, successHandler, errorHandler) {
+        Pace.restart();
         APIService.post('/api/voucher/create', voucherDetails, successHandler, errorHandler);
     };
 
     this.getVouchers = function (successHandler, errorHandler) {
+        Pace.restart();
         APIService.get('/api/vouchers?n=10', successHandler, errorHandler);
     };
 
     this.getPayableVouchers = function (successHandler, errorHandler) {
+        Pace.restart();
         APIService.get('/api/vouchers/payable', successHandler, errorHandler);
     };
 
     this.getVoucherById = function (voucherId, successHandler, errorHandler) {
+        Pace.restart();
         APIService.get('/api/voucher/' + voucherId, successHandler, errorHandler);
     };
 
     this.searchText = function (text, successHandler, errorHandler) {
+        Pace.restart();
         APIService.get('/api/vouchers/find?q=' + text + '&n=10', successHandler, errorHandler);
     };
 
     this.getUserVouchers = function (successHandler, errorHandler) {
+        Pace.restart();
         APIService.get('/api/vouchers/user', successHandler, errorHandler);
     };
 
     this.deleteVoucher = function (voucherId, successHandler, errorHandler) {
+        Pace.restart();
         APIService.delete('/api/voucher/delete/' + voucherId, successHandler, errorHandler);
     };
 
     this.updateVoucher = function (voucherId, voucherDetails, successHandler, errorHandler) {
+        Pace.restart();
         APIService.put('/api/voucher/update/' + voucherId, voucherDetails, successHandler, errorHandler);
     };
 
     this.approveVoucher = function (voucherId, details, successHandler, errorHandler) {
+        Pace.restart();
         APIService.put('/api/voucher/approve/' + voucherId, details, successHandler, errorHandler);
     };
 
     this.getOfficeEntities = function (successHandler, errorHandler) {
+        Pace.restart();
         APIService.get('/api/office_entities', successHandler, errorHandler);
     };
 
     this.getPage = function (url, successHandler, errorHandler) {
+        Pace.restart();
         APIService.get(url, successHandler, errorHandler);
     };
 }]);
