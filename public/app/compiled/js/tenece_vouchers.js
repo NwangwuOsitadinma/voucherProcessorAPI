@@ -44550,9 +44550,9 @@ app.service('VoucherTrailService', ['APIService', function (APIService) {
         // Pace.restart();
         VoucherService.createVoucher($scope.voucher, function (response) {
             console.log("voucher was successfully created");
-            $scope.voucher = {};
             if(response.data.type === 'success') {
                 $('#message').toggleClass('alert-success');
+                $scope.voucher = {};
             } else {
                 $('#message').toggleClass('alert-danger');
             }
