@@ -1,10 +1,13 @@
-app.controller('UserController', ['$rootScope', '$scope', 'UserService', function ($rootScope, $scope, UserService) {
+app.controller('UserController', ['$rootScope', '$scope', '$state', 'UserService', function ($rootScope, $scope, $state, UserService) {
 
     $scope.user = {};
     $scope.object = {};
     $scope.users = [];
     $scope.page = 'view-users';
     $scope.roles = [];
+    $scope.userChecks = [];
+    $scope.pagination = {};
+    $scope.pagination.index = 1;
 
     $scope.login = function () {
         UserService.login($scope.user, function (response) {
@@ -47,7 +50,7 @@ app.controller('UserController', ['$rootScope', '$scope', 'UserService', functio
 
     $scope.assignRoleToUser = function () {
         Pace.restart();
-        UserService.assignRole($scope.object, function(response) {
+        UserService.assignRole($scope.object, function (response) {
             console.log("role was successfully assigned to the user");
             $scope.page = 'view-users';
         }, function (response) {
@@ -76,8 +79,45 @@ app.controller('UserController', ['$rootScope', '$scope', 'UserService', functio
         });
     };
 
+    $scope.registerNewUserEmail = function () {
+        Pace.restart();
+        if(!(/^\w+[a-z]+[0-9]*.*[_-]*@tenece.com$/gi.test($scope.user.email))) {
+            $scope.errorMessage = "please register a valid tenece mail";
+            return;
+        }
+        UserService.registerNewUserEmail($scope.user, function (response) {
+            console.log("the user email was successfully registered");
+            $state.go('view-tenece-mails');
+        }, function (response) {
+            console.log("error occurred while trying to create the user");
+            $scope.errorMessage = "email already exists";
+        });
+    };
+
+    $scope.getUserCheckEmails = function () {
+        Pace.restart();
+        UserService.getUserCheckEmails(function (response) {
+            $scope.userChecks = response.data;
+            // $scope.pagination.urls = [];
+            // for (var i = 0; i < $scope.userChecks.last_page; i++) {
+            //     $scope.pagination.urls.push($scope.userChecks.path + "&page=" + (i + 1));
+            // }
+        }, function (response) {
+            console.log("an error occurred while trying to fetch the user checks emails");
+        });
+    };
+
+    $scope.deleteUserCheckEmail = function (id) {
+        UserService.deleteUserCheckEmail(id, function (response) {
+            console.log("the user check email was successfully deleted");
+            $scope.getUserCheckEmails();
+        }, function (response) {
+            console.log("an error occurred while trying to delete the user check email");
+        });
+    };
+
     $scope.getAllRoles = function () {
-        UserService.getAllRoles(function(response) {
+        UserService.getAllRoles(function (response) {
             $scope.roles = response.data;
         }, function (response) {
             console.error("an error occurred while trying to fetch all the registered roles");
@@ -111,6 +151,18 @@ app.service('UserService', ['APIService', function (APIService) {
 
     this.updateUserDetails = function (id, userDetails, successHandler, errorHandler) {
         APIService.put('/api/user/update/' + id, userDetails, successHandler, errorHandler);
+    };
+
+    this.registerNewUserEmail = function (user, successHandler, errorHandler) {
+        APIService.post('/api/user-check/create', user, successHandler, errorHandler);
+    };
+
+    this.getUserCheckEmails = function (successHandler, errorHandler) {
+        APIService.get('/api/user-checks', successHandler, errorHandler);
+    };
+
+    this.deleteUserCheckEmail = function (id, successHandler, errorHandler) {
+        APIService.delete('/api/user-check/delete/' + id, successHandler, errorHandler);
     };
 
     this.assignRole = function (details, successHandler, errorHandler) {

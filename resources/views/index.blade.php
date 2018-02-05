@@ -1188,8 +1188,16 @@
                                         <!--Submenu-->
                                         <ul class="collapse">
                                             <li>
-                                                <a href="javascript:;" ui-sref="view-users">View Users</a>
+                                                <a href="javascript:;" ui-sref="view-users">View All Users</a>
                                             </li>
+                                            @if($user && ($user->isAn('ADMIN') || $user->isA('MODERATOR')))
+                                            <li>
+                                                <a href="javascript:;" ui-sref="new-tenece-mail">Register A New Tenece Mail</a>
+                                            </li>
+                                            <li>
+                                                <a href="javascript:;" ui-sref="view-tenece-mails">View All Tenece Mails</a>
+                                            </li>
+                                            @endif
 
                                         </ul>
                                     </li>
@@ -1265,7 +1273,7 @@
     <!-- END OF CONTAINER -->
 
     <!-- tenece js -->
-    <script src="app/compiled/js/tenece_vouchers.js"></script>
+    <script src="app/compiled/js/tenece_vouchers.min.js"></script>
 
 
 

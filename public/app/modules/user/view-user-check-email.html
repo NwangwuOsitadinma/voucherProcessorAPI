@@ -1,0 +1,91 @@
+<!--Page Title-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<div id="page-title" data-ng-init="getUserCheckEmails()">
+    <h1 class="page-header text-overflow">View Registered Tenece Mails</h1>
+
+    <!--Searchbox-->
+    <div class="searchbox">
+        <div class="input-group custom-search-form">
+            <input type="text" data-ng-model="searchParam" class="form-control" placeholder="Search..">
+            <span class="input-group-btn">
+                <button class="text-muted" type="button">
+                    <i class="demo-pli-magnifi-glass"></i>
+                </button>
+            </span>
+        </div>
+    </div>
+</div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--End page title-->
+
+
+<!--Breadcrumb-->
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<ol class="breadcrumb">
+    <li>
+        <a href="#">Home</a>
+    </li>
+    <li class="active">
+        View Registered Tenece Mails
+    </li>
+</ol>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<!--End breadcrumb-->
+
+
+
+
+<!--Page content-->
+<!--===================================================-->
+<div id="page-content">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">View registered tenece mails</h3>
+                </div>
+
+                <!-- Foo Table - Pagination -->
+                <!--===================================================-->
+                <div class="panel-body">
+                    <table id="demo-foo-pagination" class="table table-hover toggle-arrow-tiny" data-page-size="5">
+                        <thead>
+                            <tr>
+                                <th data-toggle="true">Email</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-ng-repeat="userCheck in userChecks | filter : searchParam">
+                                <td>
+                                    <span data-ng-bind="userCheck.email"></span>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" data-ng-click="deleteUserCheckEmail(userCheck.id)">
+                                        <span class="label label-table label-danger">
+                                            <i class="fa fa-trash"></i> Delete</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="5">
+                                    <div class="text-right">
+                                        <ul class="pagination"></ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <!--===================================================-->
+                <!-- End Foo Table - Pagination -->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--===================================================-->
+<!--End page content-->

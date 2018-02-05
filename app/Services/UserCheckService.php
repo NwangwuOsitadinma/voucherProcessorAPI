@@ -21,12 +21,12 @@ class UserCheckService
         $this->repository = $r;
     }
 
-    public function getAll($n)
+    public function getAll(int $n = null, array $fields = null)
     {
-        if(!$this->repository->getAll($n)){
-            return response()->json(['message' => 'Something went wrong.']);
-        }
-        return $this->repository->getAll($n);
+        // $userChecks = $this->repository->getAll($n, "/api/user-checks?n=" .$n, $fields);
+        $userChecks = $this->repository->getAll();
+        return $userChecks
+            ?: response()->json(['message' => 'Something went wrong.']);
     }
 
     public function getById($id)

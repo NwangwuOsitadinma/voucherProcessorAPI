@@ -80,9 +80,13 @@ Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
     Route::put('/user/update/{id}', 'UserController@update');
     Route::delete('/user/delete/{id}', 'UserController@delete')->middleware('admin');
 
+    Route::post('/user-check/create', 'UserCheckController@store')->middleware('moderator');
+    Route::get('/user-checks', 'UserCheckController@getUserChecks')->middleware('moderator');
+    Route::delete('/user-check/delete/{id}', 'UserCheckController@delete')->middleware('moderator');
+
     Route::get('/employees', 'UserController@getCategorizedEmployees');
 
-    Route::get('/roles', 'RolesAndClaimsController@getAllRoles');
+    Route::get('/roles', 'RolesAndClaimsController@getAllRoles')->middleware('admin');
 
     Route::post('/role-with-claims/create', 'RolesAndClaimsController@create');
     Route::put('/role-with-claims/assign', 'RolesAndClaimsController@assignRole')->middleware('moderator');

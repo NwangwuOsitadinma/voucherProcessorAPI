@@ -104,6 +104,16 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
                 templateUrl: '/app/modules/roles-and-claims/view-roles-with-claims.html',
                 controller: 'RolesAndClaimsController'
             })
+            .state('new-tenece-mail', {
+                url: '/new-tenece-mail',
+                templateUrl: '/app/modules/user/new-user-email.html',
+                controller: 'UserController'
+            })
+            .state('view-tenece-mails', {
+                url: '/view-tenece-mails',
+                templateUrl: '/app/modules/user/view-user-check-email.html',
+                controller: 'UserController'
+            })
             .state('vouchers-trail', {
                 url: '/vouchers-trail',
                 templateUrl: '/app/modules/voucher-trail/voucher-trail.html',
@@ -117,7 +127,7 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
 
     }]);
 
-    app.run(function($http, $rootScope, $cookies) {
+    app.run(['$http', '$rootScope', '$cookies', function($http, $rootScope, $cookies) {
         $rootScope.role = atob($cookies.get('r'));
 
         // $rootScope.alert = function (message) {
@@ -141,4 +151,4 @@ app.config(['$httpProvider', '$interpolateProvider', '$locationProvider', '$stat
         //     });
 
         // };
-    });
+    }]);

@@ -38,16 +38,14 @@ class VoucherService
     {
         $vouchers = $this->repository->getAll($n, "/api/vouchers?n=" .$n, $fields);
         return $vouchers
-            ? $vouchers
-            : response()->json(['message' => 'the resource you requested was not found']);
+            ?: response()->json(['message' => 'the resource you requested was not found']);
     }
 
     public function getById($id)
     {
         $voucher = $this->repository->getById($id);
         return $voucher
-            ? $voucher
-            : response()->json(['message' => 'the resource you requested was not found']);
+            ?: response()->json(['message' => 'the resource you requested was not found']);
     }
 
     public function search($text, $n, $user)
