@@ -9,7 +9,7 @@
   "author": "Harrison Favour, Nwangwu Ositadinma",
   "license": "ISC",
   "devDependencies": {
-    "grunt": "^1.0.1",
+    "grunt": "^1.5.2",
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-cssmin": "^2.2.1",
     "grunt-contrib-jshint": "^1.1.0",
